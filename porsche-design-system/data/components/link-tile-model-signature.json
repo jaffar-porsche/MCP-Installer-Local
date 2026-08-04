@@ -1,0 +1,136 @@
+{
+  "name": "Link Tile Model Signature",
+  "id": "p-link-tile-model-signature",
+  "description": "The `p-link-tile-model-signature` is a navigational component that displays a provided image to tease content and\nprovides two `p-link's` to navigate to further information within one container. In addition to the `p-link-tile` it\nshows one of the model signatures at the top.",
+  "code": "<p-link-tile-model-signature heading=\"Some heading\" aspect-ratio=\"16:9\" @click=\"onClick\">\n    <img :src=\"imgSrc\" width=\"3000\" height=\"2000\" alt=\"Some alt text\" />\n    <p-link slot=\"primary\"><a href=\"https://porsche.com/#primary\">Primary label</a></p-link>\n<p-link slot=\"secondary\"><a href=\"https://porsche.com/#secondary\">Secondary label</a></p-link>\n<p-text>clicked href: {{clickedHref}}</p-text>\n<p-link slot=\"primary\" href=\"https://porsche.com/#primary\">Primary label</p-link>\n<p-link slot=\"secondary\" href=\"https://porsche.com/#secondary\">Secondary label</p-link>\n<p-link-tile-model-signature heading=\"Some heading\">\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">Some tag</p-tag>\n<p-link-tile-model-signature heading=\"Some heading\">\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">Some tag</p-tag>\n<p-link-tile-model-signature heading=\"Some heading\" weight=\"Some content\" description=\"Some description\">\n  Some content\n  Some content\n  Some content\n</p-link-tile-model-signature>\n<p-link-tile-model-signature heading=\"Some heading\" description=\"Some description\">\n  Some content\n  Some content\n  Some content\n</p-link-tile-model-signature>\n<p-link-tile-model-signature heading=\"Some heading\" link-direction=\"Some content\">\n  Some content\n  Some content\n  Some content\n</p-link-tile-model-signature>\n<p-link-tile-model-signature heading=\"Some Heading\" aspect-ratio=\"Some content\">\n  Some content\n  Some content\n  Some content\n</p-link-tile-model-signature>\n<p-link-tile-model-signature heading=\"Some Heading\" model=\"Some content\">\n  Some content\n  Some content\n  Some content\n</p-link-tile-model-signature>\n<p-link-tile-model-signature\n  heading=\"A very special limited extra&shy;ordinarily Porsche\"\n  description=\"Some Description for a very special limited extra&shy;ordinarily Porsche\"\n  style=\"Some contentfont-size: 45px;\"\n>\n  Some content\n  Some content\n  Some content\n</p-link-tile-model-signature>\n<p-link-tile-model-signature\n    aspect-ratio=\"4/3\"\n    heading=\"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\"\n  >\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">4/3</p-tag>\n<p-link-tile-model-signature aspect-ratio=\"4/3\" heading=\"Some description\">\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">4/3</p-tag>\n<p-link-tile-model-signature aspect-ratio=\"1/1\" heading=\"Some description\">\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">1/1</p-tag>\n<p-link-tile-model-signature aspect-ratio=\"9/16\" heading=\"Some description\">\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">9/16</p-tag>\n<p-link-tile-model-signature aspect-ratio=\"1/1\" heading=\"Some description\">\n    <p-tag slot=\"header\" theme=\"dark\" color=\"background-frosted\" compact=\"true\">1/1</p-tag>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": false,
+    "nestedComponents": [
+      "p-model-signature"
+    ],
+    "propsMeta": {
+      "aspectRatio": {
+        "allowedValues": [
+          "1/1",
+          "4/3",
+          "3/4",
+          "16/9",
+          "9/16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "16:9",
+          "9:16"
+        ],
+        "defaultValue": "3/4",
+        "deprecatedValues": [
+          "1:1",
+          "4:3",
+          "3:4",
+          "16:9",
+          "9:16"
+        ],
+        "description": "Aspect ratio of the link-tile-model-signature.",
+        "isBreakpointCustomizable": true,
+        "type": "LinkTileModelSignatureAspectRatio"
+      },
+      "description": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Description text.",
+        "type": "string"
+      },
+      "heading": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Heading text.",
+        "isRequired": true,
+        "type": "string"
+      },
+      "headingTag": {
+        "allowedValues": [
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6"
+        ],
+        "defaultValue": "h2",
+        "description": "Sets a heading tag, so it fits correctly within the outline of the page.",
+        "type": "LinkTileModelSignatureHeadingTag"
+      },
+      "linkDirection": {
+        "allowedValues": [
+          "row",
+          "column"
+        ],
+        "defaultValue": {
+          "base": "column",
+          "xs": "row"
+        },
+        "description": "Defines the direction of the main and cross axis of the links. The default is '{base: ‘column’, xs: ‘row’}' showing buttons vertically stacked on mobile viewports and side-by-side in a horizontal row from breakpoint 'xs'.",
+        "isBreakpointCustomizable": true,
+        "type": "LinkTileModelSignatureLinkDirection"
+      },
+      "model": {
+        "allowedValues": [
+          "718",
+          "911",
+          "boxster",
+          "cayenne",
+          "cayman",
+          "macan",
+          "panamera",
+          "taycan",
+          "turbo-s",
+          "turbo"
+        ],
+        "defaultValue": "911",
+        "description": "Adapts the model of the component.",
+        "type": "LinkTileModelSignatureModel"
+      },
+      "weight": {
+        "allowedValues": [
+          "regular",
+          "semi-bold"
+        ],
+        "defaultValue": "semi-bold",
+        "description": "Adapts the font weight of the heading.",
+        "isBreakpointCustomizable": true,
+        "type": "LinkTileModelSignatureWeight"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the img or picture tag."
+      },
+      "header": {
+        "description": "Renders a header section above the content area."
+      },
+      "primary": {
+        "allowedTagNames": [
+          "p-link"
+        ],
+        "description": "Renders the primary link. Has to be a p-link tag.",
+        "isRequired": true
+      },
+      "secondary": {
+        "allowedTagNames": [
+          "p-link"
+        ],
+        "description": "Renders the secondary link. Has to be a p-link tag.",
+        "isRequired": true
+      }
+    },
+    "styling": "jss"
+  }
+}

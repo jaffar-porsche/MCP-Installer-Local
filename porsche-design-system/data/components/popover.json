@@ -1,0 +1,65 @@
+{
+  "name": "Popover",
+  "id": "p-popover",
+  "description": "The `p-popover` component can be used to display some additional content on top of another in conjunction with the info",
+  "code": "<p-popover :theme=\"this.$store.getters.storefrontTheme\" description=\"Hello World\"></p-popover>\n<p-icon :theme=\"this.$store.getters.storefrontTheme\" name=\"information\" aria=\"{ 'aria-label': 'Information icon' }\"></p-icon>\n<p-icon :theme=\"this.$store.getters.storefrontTheme\" name=\"information\" aria=\"{ 'aria-label': 'Information icon' }\"></p-icon>\n<p-text>\n  Some content <p-popover>Some content</p-popover>\n<p-popover description=\"Some content\"></p-popover>\n<p-popover description=\"Some content\"></p-popover>\n<p-popover direction=\"Some content\">Some content</p-popover>\n<p-text>\n  Some content <p-popover aria=\"{ 'aria-label': 'Some more descriptive label' }\">Some content</p-popover>",
+  "properties": {
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-icon"
+    ],
+    "propsMeta": {
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "PopoverAriaAttribute"
+      },
+      "description": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Descriptive text to show additional information when popover is open",
+        "type": "string"
+      },
+      "direction": {
+        "allowedValues": [
+          "top",
+          "right",
+          "bottom",
+          "left"
+        ],
+        "defaultValue": "bottom",
+        "description": "Preferred direction in which popover should open, given there is enough space in viewport. Otherwise, it will be opened in the direction with most available space.",
+        "type": "PopoverDirection"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the popover color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the popover content."
+      }
+    },
+    "styling": "jss"
+  }
+}

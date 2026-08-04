@@ -1,0 +1,96 @@
+{
+  "name": "Model Signature",
+  "id": "p-model-signature",
+  "description": "The `p-model-signature` component is purely visual and renders the different signatures of Porsche car models.  \nIt can be used to overlay background images or enhance cards and teasers to be more dynamic and recognizable.",
+  "code": "<p-model-signature model=\"Some content\"></p-model-signature>\n<p-model-signature safe-zone=\"Some content\" model=\"Some content\"></p-model-signature>\n<p-model-signature size=\"Some content\"></p-model-signature>\n<p-model-signature color=\"Some content\"></p-model-signature>\n<p-model-signature color=\"contrast-medium\" safe-zone=\"false\" style=\"mix-blend-mode: Some content\"></p-model-signature>\n<p-model-signature color=\"contrast-medium\" safe-zone=\"false\" style=\"mix-blend-mode: Some content\"></p-model-signature>\n<p-model-signature color=\"contrast-medium\" safe-zone=\"false\" style=\"mix-blend-mode: Some content\"></p-model-signature>\n<p-model-signature color=\"contrast-medium\" safe-zone=\"false\" style=\"mix-blend-mode: Some content\"></p-model-signature>\n<p-model-signature color=\"contrast-medium\" safe-zone=\"false\" style=\"mix-blend-mode: Some content\"></p-model-signature>\n<p-model-signature color=\"contrast-medium\" safe-zone=\"false\" style=\"mix-blend-mode: Some content\"></p-model-signature>\n<p-model-signature safe-zone=\"false\" style=\"--p-model-signature-width: auto;\">\n  <img src=\"assets/dessert.jpg\" alt=\"Dessert\" />\n</p-model-signature>\n<p-model-signature safe-zone=\"false\" style=\"--p-model-signature-width: auto;\">\n  <video\n    poster=\"assets/ocean.jpg\"\n    src=\"assets/ocean.mp4\"\n    autoplay\n    playsinline\n    loop\n    muted\n  ></video>\n</p-model-signature>\n<p-model-signature style=\"--p-model-signature-color: deeppink;\"></p-model-signature>\n<p-model-signature style=\"--p-model-signature-width: auto; --p-model-signature-height: 50px;\"></p-model-signature>\n<p-model-signature style=\"--p-model-signature-width: 50px; --p-model-signature-height: auto;\"></p-model-signature>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "propsMeta": {
+      "color": {
+        "allowedValues": [
+          "primary",
+          "contrast-low",
+          "contrast-medium",
+          "contrast-high",
+          "inherit"
+        ],
+        "defaultValue": "primary",
+        "description": "Adapts the color of the component.",
+        "type": "ModelSignatureColor"
+      },
+      "fetchPriority": {
+        "allowedValues": [
+          "low",
+          "high",
+          "auto"
+        ],
+        "defaultValue": "auto",
+        "description": "Defines the fetch priority of the model signature. In the end it is just a recommendation to the browser, but it defines the priority on its own.",
+        "type": "ModelSignatureFetchPriority"
+      },
+      "lazy": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Defines whether the model signature is always loaded or only loaded when it is in the viewport (this feature may not work reliably).",
+        "type": "boolean"
+      },
+      "model": {
+        "allowedValues": [
+          "718",
+          "911",
+          "boxster",
+          "cayenne",
+          "cayman",
+          "macan",
+          "panamera",
+          "taycan",
+          "turbo-s",
+          "turbo"
+        ],
+        "defaultValue": "911",
+        "description": "Adapts the model of the component.",
+        "type": "ModelSignatureModel"
+      },
+      "safeZone": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "When set to `true`, then all model signatures are visually aligned with each other. When set to `false` the model signature comes without any safe zone.",
+        "type": "boolean"
+      },
+      "size": {
+        "allowedValues": [
+          "small",
+          "inherit"
+        ],
+        "defaultValue": "small",
+        "description": "Adapts the size of the component. When set to `inherit` a CSS `width` or `height` needs to be defined on the host but not both.",
+        "type": "ModelSignatureSize"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts color depending on theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for an img or video tag when using the model-signature as a mask."
+      }
+    },
+    "styling": "jss"
+  }
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Access Request</title>
+  <script type="module" src="node_modules/@porsche-design-system/components-js/index.js"></script>
+</head>
+
+<body>
+  <script type="module" src="/src/main.js"></script>
+  <div id="app" class="container">
+    <div class="content">
+      <div>
+        <p-heading>Application Access Request</p-heading>
+      </div>
+      <div>
+        <p-inline-notification heading="An application is requesting access"
+          type="info" dismiss-button="false"></p-inline-notification>
+      </div>
+      <div>
+        <p-table>
+          <p-table-head>
+            <p-table-head-row>
+              <p-table-head-cell>Name</p-table-head-cell>
+              <p-table-head-cell>Value</p-table-head-cell>
+            </p-table-head-row>
+          </p-table-head>
+          <p-table-body>
+            <p-table-row>
+              <p-table-cell>Application Name</p-table-cell>
+              <p-table-cell><code>{{ params.client.client_name }}</code></p-table-cell>
+            </p-table-row>
+            <p-table-row>
+              <p-table-cell>Application Website</p-table-cell>
+              <p-table-cell><code>{{ params.client.client_uri }}</code></p-table-cell>
+            </p-table-row>
+            <p-table-row>
+              <p-table-cell>Client ID</p-table-cell>
+              <p-table-cell><code>{{ params.client.client_id }}</code></p-table-cell>
+            </p-table-row>
+            <p-table-row>
+              <p-table-cell>Redirect URI</p-table-cell>
+              <p-table-cell><code>{{ params.redirect_uri }}</code></p-table-cell>
+            </p-table-row>
+          </p-table-body>
+        </p-table>
+      </div>
+      <div>
+        <form method="post" action="/consent">
+          <input type="hidden" name="client_id" value="{{ params.client_id }}" />
+          <input type="hidden" name="redirect_uri" value="{{ params.redirect_uri }}" />
+          <input type="hidden" name="response_type" value="code" />
+          <input type="hidden" name="code_challenge" value="{{ params.code_challenge }}" />
+          <input type="hidden" name="code_challenge_method" value="S256" />
+          <input type="hidden" name="scope" value="{{ params.scope }}" />
+          <input type="hidden" name="state" value="{{ params.state }}" />
+          <p-button-group>
+            <p-button type="submit" variant="primary" name="consent_action" value="approve">Approve</p-button>
+            <p-button type="submit" variant="secondary" name="consent_action" value="deny">Deny</p-button>
+          </p-button-group>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

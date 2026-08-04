@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - 'deliverable-electron/**'
+      - '.github/workflows/ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'deliverable-electron/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  build:
+    name: Type-check & build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+    defaults:
+      run:
+        working-directory: deliverable-electron
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: deliverable-electron/package-lock.json
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build   # Produces `out/` but doesn't create the installer.

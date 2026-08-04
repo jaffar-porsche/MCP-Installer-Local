@@ -1,0 +1,88 @@
+{
+  "name": "Radio Button Wrapper",
+  "id": "p-radio-button-wrapper",
+  "description": "The `p-radio-button-wrapper` component is a styling wrapper for the native HTML input type `radio` form element. The\nsingular property of a Radio Button makes it distinct from a checkbox, which allows more than one (or no) item to be\nselected and for the unselected state to be restored.",
+  "code": "<p-radio-button-wrapper label=\"Some label\" hide-label=\"Some content\">\n  <input type=\"radio\" name=\"some-name-1\" />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\" hide-label=\"Some content\">\n  <input type=\"radio\" name=\"some-name-1\" />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\">\n  <input type=\"radio\" name=\"some-name-2\" required />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\">\n  <input type=\"radio\" name=\"some-name-2\" required checked />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\">\n  <input type=\"radio\" name=\"some-name-3\" disabled />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\">\n  <input type=\"radio\" name=\"some-name-3\" disabled checked />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\" loading=\"true\">\n  <input type=\"radio\" name=\"some-name-4\" />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\">\n  <input type=\"radio\" name=\"some-name-4\" checked />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\" state=\"Some content\">\n  <input type=\"radio\" name=\"some-name-5\" />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper label=\"Some label\" state=\"Some content\"Some content>\n  <input type=\"radio\" name=\"some-name-5\" />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper state=\"error\">\n  <span slot=\"label\" id=\"some-label-id-1\">Some label with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n  <input type=\"radio\" name=\"some-name-6\" aria-labelledby=\"some-label-id-1\" />\n</p-radio-button-wrapper>\n<p-radio-button-wrapper state=\"error\">\n  <span slot=\"label\" id=\"some-label-id-2\">Some label with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n  <input type=\"radio\" name=\"some-name-6\" aria-labelledby=\"some-label-id-2\" aria-describedby=\"some-message-id\" />\n  <span slot=\"message\" id=\"some-message-id\">Some error message with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n</p-radio-button-wrapper>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": true,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-spinner",
+      "p-icon"
+    ],
+    "observedAttributes": [
+      "disabled",
+      "required"
+    ],
+    "propsMeta": {
+      "hideLabel": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Show or hide label. For better accessibility it's recommended to show the label.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "label": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The label text.",
+        "type": "string"
+      },
+      "loading": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "@experimental Disables the radio button and shows a loading indicator.",
+        "isExperimental": true,
+        "type": "boolean"
+      },
+      "message": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The message styled depending on validation state.",
+        "type": "string"
+      },
+      "state": {
+        "allowedValues": [
+          "none",
+          "error",
+          "success"
+        ],
+        "defaultValue": "none",
+        "description": "The validation state.",
+        "type": "RadioButtonWrapperState"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "requiredChild": "input type=radio",
+    "requiredChildSelector": "input[type=radio]",
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the input."
+      },
+      "label": {
+        "description": "Shows a label. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "message": {
+        "description": "Shows a state message. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      }
+    },
+    "styling": "jss"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "manifest-v1",
+  "key": "jira",
+  "display_name": "Jira MCP Server",
+  "server_dir_name": "jira-mcp",
+  "default_port": 8000,
+  "app_module": "mcp_server:app",
+  "health_path": "/health/pat",
+  "myself_path": "/rest/api/2/myself",
+  "base_url_env": "JIRA_BASE_URL",
+  "token_env": "JIRA_PAT",
+  "fields": [
+    {
+      "key": "JIRA_BASE_URL",
+      "label": "Jira base URL",
+      "category": "Connection",
+      "default": "https://api.skyway.porsche.com/jira",
+      "help_text": "The Jira REST API base URL. Only change for non-Skyway instances.",
+      "validator": "url"
+    },
+    {
+      "key": "JIRA_PAT",
+      "label": "Jira Personal Access Token",
+      "category": "Auth",
+      "secret": true,
+      "required": true,
+      "help_text": "Create/rotate at Skyway Service Desk. Never share this value.",
+      "help_url": "https://skyway.porsche.com/jira/plugins/servlet/desk/portal/1/create/9141",
+      "validator": "pat_shape"
+    },
+    {
+      "key": "CERT_PATH",
+      "label": "Client certificate (.p12)",
+      "category": "Auth",
+      "help_text": "Optional. Only set if you use certificate-based auth."
+    },
+    {
+      "key": "CERT_PASSWORD",
+      "label": "Certificate password",
+      "category": "Auth",
+      "secret": true,
+      "help_text": "Password for the .p12 file, if set."
+    },
+    {
+      "key": "MCP_PORT",
+      "label": "Local server port",
+      "category": "Advanced",
+      "default": "8000",
+      "help_text": "Port the MCP server listens on. Change only if 8000 is in use.",
+      "validator": "port"
+    }
+  ],
+  "include_common": ["proxy", "advanced_transport"]
+}

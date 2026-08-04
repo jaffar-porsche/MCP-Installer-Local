@@ -1,0 +1,113 @@
+{
+  "name": "Tabs",
+  "id": "p-tabs",
+  "description": "The `p-tabs` component makes it easy to explore and switch between different views. You can organize and allow\nnavigation between groups of content that are related and at the same level of hierarchy. The component handles the\ndisplay of content according to the active tab and all accessibility attributes on your tab and tab content.",
+  "code": "<p-tabs-item label=\"Tab Some content\">\n    <p-text>Tab Content Some content</p-text>\n<p-tabs>\nSome content\n</p-tabs>\n<p-tabs size=\"Some content\">\nSome content\n</p-tabs>\n<p-tabs weight=\"Some content\">\nSome content\n</p-tabs>\n<p-tabs gradient-color=\"Some content\">\nSome content\n</p-tabs>\n<p-tabs active-tab-index=\"1\">\nSome content\n</p-tabs>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "isInternallyMutated": true,
+        "props": [
+          "activeTabIndex"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "tabChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when active tab is changed.",
+        "isDeprecated": true,
+        "type": "TabsUpdateEventDetail",
+        "typeDetail": "{ activeTabIndex: number }"
+      },
+      "update": {
+        "description": "Emitted when active tab is changed.",
+        "type": "TabsUpdateEventDetail",
+        "typeDetail": "{ activeTabIndex: number }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-tabs-bar"
+    ],
+    "propsMeta": {
+      "activeTabIndex": {
+        "allowedValues": "number",
+        "defaultValue": 0,
+        "description": "Defines which tab to be visualized as selected (zero-based numbering).",
+        "propOptions": {
+          "mutable": true
+        },
+        "type": "number"
+      },
+      "gradientColor": {
+        "allowedValues": [
+          "background-base",
+          "background-surface"
+        ],
+        "defaultValue": "background-base",
+        "description": "Adapts the background gradient color of prev and next button.",
+        "type": "TabsGradientColor"
+      },
+      "gradientColorScheme": {
+        "allowedValues": [
+          null,
+          "default",
+          "surface"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `gradientColor` instead. Adapts the background gradient color of prev and next button.",
+        "isDeprecated": true,
+        "type": "TabsGradientColorScheme"
+      },
+      "size": {
+        "allowedValues": [
+          "small",
+          "medium"
+        ],
+        "defaultValue": "small",
+        "description": "The text size.",
+        "isBreakpointCustomizable": true,
+        "type": "TabsSize"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color when used on dark background.",
+        "type": "Theme"
+      },
+      "weight": {
+        "allowedValues": [
+          "regular",
+          "semi-bold",
+          "semibold"
+        ],
+        "defaultValue": "regular",
+        "deprecatedValues": [
+          "semibold"
+        ],
+        "description": "The text weight.",
+        "type": "TabsWeight"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the `p-tabs-item` tags."
+      }
+    },
+    "styling": "jss"
+  }
+}

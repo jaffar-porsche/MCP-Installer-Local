@@ -1,0 +1,114 @@
+{
+  "name": "Switch",
+  "id": "p-switch",
+  "description": "The `p-switch` component is a control that is used to quickly switch between two possible states. A switch is only used\nfor these binary actions that occur immediately after the user \u201cflips the switch\u201d. Commonly it is used for \u201con/off\u201d\nstate.",
+  "code": "<p-switch [checked]=\"checked\" (update)=\"onUpdate($event)\">Some label</p-switch>\n<p-switch hide-label=\"Some content\">Some label</p-switch>\n<p-switch hide-label=\"Some content\" checked=\"true\">Some label</p-switch>\n<p-switch align-label=\"Some content\"Some content>Some label</p-switch>\n<p-switch align-label=\"Some content\"Some content checked=\"true\">Some label</p-switch>\n<p-switch disabled=\"true\">Some label</p-switch>\n<p-switch disabled=\"true\" checked=\"true\">Some label</p-switch>\n<p-switch loading=\"true\">Some label</p-switch>\n<p-switch loading=\"true\" checked=\"true\">Some label</p-switch>\n<p-switch compact=\"true\">Some label</p-switch>\n<p-switch compact=\"true\" checked=\"true\">Some label</p-switch>\n<p-switch\n  onclick=\"alert('click')\"\n  onfocus=\"console.log('focus')\"\n  onfocusin=\"console.log('focusin')\"\n  onblur=\"console.log('blur')\"\n  onfocusout=\"console.log('focusout')\"\n>Some label</p-switch>\n<p-switch>Some label</p-switch>\n<p-switch tabindex=\"-1\">Some label</p-switch>\n<p-switch>Some label</p-switch>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "props": [
+          "checked"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "switchChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when checked status is changed.",
+        "isDeprecated": true,
+        "type": "SwitchUpdateEventDetail",
+        "typeDetail": "{ checked: boolean }"
+      },
+      "update": {
+        "description": "Emitted when checked status is changed.",
+        "type": "SwitchUpdateEventDetail",
+        "typeDetail": "{ checked: boolean }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": true,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-spinner"
+    ],
+    "propsMeta": {
+      "alignLabel": {
+        "allowedValues": [
+          "start",
+          "end",
+          "left",
+          "right"
+        ],
+        "defaultValue": "end",
+        "deprecatedValues": [
+          "left",
+          "right"
+        ],
+        "description": "Aligns the label.",
+        "isBreakpointCustomizable": true,
+        "type": "SwitchAlignLabel"
+      },
+      "checked": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Visualize the switch with on/off status.",
+        "type": "boolean"
+      },
+      "compact": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Displays as compact version.",
+        "type": "boolean"
+      },
+      "disabled": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Disables the switch. No events will be triggered while disabled state is active.",
+        "type": "boolean"
+      },
+      "hideLabel": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Show or hide label. For better accessibility it's recommended to show the label.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "loading": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Disables the switch and shows a loading indicator. No events will be triggered while loading state is active.",
+        "type": "boolean"
+      },
+      "stretch": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Stretches the contents to max available space.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the switch color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the label."
+      }
+    },
+    "styling": "jss"
+  }
+}

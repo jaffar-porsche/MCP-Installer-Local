@@ -1,0 +1,96 @@
+{
+    "name": "Heading",
+    "id": "p-heading",
+    "description": "`p-heading` is used to highlight and specify heading styling and hierarchy in documents.",
+    "code": "<p-heading tag=\"h3\" size=\"large\">The quick brown fox jumps over the lazy dog</p-heading>",
+    "properties": {
+        "hasAriaProp": false,
+        "hasElementInternals": false,
+        "hasEvent": false,
+        "hasObserveAttributes": false,
+        "hasObserveChildren": false,
+        "hasSlot": true,
+        "isChunked": true,
+        "isDelegatingFocus": false,
+        "isInternal": false,
+        "isThemeable": true,
+        "propsMeta": {
+          "align": {
+            "allowedValues": [
+              "start",
+              "center",
+              "end",
+              "inherit",
+              "left",
+              "right"
+            ],
+            "defaultValue": "start",
+            "deprecatedValues": [
+              "left",
+              "right"
+            ],
+            "description": "Text alignment of the component.",
+            "type": "HeadingAlign"
+          },
+          "color": {
+            "allowedValues": [
+              "primary",
+              "inherit"
+            ],
+            "defaultValue": "primary",
+            "description": "Basic text color variations depending on theme property.",
+            "type": "HeadingColor"
+          },
+          "ellipsis": {
+            "allowedValues": "boolean",
+            "defaultValue": false,
+            "description": "Adds an ellipsis to a single line of text if it overflows.",
+            "type": "boolean"
+          },
+          "size": {
+            "allowedValues": [
+              "small",
+              "medium",
+              "large",
+              "x-large",
+              "xx-large",
+              "inherit"
+            ],
+            "defaultValue": "xx-large",
+            "description": "Size of the component. Also defines the size for specific breakpoints, like {base: \"small\", l: \"medium\"}. You always need to provide a base value when doing this.",
+            "isBreakpointCustomizable": true,
+            "type": "HeadingSize"
+          },
+          "tag": {
+            "allowedValues": [
+              null,
+              "h1",
+              "h2",
+              "h3",
+              "h4",
+              "h5",
+              "h6"
+            ],
+            "defaultValue": null,
+            "description": "Sets a heading tag, so it fits correctly within the outline of the page.",
+            "type": "HeadingTag"
+          },
+          "theme": {
+            "allowedValues": [
+              "light",
+              "dark",
+              "auto"
+            ],
+            "defaultValue": "light",
+            "description": "Adapts the text color depending on the theme. Has no effect when \"inherit\" is set as color prop.",
+            "type": "Theme"
+          }
+        },
+        "slotsMeta": {
+          "": {
+            "description": "Default slot to render the heading."
+          }
+        },
+        "styling": "jss"
+      }
+    }

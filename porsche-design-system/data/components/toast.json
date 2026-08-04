@@ -1,0 +1,38 @@
+{
+  "name": "Toast",
+  "id": "p-toast",
+  "description": "The `p-toast` component manages both the queue and display of toast messages.  \nTherefore, you can only have a single instance of this component within in your application and its messages are\nrendered on the `#top-layer` which ensures the element to be on top of the page, independent of where `p-toast` is\nplaced in the DOM hierarchy (z-index is not relevant anymore and won't have any effect).",
+  "code": "<p-toast ref=\"toast\" :theme=\"theme\" :style=\"`--p-toast-position-bottom: Some contentpx`\"></p-toast>\n<p-toast style=\"--p-toast-position-bottom: Some contentpx\"></p-toast>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": false,
+    "hostAttributes": {
+      "aria-live": "polite",
+      "role": "status"
+    },
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-toast-item"
+    ],
+    "propsMeta": {
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the toast color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "styling": "jss"
+  }
+}

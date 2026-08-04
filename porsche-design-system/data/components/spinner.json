@@ -1,0 +1,52 @@
+{
+  "name": "Spinner",
+  "id": "p-spinner",
+  "description": "There are unavoidable moments when the user has to wait for more than 1 second (for example due to technical processing\nof information or requests). These moments should be bridged with a good user feedback in order to not leave the user\nuncertain about what's currently happening - also to avoid a high bounce rate and to obtain a positive impression of\nyour website or application.",
+  "code": "",
+  "properties": {
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": false,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "propsMeta": {
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "SpinnerAriaAttribute"
+      },
+      "size": {
+        "allowedValues": [
+          "small",
+          "medium",
+          "large",
+          "inherit"
+        ],
+        "defaultValue": "small",
+        "description": "Size of the spinner.",
+        "isBreakpointCustomizable": true,
+        "type": "SpinnerSize"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the spinner color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "styling": "jss"
+  }
+}

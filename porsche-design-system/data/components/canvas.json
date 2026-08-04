@@ -1,0 +1,90 @@
+{
+  "name": "Canvas",
+  "id": "p-canvas",
+  "description": "The `p-canvas` is an experimental layout component for productive web applications.",
+  "code": "",
+  "properties": {
+    "eventsMeta": {
+      "sidebarEndDismiss": {
+        "description": "Emitted when the sidebar end requests to be dismissed.",
+        "type": "void"
+      },
+      "sidebarStartUpdate": {
+        "description": "Emitted when the sidebar start requests to be opened or dismissed.",
+        "type": "CanvasSidebarStartUpdateEventDetail",
+        "typeDetail": "{ open: boolean }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isExperimental": true,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-button",
+      "p-crest",
+      "p-wordmark",
+      "p-flyout"
+    ],
+    "propsMeta": {
+      "sidebarEndOpen": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Open the sidebar on the end side",
+        "type": "boolean"
+      },
+      "sidebarStartOpen": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Open the sidebar on the start side",
+        "type": "boolean"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the main content."
+      },
+      "background": {
+        "description": "Can be used to pass a sticky media element <img/> or <video/> placed underneath the main content."
+      },
+      "footer": {
+        "description": "Renders a **sticky** footer section underneath the main content."
+      },
+      "header-end": {
+        "description": "Renders a **sticky** header section above the content area on the **end** side (**right** in **LTR** mode / **left** in **RTL** mode)."
+      },
+      "header-start": {
+        "description": "Renders a **sticky** header section above the content area on the **start** side (**left** in **LTR** mode / **right** in **RTL** mode)."
+      },
+      "sidebar-end": {
+        "description": "Renders a sidebar area on the **end** side (**right** in **LTR** mode / **left** in **RTL** mode). On mobile view it transforms into a flyout."
+      },
+      "sidebar-end-header": {
+        "description": "Renders in the header section of the sidebar end area."
+      },
+      "sidebar-start": {
+        "description": "Renders a sidebar area on the **start** side (**left** in **LTR** mode / **right** in **RTL** mode). On mobile view it transforms into a flyout."
+      },
+      "title": {
+        "description": "Renders the application name in the header section of the sidebar start area."
+      }
+    },
+    "styling": "jss"
+  }
+}

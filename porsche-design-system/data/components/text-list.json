@@ -1,0 +1,68 @@
+{
+  "name": "Text List",
+  "id": "p-text-list",
+  "description": "The `p-text-list` component is used to display listed data in form of an unordered or ordered list. A list depends on\ntwo parts (like any native HTML list): A list wrapper which defines the type of the list (unordered or ordered) and the\nlist items. Nesting is also provided and follows the same nesting rules like native HTML lists. For more complex data\nyou should consider the use of a data table.",
+  "code": "<p-text-listSome content>\n  <p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list-item>The quick brown fox jumps over the lazy dog\n    <p-text-listSome content>\n      <p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list type=\"numbered\">\n  <p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list-item>The quick brown fox jumps over the lazy dog\n    <p-text-list>\n      <p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>\n<p-text-list-item>The quick brown fox jumps over the lazy dog</p-text-list-item>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "propsMeta": {
+      "listType": {
+        "allowedValues": [
+          null,
+          "unordered",
+          "ordered"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `type` instead. The type of the list.",
+        "isDeprecated": true,
+        "type": "TextListListType"
+      },
+      "orderType": {
+        "allowedValues": [
+          null,
+          "numbered",
+          "alphabetically"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `type` instead. The list style type of ordered list. Only has effect when list type is set to 'ordered'.",
+        "isDeprecated": true,
+        "type": "TextListOrderType"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the text color depending on the theme.",
+        "type": "Theme"
+      },
+      "type": {
+        "allowedValues": [
+          "unordered",
+          "numbered",
+          "alphabetically"
+        ],
+        "defaultValue": "unordered",
+        "description": "The list style type.",
+        "type": "TextListType"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the `p-text-list-item` tags or nested `p-text-list` tags."
+      }
+    },
+    "styling": "jss"
+  }
+}

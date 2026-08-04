@@ -1,0 +1,88 @@
+appId: com.porsche-engineering.mcporsche
+productName: MCPorsche
+copyright: © Porsche Engineering — PEG-IT
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**
+  - resources/**
+  - '!**/*.map'
+  - '!**/{README.md,CHANGELOG.md,LICENSE,TODO,test,tests,__tests__,__mocks__,coverage}'
+extraResources:
+  - from: resources/manifests
+    to: manifests
+    filter: ['**/*.json']
+
+# Ship Python server sources as siblings of MCPorsche.exe so users see them
+# in the extracted folder. venv/ and .env live in the same folder — the whole
+# thing is portable and self-contained.
+extraFiles:
+  - from: ../jira-mcp
+    to: mcp-servers/jira-mcp
+    filter:
+      - "**/*"
+      - "!venv/**"
+      - "!__pycache__/**"
+      - "!**/__pycache__/**"
+      - "!.pytest_cache/**"
+      - "!.env"
+      - "!tests/**"
+      - "!examples/**"
+      - "!*.log"
+      - "!Dockerfile"
+      - "!*.md"
+  - from: ../confluence-mcp
+    to: mcp-servers/confluence-mcp
+    filter:
+      - "**/*"
+      - "!venv/**"
+      - "!__pycache__/**"
+      - "!**/__pycache__/**"
+      - "!.pytest_cache/**"
+      - "!.env"
+      - "!tests/**"
+      - "!*.log"
+      - "!Dockerfile"
+      - "!*.md"
+  - from: ../gitlab-mcp
+    to: mcp-servers/gitlab-mcp
+    filter:
+      - "**/*"
+      - "!venv/**"
+      - "!__pycache__/**"
+      - "!**/__pycache__/**"
+      - "!.pytest_cache/**"
+      - "!.env"
+      - "!tests/**"
+      - "!*.log"
+      - "!Dockerfile"
+      - "!*.md"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.ico
+  publisherName: Porsche Engineering
+  signAndEditExecutable: false
+
+nsis:
+  # oneClick + no admin so the same installer works on any user's laptop.
+  # extraFiles put mcp-servers next to MCPorsche.exe in the install folder.
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: MCPorsche
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+  differentialPackage: true
+
+publish:
+  provider: github
+  owner: porsche-engineering
+  repo: mcporsche
+  releaseType: release
+  channel: latest

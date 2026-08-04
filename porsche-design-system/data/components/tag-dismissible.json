@@ -1,0 +1,67 @@
+{
+  "name": "Tag Dismissible",
+  "id": "p-tag-dismissible",
+  "description": "`p-tag-dismissible` is used in contexts where the user can actively remove a tag. It is often seen in filtering.",
+  "code": "<p-tag-dismissible color=\"Some content\">Color Some content</p-tag-dismissible>\n<p-tag-dismissible label=\"Some label\">Some content</p-tag-dismissible>\n<p-tag-dismissible label=\"Cars\" aria=\"{ 'aria-label': 'Remove filter used cars' }\">Used cars</p-tag-dismissible>",
+  "properties": {
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": true,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-icon"
+    ],
+    "propsMeta": {
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "TagDismissibleAriaAttribute"
+      },
+      "color": {
+        "allowedValues": [
+          "background-base",
+          "background-surface",
+          "background-default"
+        ],
+        "defaultValue": "background-surface",
+        "deprecatedValues": [
+          "background-default"
+        ],
+        "description": "Background color variations",
+        "type": "TagDismissibleColor"
+      },
+      "label": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "The label text.",
+        "type": "string"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color when used on dark background.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the tag content."
+      }
+    },
+    "styling": "jss"
+  }
+}

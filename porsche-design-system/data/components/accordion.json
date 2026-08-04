@@ -1,0 +1,126 @@
+{
+  "name": "Accordion",
+  "id": "p-accordion",
+  "description": "The `p-accordion` is a component that reveals or hides associated sections of content.  \nAccordions are flexible in the context and can include other components of the Porsche Design System.",
+  "code": "<p-text>\n    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,\n    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.\n  </p-text>\n<p-accordion heading=\"Some Heading\" heading-tag=\"h3\">\n  Some content\n</p-accordion>\n<p-accordion heading=\"Some Heading\" heading-tag=\"h3\">\n  Some content\n</p-accordion>\n<p-accordion heading=\"Some Heading\" heading-tag=\"h3\" size=\"Some content\">\n  Some content\n</p-accordion>\n<p-accordion heading=\"Some Heading\" heading-tag=\"h3\" size=\"Some content\">\n  Some content\n</p-accordion>\n<p-accordion heading-tag=\"h3\">\n  <span slot=\"heading\">Some slotted heading</span>\n  Some content\n</p-accordion>\n<p-accordion heading-tag=\"h3\">\n  <span slot=\"heading\">Some slotted heading</span>\n  Some content\n</p-accordion>\n<p-accordion heading=\"Some Heading\" heading-tag=\"h3\" compact=\"true\">\n    <p-link-pure href=\"https://porsche.com\" icon=\"none\">Some label</p-link-pure>\n<p-accordion heading=\"Some Heading\" heading-tag=\"h3\" compact=\"true\">\n    <p-link-pure href=\"https://porsche.com\" icon=\"none\">Some label</p-link-pure>\n<p-accordion heading-tag=\"h3\" compact=\"true\">\n    <span slot=\"heading\" style=\"padding: 1rem;\">Some slotted heading</span>\n    <p-link-pure href=\"https://porsche.com\" icon=\"none\" style=\"padding: 1rem;\">Some label</p-link-pure>\n<p-accordion heading-tag=\"h3\" compact=\"true\">\n    <span slot=\"heading\" style=\"padding: 1rem;\">Some slotted heading</span>\n    <p-link-pure href=\"https://porsche.com\" icon=\"none\" style=\"padding: 1rem;\">Some label</p-link-pure>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "props": [
+          "open"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "accordionChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when accordion state is changed.",
+        "isDeprecated": true,
+        "type": "AccordionUpdateEventDetail",
+        "typeDetail": "{ open: boolean }"
+      },
+      "update": {
+        "description": "Emitted when accordion state is changed.",
+        "type": "AccordionUpdateEventDetail",
+        "typeDetail": "{ open: boolean }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-icon"
+    ],
+    "propsMeta": {
+      "compact": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "Displays the Accordion as compact version with thinner border and smaller paddings.",
+        "type": "boolean"
+      },
+      "heading": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Defines the heading used in accordion.",
+        "type": "string"
+      },
+      "headingTag": {
+        "allowedValues": [
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6"
+        ],
+        "defaultValue": "h2",
+        "description": "Sets a heading tag, so it fits correctly within the outline of the page.",
+        "type": "AccordionHeadingTag"
+      },
+      "open": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "Defines if accordion is open.",
+        "type": "boolean"
+      },
+      "size": {
+        "allowedValues": [
+          "small",
+          "medium"
+        ],
+        "defaultValue": "small",
+        "description": "The text size.",
+        "isBreakpointCustomizable": true,
+        "type": "AccordionSize"
+      },
+      "sticky": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "@experimental Sticks the Accordion heading at the top, fixed while scrolling",
+        "isExperimental": true,
+        "type": "boolean"
+      },
+      "tag": {
+        "allowedValues": [
+          null,
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated, will be removed with next major release, use `heading-tag` instead. Sets a heading tag, so it fits correctly within the outline of the page.",
+        "isDeprecated": true,
+        "type": "AccordionTag"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color when used on dark background.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the main content"
+      },
+      "heading": {
+        "description": "Defines the heading used in the accordion. Can be used alternatively to the heading prop. Please **refrain** from using any other than text content as slotted markup."
+      }
+    },
+    "styling": "jss"
+  }
+}

@@ -1,0 +1,136 @@
+{
+    "name": "Text",
+    "id": "p-text",
+    "description": "`p-text` is used to specify paragraph styling in documents.",
+    "code": "<p-text size=\"small\">The quick brown fox jumps over the lazy dog</p-text>\n<p-text size=\"{ base: 'small', l: 'medium' }\">The quick brown fox jumps over the lazy dog</p-text>\n<p-text color=\"primary\">The quick brown fox jumps over the lazy dog</p-text>",
+    "properties": {
+        "hasAriaProp": false,
+        "hasElementInternals": false,
+        "hasEvent": false,
+        "hasObserveAttributes": false,
+        "hasObserveChildren": false,
+        "hasSlot": true,
+        "isChunked": true,
+        "isDelegatingFocus": false,
+        "isInternal": false,
+        "isThemeable": true,
+        "propsMeta": {
+          "align": {
+            "allowedValues": [
+              "start",
+              "center",
+              "end",
+              "inherit",
+              "left",
+              "right"
+            ],
+            "defaultValue": "start",
+            "deprecatedValues": [
+              "left",
+              "right"
+            ],
+            "description": "Text alignment of the component.",
+            "type": "TextAlign"
+          },
+          "color": {
+            "allowedValues": [
+              "primary",
+              "contrast-low",
+              "contrast-medium",
+              "contrast-high",
+              "notification-success",
+              "notification-warning",
+              "notification-error",
+              "notification-info",
+              "inherit",
+              "brand",
+              "default",
+              "neutral-contrast-low",
+              "neutral-contrast-medium",
+              "neutral-contrast-high",
+              "notification-neutral"
+            ],
+            "defaultValue": "primary",
+            "deprecatedValues": [
+              "brand",
+              "default",
+              "neutral-contrast-low",
+              "neutral-contrast-medium",
+              "neutral-contrast-high",
+              "notification-neutral"
+            ],
+            "description": "Basic text color variations depending on theme property.",
+            "type": "TextColor"
+          },
+          "ellipsis": {
+            "allowedValues": "boolean",
+            "defaultValue": false,
+            "description": "Adds an ellipsis to a single line of text if it overflows.",
+            "type": "boolean"
+          },
+          "size": {
+            "allowedValues": [
+              "xx-small",
+              "x-small",
+              "small",
+              "medium",
+              "large",
+              "x-large",
+              "inherit"
+            ],
+            "defaultValue": "small",
+            "description": "Size of the text. Also defines the size for specific breakpoints, like {base: \"small\", l: \"medium\"}. You always need to provide a base value when doing this.",
+            "isBreakpointCustomizable": true,
+            "type": "TextSize"
+          },
+          "tag": {
+            "allowedValues": [
+              "p",
+              "span",
+              "div",
+              "address",
+              "blockquote",
+              "figcaption",
+              "cite",
+              "time",
+              "legend"
+            ],
+            "defaultValue": "p",
+            "description": "Sets a custom HTML tag depending on the usage of the text component.",
+            "type": "TextTag"
+          },
+          "theme": {
+            "allowedValues": [
+              "light",
+              "dark",
+              "auto"
+            ],
+            "defaultValue": "light",
+            "description": "Adapts the text color depending on the theme. Has no effect when \"inherit\" is set as color prop.",
+            "type": "Theme"
+          },
+          "weight": {
+            "allowedValues": [
+              "regular",
+              "semi-bold",
+              "bold",
+              "thin",
+              "semibold"
+            ],
+            "defaultValue": "regular",
+            "deprecatedValues": [
+              "thin",
+              "semibold"
+            ],
+            "description": "The weight of the text.",
+            "type": "TextWeight"
+          }
+        },
+        "slotsMeta": {
+          "": {
+            "description": "Default slot for the text to render."
+          }
+        },
+        "styling": "jss"
+      }
+  }

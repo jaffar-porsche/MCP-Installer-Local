@@ -1,0 +1,92 @@
+name: Docker Images
+
+on:
+  push:
+    tags:
+      - 'jira-mcp-v*'
+      - 'confluence-mcp-v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/ai4it-mcporsche
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: jira-mcp
+            context: .
+            dockerfile: ./jira-mcp/Dockerfile
+            tag_prefix: jira-mcp-v
+          - name: confluence-mcp
+            context: .
+            dockerfile: ./confluence-mcp/Dockerfile
+            tag_prefix: confluence-mcp-v
+
+    steps:
+      - name: Determine build mode
+        id: mode
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
+            TAG="${{ github.ref_name }}"
+            PREFIX="${{ matrix.tag_prefix }}"
+            if [[ "$TAG" == ${PREFIX}* ]]; then
+              VERSION="${TAG#${PREFIX}}"
+              echo "version=${VERSION}" >> $GITHUB_OUTPUT
+              echo "should_build=true" >> $GITHUB_OUTPUT
+              echo "should_push=true" >> $GITHUB_OUTPUT
+            else
+              echo "should_build=false" >> $GITHUB_OUTPUT
+              echo "should_push=false" >> $GITHUB_OUTPUT
+            fi
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "version=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
+            echo "should_build=true" >> $GITHUB_OUTPUT
+            echo "should_push=false" >> $GITHUB_OUTPUT
+          else
+            SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+            echo "version=manual-${SHORT_SHA}" >> $GITHUB_OUTPUT
+            echo "should_build=true" >> $GITHUB_OUTPUT
+            echo "should_push=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout repository
+        if: steps.mode.outputs.should_build == 'true'
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        if: steps.mode.outputs.should_push == 'true'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        if: steps.mode.outputs.should_build == 'true'
+        run: |
+          docker build \
+            -t ${{ env.IMAGE_PREFIX }}/${{ matrix.name }}:${{ steps.mode.outputs.version }} \
+            -f ${{ matrix.dockerfile }} \
+            ${{ matrix.context }}
+
+      - name: Tag and push Docker image
+        if: steps.mode.outputs.should_push == 'true'
+        run: |
+          IMAGE="${{ env.IMAGE_PREFIX }}/${{ matrix.name }}"
+          VERSION="${{ steps.mode.outputs.version }}"
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+
+          docker tag "${IMAGE}:${VERSION}" "${IMAGE}:latest"
+          docker tag "${IMAGE}:${VERSION}" "${IMAGE}:${SHORT_SHA}"
+
+          docker push "${IMAGE}:${VERSION}"
+          docker push "${IMAGE}:latest"
+          docker push "${IMAGE}:${SHORT_SHA}"

@@ -1,0 +1,197 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <p-crest></p-crest>
+      <p-wordmark></p-wordmark>
+      <p-link icon="user-filled" class="login-link">Login</p-link>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <aside class="sidebar">
+      <div class="sidebar-content">
+
+        <p-link-pure icon="car">Models</p-link-pure>
+        <p-link-pure icon="wrench">Services</p-link-pure>
+        <p-link-pure icon="information">About</p-link-pure>
+
+        <p-divider></p-divider>
+
+        <p-accordion [open]="isAccordionOpen('Latest News')" heading="Latest News"
+          (update)="onUpdate($event, 'Latest News')">
+          <p-text>Discover the latest updates from Porsche.</p-text>
+        </p-accordion>
+        <p-accordion [open]="isAccordionOpen('Events')" heading="Events" (update)="onUpdate($event, 'Events')">
+          <p-text>Upcoming Porsche events and experiences.</p-text>
+        </p-accordion>
+      </div>
+    </aside>
+
+    <p-content-wrapper>
+
+      <!-- Link Tile Section-->
+      <div>
+        <div class="link-tiles-grid">
+          <p-link-tile label="Performance" description="Explore Porsche performance" model="718">
+            <p-tag slot="header" color="background-frosted" [compact]="true">
+              Featured
+            </p-tag>
+            <img src="https://designsystem.porsche.com/v3/assets/porsche-992-carrera-s.jpg" alt="Performance" class="accordion-image">
+          </p-link-tile>
+
+          <p-link-tile label="Design" description="Iconic Porsche design language">
+            <p-tag slot="header" color="background-frosted" [compact]="true">
+              New
+            </p-tag>
+            <img src="https://designsystem.porsche.com/v3/assets/porsche-718-gts.jpg" alt="Design Language" class="accordion-image">
+          </p-link-tile>
+
+          <p-link-tile label="Innovation" description="Cutting-edge technology">
+            <p-tag slot="header" color="background-frosted" [compact]="true">
+              Trending
+            </p-tag>
+            <img src="https://designsystem.porsche.com/v3/assets/lights.jpg" alt="Technology" class="accordion-image">
+          </p-link-tile>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="section">
+        <p-heading>Component Showcase</p-heading>
+        <p-tabs>
+          <p-tabs-item label="Carousel" active="true">
+            <div class="section">
+              <p-carousel>
+                <div class="carousel-slide">
+                  <div class="carousel-content">
+                    <!-- <p-heading>911</p-heading> -->
+                    <p-model-signature model="911"></p-model-signature>
+                    <p-text>Timeless Machine</p-text>
+      
+                  </div>
+                </div>
+                <div class="carousel-slide">
+                  <div class="carousel-content">
+                    <!-- <p-heading>Taycan</p-heading> -->
+                    <p-model-signature model="taycan"></p-model-signature>
+                    <p-text>Soul, electrified</p-text>
+      
+                  </div>
+                </div>
+                <div class="carousel-slide">
+                  <div class="carousel-content">
+                    <!-- <p-heading>Cayenne</p-heading> -->
+                    <p-model-signature model="cayenne"></p-model-signature>
+                    <p-text>Sportscar Together</p-text>
+      
+                  </div>
+                </div>
+              </p-carousel>
+            </div>
+          </p-tabs-item>
+          <p-tabs-item label="Accordion">
+            <div class="accordion-content">
+
+              <!-- Accordion Section -->
+              <div class="section">
+                <p-heading>Accordion Component</p-heading>
+                <p-accordion [open]="isAccordionOpen('Performance')" (update)="onUpdate($event, 'Performance')"
+                  heading="Performance">
+                  <p-text>Porsche vehicles are known for their exceptional performance capabilities, combining power,
+                    precision, and handling.</p-text>
+                  
+                </p-accordion>
+                <p-accordion [open]="isAccordionOpen('Design')" (update)="onUpdate($event, 'Design')" heading="Design">
+                  <p-text>Iconic design language that balances form and function, with distinctive features like the
+                    sloping roofline.</p-text>
+                </p-accordion>
+                <p-accordion [open]="isAccordionOpen('Innovation')" (update)="onUpdate($event, 'Innovation')"
+                  heading="Innovation">
+                  <p-text>Cutting-edge technology and engineering solutions that push the boundaries of automotive
+                    excellence.</p-text>
+                </p-accordion>
+              </div>
+
+            </div>
+          </p-tabs-item>
+          <p-tabs-item label="Tags">
+            <!-- Tag Section -->
+            <div class="section">
+              <p-heading>Tags</p-heading>
+              <div class="tags-container">
+                <p-tag>Performance</p-tag>
+                <p-tag>Design</p-tag>
+                <p-tag>Innovation</p-tag>
+                <p-tag>Luxury</p-tag>
+                <p-tag>Heritage</p-tag>
+                <p-tag-dismissible>Customizable</p-tag-dismissible>
+              </div>
+            </div>
+          </p-tabs-item>
+          <p-tabs-item label="Text">
+            <!-- Text List Section -->
+            <div class="section">
+              <p-heading>Text List</p-heading>
+              <p-text-list>
+                <p-text-list-item>Exceptional driving dynamics</p-text-list-item>
+                <p-text-list-item>Premium materials and craftsmanship</p-text-list-item>
+                <p-text-list-item>Advanced driver assistance systems</p-text-list-item>
+                <p-text-list-item>Cutting-edge infotainment technology</p-text-list-item>
+              </p-text-list>
+            </div>
+          </p-tabs-item>
+          <p-tabs-item label="Table">
+            <!-- Table Section -->
+            <div class="section">
+              <p-heading>Model Comparison</p-heading>
+              <p-table>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>Power</th>
+                      <th>0-100 km/h</th>
+                      <th>Top Speed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>911 Carrera</td>
+                      <td>385 PS</td>
+                      <td>4.2 s</td>
+                      <td>293 km/h</td>
+                    </tr>
+                    <tr>
+                      <td>Taycan</td>
+                      <td>680 PS</td>
+                      <td>3.2 s</td>
+                      <td>260 km/h</td>
+                    </tr>
+                    <tr>
+                      <td>Cayenne</td>
+                      <td>340 PS</td>
+                      <td>6.2 s</td>
+                      <td>245 km/h</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </p-table>
+            </div>
+          </p-tabs-item>
+        </p-tabs>
+      </div>
+    </p-content-wrapper>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p-content-wrapper>
+      <p-divider></p-divider>
+      <p-text>© 2025 Porsche Design System Demo</p-text>
+    </p-content-wrapper>
+  </footer>
+</div>
+
+<router-outlet></router-outlet>

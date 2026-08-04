@@ -1,0 +1,118 @@
+{
+  "name": "Flyout",
+  "id": "p-flyout",
+  "description": "The `p-flyout` is a overlay from the left or right side of the screen. It is commonly used as a temporary workspace that\nallows users to complete tasks without navigating to a new page or as a mobile navigation.",
+  "code": "<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\" :theme=\"theme\">Open Flyout</p-button>\n<p-flyout open=\"false\" aria=\"{ 'aria-label': 'Some Heading' }\">\n        <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some Heading</p-heading>\n<p-button-group slot=\"footer\">\n          <p-button>Proceed</p-button>\n<p-button type=\"button\" variant=\"secondary\">Cancel</p-button>\n<p-text slot=\"sub-footer\">Some additional Sub-Footer</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\" :theme=\"theme\">Open Flyout</p-button>\n<p-flyout open=\"false\" aria=\"{ 'aria-label': 'Some Heading' }\" :theme=\"theme\">\n    <p-heading slot=\"header\" size=\"large\" tag=\"h2\" :theme=\"theme\">Some Heading</p-heading>\n<p-checkbox name=\"some-checkbox\" label=\"Some Label\" :theme=\"theme\"></p-checkbox>\n<p-textarea name=\"some-textarea\" label=\"Some Label\" :theme=\"theme\"></p-textarea>\n<p-button-group slot=\"footer\" :theme=\"theme\">\n      <p-button type=\"submit\" form=\"some-form\" :theme=\"theme\">Submit</p-button>\n<p-button type=\"reset\" variant=\"secondary\" form=\"some-form\" :theme=\"theme\">Reset</p-button>\n<p-text slot=\"sub-footer\" :theme=\"theme\" v-html=\"'Last submitted data:<br/><br/> ' + lastSubmittedData\"></p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Flyout</p-button>\n<p-flyout disable-backdrop-click=\"true\" open=\"false\" aria=\"{ 'aria-label': 'Some Heading' }\">\n  <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Flyout</p-button>\n<p-flyout position=\"Some content\" aria=\"{ 'aria-label': 'Some Heading' }\" open=\"false\">\n  <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Flyout</p-button>\n<p-flyout open=\"false\" aria=\"{ 'aria-label': 'Some Heading' }\">\n  <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some Heading</p-heading>\n<p-text>Some Content Begin</p-text>\n<p-text>Some Content End</p-text>\n<p-button-group slot=\"footer\">\n    <p-button type=\"button\">Proceed</p-button>\n<p-button type=\"button\" variant=\"secondary\">Cancel</p-button>\n<p-text slot=\"sub-footer\">Some additional Sub-Footer</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Flyout</p-button>\n<p-flyout>\n  <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some Heading</p-heading>\n<p-text>Some Content Begin</p-text>\n<p-text>Some Content End</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Flyout</p-button>\n<p-flyout footer-behavior=\"Some content\" aria=\"{ 'aria-label': 'Some Heading' }\" open=\"false\">\n  <p-text>Some Content</p-text>\n<p-button-group slot=\"footer\">\n    <p-button type=\"button\">Proceed</p-button>\n<p-button type=\"button\" variant=\"secondary\">Cancel</p-button>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Flyout</p-button>\n<p-flyout open=\"false\" aria=\"{ 'aria-label': 'Some Heading' }\" style=\"--p-flyout-width: Some content; --p-flyout-max-width: Some content;\">\n  <p-text>Some content</p-text>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "dismiss",
+        "props": [
+          "open"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "dismiss": {
+        "description": "Emitted when the component requests to be dismissed.",
+        "type": "void"
+      },
+      "motionHiddenEnd": {
+        "description": "Emitted when the flyout is closed and the transition is finished.",
+        "type": "FlyoutMotionHiddenEndEventDetail",
+        "typeDetail": "TransitionEvent"
+      },
+      "motionVisibleEnd": {
+        "description": "Emitted when the flyout is opened and the transition is finished.",
+        "type": "FlyoutMotionVisibleEndEventDetail",
+        "typeDetail": "TransitionEvent"
+      }
+    },
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": true,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-button"
+    ],
+    "propsMeta": {
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "FlyoutAriaAttribute"
+      },
+      "disableBackdropClick": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true, the flyout will not be closable via backdrop click.",
+        "type": "boolean"
+      },
+      "footerBehavior": {
+        "allowedValues": [
+          "sticky",
+          "fixed"
+        ],
+        "defaultValue": "sticky",
+        "description": "Determines the footer's position behavior. When set to \"fixed\", the flyout content stretches to fill the full height, keeping the footer permanently at the bottom. When set to \"sticky\", the footer flows beneath the content and only becomes fixed if the content overflows.",
+        "type": "FlyoutFooterBehavior"
+      },
+      "open": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true, the flyout is open.",
+        "isRequired": true,
+        "type": "boolean"
+      },
+      "position": {
+        "allowedValues": [
+          "start",
+          "end",
+          "left",
+          "right"
+        ],
+        "defaultValue": "end",
+        "deprecatedValues": [
+          "left",
+          "right"
+        ],
+        "description": "The position of the flyout",
+        "type": "FlyoutPosition"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the flyout color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the main content."
+      },
+      "footer": {
+        "description": "Shows a sticky footer section, flowing under the content area when scrollable."
+      },
+      "header": {
+        "description": "Renders a sticky header section above the content area."
+      },
+      "sub-footer": {
+        "description": "Shows a sub-footer section to display additional information below the footer. This slot is ideal for less critical content, such as legal information or FAQs, which provides further details to the user. It appears when scrolling to the end of the flyout or when there is available space to accommodate the content."
+      }
+    },
+    "styling": "jss"
+  }
+}

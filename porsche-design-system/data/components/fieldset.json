@@ -1,0 +1,82 @@
+{
+  "name": "Fieldset",
+  "id": "p-fieldset",
+  "description": "The `p-fieldset` is a grouping component for wrapping contextual associated form elements. Its visible part is an HTML\n_legend_ element, which can be seen like a headline for describing the meaning of a form block. You can see some usage\nexamples on our [form patterns section](patterns/forms/resources).",
+  "code": "<p-fieldset label=\"Some legend label\">\n  <p-text-field-wrapper label=\"Some label\">\n    <input type=\"text\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-fieldset>\n  <span slot=\"label\">Some legend label</span>\n  <p-text-field-wrapper label=\"Some label\">\n    <input type=\"text\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-fieldset label=\"Some legend label\" label-size=Some content>\n  <p-text-field-wrapper label=\"Some label\">\n    <input type=\"text\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-fieldset label=\"Some legend label\" required=\"true\">\n  <p-text-field-wrapper label=\"Some label\">\n    <input type=\"text\" name=\"some-name\" required />\n  </p-text-field-wrapper>\n<p-fieldset label=\"Some legend label\" Some content class=\"state-markup\">\n  <p-text-field-wrapper label=\"Some label\" state=\"Some content\">\n    <input type=\"text\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-checkbox-wrapper label=\"Some label\" hide-label=\"false\" state=\"Some content\">\n   <input type=\"checkbox\" name=\"some-name\" />\n  </p-checkbox-wrapper>\n<p-checkbox-wrapper label=\"Some label\" hide-label=\"false\" state=\"Some content\">\n    <input type=\"checkbox\" name=\"some-name\" />\n  </p-checkbox-wrapper>\n<p-fieldset label=\"Some legend label\" state=Some content>\n  <p-text-field-wrapper label=\"Some label\" state=Some content>\n    <input type=\"text\" name=\"some-name\" />\n  </p-text-field-wrapper>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-icon"
+    ],
+    "propsMeta": {
+      "label": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The label text.",
+        "type": "string"
+      },
+      "labelSize": {
+        "allowedValues": [
+          "small",
+          "medium"
+        ],
+        "defaultValue": "medium",
+        "description": "The size of the label text.",
+        "type": "FieldsetLabelSize"
+      },
+      "message": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The message styled depending on validation state.",
+        "type": "string"
+      },
+      "required": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Marks the Fieldset as required.",
+        "type": "boolean"
+      },
+      "state": {
+        "allowedValues": [
+          "none",
+          "error",
+          "success"
+        ],
+        "defaultValue": "none",
+        "description": "The validation state.",
+        "type": "FieldsetState"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts color depending on theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the main content."
+      },
+      "label": {
+        "description": "Shows a label. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "message": {
+        "description": "Shows a state message. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      }
+    },
+    "styling": "jss"
+  }
+}

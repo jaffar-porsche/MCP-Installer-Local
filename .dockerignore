@@ -1,0 +1,22 @@
+# Version control
+.git
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+
+# Docker compose files
+docker-compose*.yml

@@ -1,0 +1,72 @@
+# ignore GitHub Coplilot custom prompts
+.github/prompts/
+
+# pyenv local version files
+.python-version
+
+# Python virtual environments and cache
+**/venv/*
+**/.venv/
+**/__pycache__/*
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# MCP stdio files
+#**/mcp_server_stdio.py
+#**/test_stdio.py
+#**/*stdio.*
+**/*stdio*
+
+# Environment files
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+**/env.txt
+
+# Node.js dependencies
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+logs/
+.DS_Store
+
+**/sandbox/**

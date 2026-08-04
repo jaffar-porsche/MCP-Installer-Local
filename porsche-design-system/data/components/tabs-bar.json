@@ -1,0 +1,109 @@
+{
+  "name": "Tabs Bar",
+  "id": "p-tabs bar",
+  "description": "The `p-tabs-bar` component is a styled button/link list for multiple purposes. You can use it with your framework router\nto ensure your **window location** updates on tab click, use it for **hash routing** and displaying content accordingly\nto the hash, as **skip navigation** to move on a longer page or to **change the state** of another element and therefore\nchange the appearance of your content .",
+  "code": "<p-tabs-bar>` component and it will handle all styling behaviors.\n\nIn order to get notified when the active tabs change, you need to register an event listener for the `update` event\nwhich is emitted by `p-tabs-bar`.\n\n<Notification heading=\"Deprecation hint\" heading-tag=\"h3\" state=\"warning\">\n  The <code>tabChange</code> event has been deprecated and will be removed with the next major release.<br>\n  Please use the <code>update</code> event instead.\n</Notification>\n\n### Framework Implementations\n\n<Playground :frameworkMarkup=\"codeExampleBasic\" :markup=\"basicButton.replace('<p-tabs-bar', '$& active-tab-index=0')\"></Playground>\n\n### Buttons\n\n<Playground :markup=\"basicButton\" :config=\"config\"></Playground>\n\n### Links\n\n<Playground :markup=\"basicAnchor\" :config=\"config\"></Playground>\n\n### <A11yIcon></A11yIcon> Accessibility hints\n\nThe `p-tabs-bar` component is detached from the content which belongs to the active tab. We provide the necessary\n`role=\"tab\"`, `tabindex` and `aria-selected` on the tabs inside the component.\n\nTo be truly accessible you need to provide some more information because every tab needs an `aria-controls` attribute\nwhich points to the corresponding `id` of the `tabpanel`. The content placeholder needs the `role=\"tabpanel\"` and the\nattribute `aria-labelledby` which points to the unique id of the corresponding tab (`aria-controls`).\n\nYou must also take care of the focus handling of the tabpanel. Therefore the active tab panel must have an\n`tabindex=\"0\"` to receive keyboard focus and the focus indicator must be styled accordingly. Use the provided\n[focus style](styles/focus) like this:\n\n```\np-tabs-bar ~ [tabindex=\"0\"][role=\"tabpanel\"] {\n    @include pds-focus;\n}\n```\n\n<Playground class=\"playground-tabs-bar\" :frameworkMarkup=\"codeExampleAccessibility\" :markup=\"accessibility\" :config=\"config\"></Playground>\n\n---\n\n## Active Tab\n\n**Note:** Keep in mind that the property `active-tab-index` uses zero-based numbering. Setting `active-tab-index` to\n`undefined` removes the selection. Make sure to update the `activeTabIndex` when adding or removing elements.\n\n<Playground class=\"playground-tabs-bar\" :markup=\"activeTab\" :config=\"config\"></Playground>\n\n## Size\n\n<Playground :markup=\"sizeMarkup\" :config=\"config\">\n  <PlaygroundSelect v-model=\"size\" :values=\"sizes\" name=\"size\"></PlaygroundSelect>\n</Playground>\n\n## Weight\n\n<Notification heading=\"Deprecation hint\" heading-tag=\"h3\" state=\"warning\">\n  The <code>semibold</code> value has been deprecated and will be removed with the next major release.<br>\n  Please use the <code>semi-bold</code> value instead.\n</Notification>\n\n<Playground :markup=\"weightMarkup\" :config=\"config\">\n  <PlaygroundSelect v-model=\"weight\" :values=\"weights\" name=\"weight\"></PlaygroundSelect>\n</Playground>\n\n## Gradient color\n\nIf the amount of tabs exceeds the viewport, the component renders arrow-buttons to help with horizontal scrolling. The\nbackground and gradient has to align to your chosen background.\n\n<Notification heading=\"Deprecation hint\" heading-tag=\"h3\" state=\"warning\">\n  The <code>gradientColorScheme</code> property has been deprecated and will be removed with the next major release.<br>\n  Please use the <code>gradientColor</code> property instead.\n</Notification>\n\n<Playground :markup=\"gradientColorMarkup\" :config=\"{ ...config, backgroundColor: gradientColor }\">\n  <PlaygroundSelect v-model=\"gradientColor\" :values=\"gradientColors\" name=\"gradientColor\"></PlaygroundSelect>\n</Playground>\n\n<script lang=\"ts\">\nimport Vue from 'vue';\nimport Component from 'vue-class-component';\nimport { getTabsBarCodeSamples } from '@porsche-design-system/shared';\nimport { TABS_BAR_SIZES, TABS_BAR_WEIGHTS, TABS_BAR_WEIGHTS_DEPRECATED } from './tabs-bar-utils';\nimport { GRADIENT_COLORS } from '../scroller/scroller-utils'; \n\nconst buildButton = (name: string) => `  <button type=\"button\">Tab Some content</button>`;\nconst buildAnchor = (name: string) => `  <a href=\"https://porsche.com\" target=\"_blank\">Tab Some content</a>`;\nconst buildTabPanel = (id: number) => `<div id=\"tab-panel-Some content\" hidden tabindex=\"-1\" role=\"tabpanel\" aria-labelledby=\"tab-item-Some content\">\n  <p-text>Your content of Tab Some content</p-text>\n<p-tabs-bar>\nSome content\n</p-tabs-bar>\n<p-tabs-bar>\nSome content\n</p-tabs-bar>\n<p-tabs-bar active-tab-index=\"0\">\n  <button type=\"button\" id=\"tab-item-1\" aria-controls=\"tab-panel-1\">Tab One</button>\n  <button type=\"button\" id=\"tab-item-2\" aria-controls=\"tab-panel-2\">Tab Two</button>\n  <button type=\"button\" id=\"tab-item-3\" aria-controls=\"tab-panel-3\">Tab Three</button>\n</p-tabs-bar>\n<p-tabs-bar size=\"Some content\">\nSome content\n</p-tabs-bar>\n<p-tabs-bar weight=\"Some content\">\nSome content\n</p-tabs-bar>\n<p-tabs-bar gradient-color=\"Some content\">\nSome content\n</p-tabs-bar>\n<p-tabs-bar active-tab-index=\"0\">\nSome content\n</p-tabs-bar>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "props": [
+          "activeTabIndex"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "tabChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when active tab is changed.",
+        "isDeprecated": true,
+        "type": "TabsBarUpdateEventDetail",
+        "typeDetail": "{ activeTabIndex: number }"
+      },
+      "update": {
+        "description": "Emitted when active tab is changed.",
+        "type": "TabsBarUpdateEventDetail",
+        "typeDetail": "{ activeTabIndex: number }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-scroller"
+    ],
+    "propsMeta": {
+      "activeTabIndex": {
+        "allowedValues": "number",
+        "defaultValue": null,
+        "description": "Defines which tab to be visualized as selected (zero-based numbering), undefined if none should be selected.",
+        "type": "number | undefined"
+      },
+      "gradientColor": {
+        "allowedValues": [
+          "background-base",
+          "background-surface"
+        ],
+        "defaultValue": "background-base",
+        "description": "Adapts the background gradient color of prev and next button.",
+        "type": "TabsBarGradientColor"
+      },
+      "gradientColorScheme": {
+        "allowedValues": [
+          null,
+          "default",
+          "surface"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `gradientColor` instead. Adapts the background gradient color of prev and next button.",
+        "isDeprecated": true,
+        "type": "TabsBarGradientColorScheme"
+      },
+      "size": {
+        "allowedValues": [
+          "small",
+          "medium"
+        ],
+        "defaultValue": "small",
+        "description": "The text size.",
+        "isBreakpointCustomizable": true,
+        "type": "TabsBarSize"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color when used on dark background.",
+        "type": "Theme"
+      },
+      "weight": {
+        "allowedValues": [
+          "regular",
+          "semi-bold",
+          "semibold"
+        ],
+        "defaultValue": "regular",
+        "deprecatedValues": [
+          "semibold"
+        ],
+        "description": "The text weight.",
+        "type": "TabsBarWeight"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the `button` or `a` tags which will be rendered as tabs."
+      }
+    },
+    "styling": "jss"
+  }
+}

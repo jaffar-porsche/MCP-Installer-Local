@@ -1,0 +1,135 @@
+{
+  "name": "Pagination",
+  "id": "p-pagination",
+  "description": "<TableOfContents></TableOfContents>",
+  "code": "<p-pagination total-items-count=\"500\" items-per-page=\"25\" active-page=\"1\"></p-pagination>\n<p-pagination total-items-count=\"Some content\" items-per-page=\"Some content\" active-page=\"Some content\"></p-pagination>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "isInternallyMutated": true,
+        "props": [
+          "activePage"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "pageChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when the page changes.",
+        "isDeprecated": true,
+        "type": "PaginationUpdateEventDetail",
+        "typeDetail": "{ page: number; previousPage: number }"
+      },
+      "update": {
+        "description": "Emitted when the page changes.",
+        "type": "PaginationUpdateEventDetail",
+        "typeDetail": "{ page: number; previousPage: number }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": false,
+    "isChunked": true,
+    "isDelegatingFocus": true,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-icon"
+    ],
+    "propsMeta": {
+      "activePage": {
+        "allowedValues": "number",
+        "defaultValue": 1,
+        "description": "Index of the currently active page.",
+        "propOptions": {
+          "mutable": true
+        },
+        "type": "number"
+      },
+      "allyLabel": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `intl.root` instead. Aria label what the pagination is used for.",
+        "isDeprecated": true,
+        "type": "string"
+      },
+      "allyLabelNext": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `intl.next` instead. Aria label for next page icon.",
+        "isDeprecated": true,
+        "type": "string"
+      },
+      "allyLabelPage": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `intl.page` instead. Aria label for page navigation.",
+        "isDeprecated": true,
+        "type": "string"
+      },
+      "allyLabelPrev": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `intl.prev` instead. Aria label for previous page icon.",
+        "isDeprecated": true,
+        "type": "string"
+      },
+      "intl": {
+        "allowedValues": {
+          "next": "string",
+          "page": "string",
+          "prev": "string",
+          "root": "string"
+        },
+        "defaultValue": {
+          "next": "Next page",
+          "page": "Page",
+          "prev": "Previous page",
+          "root": "Pagination"
+        },
+        "description": "Override the default wordings that are used for aria-labels on the next/prev and page buttons.",
+        "type": "PaginationInternationalization"
+      },
+      "itemsPerPage": {
+        "allowedValues": "number",
+        "defaultValue": 1,
+        "description": "The total count of items which should be shown per page.",
+        "isRequired": true,
+        "type": "number"
+      },
+      "maxNumberOfPageLinks": {
+        "defaultValue": null,
+        "description": "Has no effect anymore @deprecated since v3.10.0, will be removed with next major release",
+        "isDeprecated": true,
+        "type": "PaginationMaxNumberOfPageLinks"
+      },
+      "showLastPage": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "Show or hide the button to jump to the last page.",
+        "type": "boolean"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color when used on dark background.",
+        "type": "Theme"
+      },
+      "totalItemsCount": {
+        "allowedValues": "number",
+        "defaultValue": 1,
+        "description": "The total count of items.",
+        "isRequired": true,
+        "type": "number"
+      }
+    },
+    "styling": "jss"
+  }
+}

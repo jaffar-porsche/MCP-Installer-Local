@@ -1,0 +1,145 @@
+{
+  "name": "Segmented Control",
+  "id": "p-segmented-control",
+  "description": "The `p-segmented-control` component is similar to the native `select` element while showing all available options right\naway.",
+  "code": "<p-segmented-control :theme=\"theme\" :value=\"eventHandlingValue\" @update=\"eventHandlingValue = $event.detail.value\">\n    <p-segmented-control-item value=\"1\">Option 1</p-segmented-control-item>\n<p-segmented-control-item value=\"2\">Option 2</p-segmented-control-item>\n<p-segmented-control-item value=\"3\">Option 3</p-segmented-control-item>\n<p-segmented-control-item value=\"4\">Option 4</p-segmented-control-item>\n<p-segmented-control-item value=\"5\">Option 5</p-segmented-control-item>\n<p-text :theme=\"theme\">Current value: {{eventHandlingValue}}</p-text>\n<p-segmented-control-item value=\"xs\">XS</p-segmented-control-item>\n<p-segmented-control-item value=\"s\">S</p-segmented-control-item>\n<p-segmented-control-item value=\"m\">M</p-segmented-control-item>\n<p-segmented-control-item value=\"l\">L</p-segmented-control-item>\n<p-segmented-control-item value=\"xl\">XL</p-segmented-control-item>\n<p-segmented-control-item value=\"1\">Option 1</p-segmented-control-item>\n<p-segmented-control-item value=\"2\">Option 2</p-segmented-control-item>\n<p-segmented-control-item value=\"3\">Option 3</p-segmented-control-item>\n<p-segmented-control-item value=\"4\" disabled>Option 4</p-segmented-control-item>\n<p-segmented-control-item value=\"5\">Option 5</p-segmented-control-item>\n<p-segmented-control-item value=\"1\"></p-segmented-control-item>\n<p-segmented-control-item value=\"2\"></p-segmented-control-item>\n<p-segmented-control-item value=\"3\"></p-segmented-control-item>\n<p-segmented-control-item value=\"4\" disabled></p-segmented-control-item>\n<p-segmented-control-item value=\"5\"></p-segmented-control-item>\n<p-segmented-control aria-label=\"Choose a t-shirt size\">\n  Some content\n</p-segmented-control>\n<p-segmented-control value=\"2\" aria-label=\"Choose an option\">\n  Some content\n</p-segmented-control>\n<p-segmented-control columns=\"Some content\" aria-label=\"Choose a t-shirt size\">\n  Some content\n</p-segmented-control>\n<p-segmented-control aria-label=\"Choose an option\">\n  Some content\n</p-segmented-control>\n<p-segmented-control aria-label=\"Choose an option\">\n  Some content\n</p-segmented-control>\n<p-segmented-control aria-label=\"Choose an option\">\n  Some content\n</p-segmented-control>\n<p-segmented-control background-color=\"Some content\" aria-label=\"Choose an option\">\n  Some content\n</p-segmented-control>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "isInternallyMutated": true,
+        "props": [
+          "value"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "segmentedControlChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when selected element changes.",
+        "isDeprecated": true,
+        "type": "SegmentedControlUpdateEventDetail",
+        "typeDetail": "{ value: string | number }"
+      },
+      "update": {
+        "description": "Emitted when selected element changes.",
+        "type": "SegmentedControlUpdateEventDetail",
+        "typeDetail": "{ value: string | number }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": true,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": true,
+    "hasSlot": true,
+    "hostAttributes": {
+      "role": "group"
+    },
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "propsMeta": {
+      "backgroundColor": {
+        "allowedValues": [
+          null,
+          "background-surface",
+          "background-default"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release. Background color variations",
+        "isDeprecated": true,
+        "type": "SegmentedControlBackgroundColor"
+      },
+      "columns": {
+        "allowedValues": [
+          "auto",
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "defaultValue": "auto",
+        "description": "Sets the amount of columns.",
+        "isBreakpointCustomizable": true,
+        "type": "SegmentedControlColumns"
+      },
+      "disabled": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Disables the segmented-control.",
+        "propOptions": {
+          "mutable": true
+        },
+        "type": "boolean"
+      },
+      "form": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "The id of a form element the segmented-control should be associated with.",
+        "propOptions": {
+          "reflect": true
+        },
+        "type": "string"
+      },
+      "name": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "The name of the segmented-control.",
+        "propOptions": {
+          "reflect": true
+        },
+        "type": "string"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the segmented-control color depending on the theme.",
+        "type": "Theme"
+      },
+      "value": {
+        "allowedValues": [
+          "string",
+          "number"
+        ],
+        "defaultValue": null,
+        "description": "Sets the initial value of the segmented-control.",
+        "propOptions": {
+          "mutable": true
+        },
+        "type": "string | number"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the `p-segmented-control-item` tags."
+      }
+    },
+    "styling": "jss"
+  }
+}

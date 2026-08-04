@@ -1,0 +1,112 @@
+{
+  "name": "Motion",
+  "id": "motion",
+  "description": "The Porsche Design System provides a consistent motion system with duration and easing values for creating smooth and meaningful animations and transitions.",
+  "properties": {
+    "duration": {
+      "description": "Duration values for controlling the timing of animations and transitions.",
+      "values": [
+        {
+          "name": "Short",
+          "value": "150ms",
+          "cssVariable": "$pds-motion-duration-short",
+          "jsVariable": "motionDurationShort",
+          "description": "Short duration for quick transitions like hover states or small UI changes."
+        },
+        {
+          "name": "Moderate",
+          "value": "300ms",
+          "cssVariable": "$pds-motion-duration-moderate",
+          "jsVariable": "motionDurationModerate",
+          "description": "Moderate duration for standard transitions like expanding panels or showing/hiding elements."
+        },
+        {
+          "name": "Long",
+          "value": "500ms",
+          "cssVariable": "$pds-motion-duration-long",
+          "jsVariable": "motionDurationLong",
+          "description": "Long duration for more significant transitions like page transitions or complex animations."
+        }
+      ]
+    },
+    "easing": {
+      "description": "Easing functions for controlling the acceleration and deceleration of animations and transitions.",
+      "values": [
+        {
+          "name": "Base",
+          "value": "cubic-bezier(0.4, 0.0, 0.2, 1)",
+          "cssVariable": "$pds-motion-easing-base",
+          "jsVariable": "motionEasingBase",
+          "description": "Standard easing function for most transitions, with smooth acceleration and deceleration."
+        },
+        {
+          "name": "In",
+          "value": "cubic-bezier(0.4, 0.0, 1, 1)",
+          "cssVariable": "$pds-motion-easing-in",
+          "jsVariable": "motionEasingIn",
+          "description": "Easing function for elements entering the screen or becoming visible, with gradual acceleration."
+        },
+        {
+          "name": "Out",
+          "value": "cubic-bezier(0.0, 0.0, 0.2, 1)",
+          "cssVariable": "$pds-motion-easing-out",
+          "jsVariable": "motionEasingOut",
+          "description": "Easing function for elements leaving the screen or becoming hidden, with gradual deceleration."
+        }
+      ]
+    },
+    "patterns": {
+      "description": "Common motion patterns for specific use cases.",
+      "values": [
+        {
+          "name": "Moving",
+          "description": "Pattern for moving elements from one position to another.",
+          "properties": {
+            "duration": "motionDurationShort",
+            "easing": "motionEasingBase"
+          }
+        },
+        {
+          "name": "Enter/Exit",
+          "description": "Pattern for elements entering or exiting the screen.",
+          "properties": {
+            "enter": {
+              "duration": "motionDurationModerate",
+              "easing": "motionEasingIn"
+            },
+            "exit": {
+              "duration": "motionDurationShort",
+              "easing": "motionEasingOut"
+            }
+          }
+        },
+        {
+          "name": "Show/Hide",
+          "description": "Pattern for showing or hiding elements with opacity.",
+          "properties": {
+            "duration": "motionDurationLong",
+            "easing": "motionEasingBase"
+          }
+        },
+        {
+          "name": "Expand",
+          "description": "Pattern for expanding or collapsing elements.",
+          "properties": {
+            "expand": {
+              "duration": "motionDurationModerate",
+              "easing": "motionEasingBase"
+            },
+            "collapse": {
+              "duration": "motionDurationShort",
+              "easing": "motionEasingIn"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "examples": {
+    "angular": "styles-motion-example.component.ts",
+    "react": "StylesMotionExample.tsx"
+  }
+}

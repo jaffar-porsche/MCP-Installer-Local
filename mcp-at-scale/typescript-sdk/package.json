@@ -1,0 +1,54 @@
+{
+  "name": "@mcporsche/typescript-sdk",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev:server": "source .env && tsx watch src/examples/mcpServerDcrProxyEntraStreamableHttp.ts",
+    "dev:entra-proxy": "source .env && tsx watch src/examples/standaloneEntraProxy.ts",
+    "copy-views": "cp ../client-consent/dist/index.html src/auth/handlers/views/consent.html",
+    "embed-views": "./hack/embed-file.ts src/auth/handlers/views/consent.html > src/auth/handlers/views/consent.ts",
+    "build": "npm run embed-views && tsc",
+    "clean": "tsc --build --clean",
+    "lint": "npx prettier . --check && eslint src/",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "@jest/globals": "^30.2.0",
+    "@types/cors": "^2.8.19",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.5",
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.9.1",
+    "@types/supertest": "^7.0.0",
+    "eslint": "^10.0.0",
+    "jest": "^30.2.0",
+    "prettier": "3.8.1",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "cors": "^2.8.5"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.24.3",
+    "cookie": "^1.0.2",
+    "express": "^5.1.0",
+    "handlebars": "^4.7.8",
+    "jsonwebtoken": "^9.0.2",
+    "pkce-challenge": "^6.0.0",
+    "uuid": "^13.0.0"
+  }
+}

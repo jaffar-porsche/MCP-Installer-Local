@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------------------------------------------------
+   Porsche Engineering — MCPorsche internal design tokens.
+   The renderer is fully themeable through these CSS variables.
+   ------------------------------------------------------------------------- */
+:root {
+  --brand-red: 213 0 28;         /* #D5001C */
+  --brand-red-hover: 238 0 36;   /* #EE0024 */
+  --brand-red-dark: 179 0 23;    /* #B30017 */
+
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: theme('colors.pag.bg.DEFAULT');
+  color: theme('colors.pag.text.DEFAULT');
+  font-family: theme('fontFamily.sans');
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Nicer scrollbars in the app */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
+/* Focus ring — respects reduced motion */
+:focus-visible {
+  outline: 2px solid theme('colors.pag.red.DEFAULT');
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Subtle gradient used as the app background canvas */
+.canvas-gradient {
+  background:
+    radial-gradient(1200px 800px at 90% -10%, rgba(213, 0, 28, 0.05), transparent 60%),
+    radial-gradient(1000px 600px at -10% 100%, rgba(9, 9, 11, 0.04), transparent 60%),
+    theme('colors.pag.bg.DEFAULT');
+}

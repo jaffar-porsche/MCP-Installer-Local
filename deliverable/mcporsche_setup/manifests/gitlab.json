@@ -1,0 +1,39 @@
+{
+  "$schema": "manifest-v1",
+  "key": "gitlab",
+  "display_name": "GitLab MCP Server",
+  "server_dir_name": "gitlab-mcp",
+  "default_port": 8003,
+  "app_module": "mcp_server:app",
+  "health_path": "/health/pat",
+  "myself_path": "/api/v4/user",
+  "base_url_env": "GITLAB_BASE_URL",
+  "token_env": "GITLAB_TOKEN",
+  "fields": [
+    {
+      "key": "GITLAB_BASE_URL",
+      "label": "GitLab base URL",
+      "category": "Connection",
+      "default": "https://cicd.skyway.porsche.com",
+      "validator": "url"
+    },
+    {
+      "key": "GITLAB_TOKEN",
+      "label": "GitLab Personal Access Token",
+      "category": "Auth",
+      "secret": true,
+      "required": true,
+      "help_text": "Required scope: 'api'. Create in GitLab → User Settings → Access Tokens.",
+      "help_url": "https://cicd.skyway.porsche.com/-/user_settings/personal_access_tokens",
+      "validator": "pat_shape"
+    },
+    {
+      "key": "MCP_PORT",
+      "label": "Local server port",
+      "category": "Advanced",
+      "default": "8003",
+      "validator": "port"
+    }
+  ],
+  "include_common": ["proxy", "advanced_transport"]
+}

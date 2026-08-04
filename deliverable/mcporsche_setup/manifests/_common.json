@@ -1,0 +1,31 @@
+{
+  "$schema": "manifest-v1",
+  "_note": "Shared field groups that manifests can include via `include_common`.",
+  "proxy": [
+    {
+      "key": "HTTP_PROXY",
+      "label": "HTTP proxy",
+      "category": "Proxy",
+      "help_text": "Leave blank to use no proxy. Auto-detect fills this from Windows settings.",
+      "placeholder": "http://http-proxy.porsche.org:3133",
+      "validator": "url"
+    },
+    {
+      "key": "HTTPS_PROXY",
+      "label": "HTTPS proxy",
+      "category": "Proxy",
+      "help_text": "Usually the same as the HTTP proxy on Porsche networks.",
+      "placeholder": "http://http-proxy.porsche.org:3133",
+      "validator": "url"
+    }
+  ],
+  "advanced_transport": [
+    {
+      "key": "MCP_TRANSPORT",
+      "label": "Transport",
+      "category": "Advanced",
+      "default": "http",
+      "help_text": "'http' for VS Code / Claude Code. 'stdio' only for the built-in Copilot stdio bridge."
+    }
+  ]
+}

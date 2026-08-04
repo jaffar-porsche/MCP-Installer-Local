@@ -1,0 +1,227 @@
+{
+  "name": "Carousel",
+  "id": "p-carousel",
+  "description": "The `p-carousel` component allows related or similar content to be consumed on a step by step basis with a better overview than just showing them in a grid or as a list. The reason for this is, that only a certain amount of slides is visible at the same time.",
+  "code": "<p-carousel :theme=\"theme\" :heading=\"basicHeading\" :active-slide-index=\"activeSlideIndex\" v-html=\"getSlides(3)\" @update=\"(e) => activeSlideIndex = e.detail.activeIndex\" style=\"margin: 0 0 1rem\">\n  </p-carousel>\n<p-carousel :theme=\"theme\" :heading=\"basicHeading\" v-html=\"getSlides(3)\" @update=\"(e) => lastEventDetail = e.detail\" style=\"margin: 0 0 1rem\">\n  </p-carousel>\n<p-text :theme=\"theme\">Last event detail: {{lastEventDetail}}</p-text>\n<p-carousel :theme=\"theme\" :heading=\"basicHeading\" slides-per-page=\"2\" v-html=\"getSlides(amountOfSlides)\" style=\"margin: 0 0 1rem\">\n  </p-carousel>\n<p-carousel :theme=\"theme\" :heading=\"basicHeading\" :gradient-color=\"gradientColor\" slides-per-page=\"3\" focus-on-center-slide=\"true\" trim-space=\"false\" :style=\"{ '--p-gradient-color-width': gradientColorWidth, margin: '0 0 1rem' }\" @update=\"onCarouselUpdate\">\n    <div v-for=\"(_, index) in Array(6)\" :key=\"index\" :class=\"getSlideClass(index)\">Slide {{index + 1}}</div>\n  </p-carousel>\n<p-carousel heading=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel slides-per-page=\"Some content\" heading=\"Some content\">\n      Some content\n    </p-carousel>\n<p-carousel slides-per-page=\"auto\" heading=\"Some content\">\n  <div style=\"width: 10vw\">Slide 1 <p>(10vw)</p></div>\n  <div style=\"width: 200px\">Slide 2 <p>(200px)</p></div>\n  <div style=\"width: 100px\">Slide 3 <p>(100px)</p></div>\n  <div style=\"width: 40vw\">Slide 4 <p>(40vw)</p></div>\n  <div style=\"width: 150px\">Slide 5 <p>(150px)</p></div>\n  <div style=\"width: 50vw\">Slide 6 <p>(50vw)</p></div>\n</p-carousel>\n<p-carousel heading=\"Some content\" heading-size=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel heading-size=\"Some content\">\n  <h3 slot=\"heading\">Some content</h3>\n  Some content\n</p-carousel>\n<p-carousel heading=\"Some content\" description=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel heading=\"Some content\">\n  <p slot=\"description\">Some slotted description</p>\n  Some content\n</p-carousel>\n<p-carousel heading=\"Some content\" description=\"Some content\">\n  <div slot=\"controls\">Some slotted controls</div>\n  Some content\n</p-carousel>\n<p-carousel rewind=\"false\" heading=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel pagination=\"Some content\" heading=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel align-header=\"Some content\" heading=\"Some content\" description=\"Some content\">\n  <div slot=\"controls\">Some slotted controls</div>  \n  Some content\n</p-carousel>\n<p-carousel width=\"Some content\" heading=\"Some content\" description=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel heading=\"Some content\">\n  Some content\" heading=\"Some content\">\n  Some content\n</p-carousel>\n<p-carousel heading=\"Some content\" style=\"--p-carousel-border-radius: Some content\">\n  Some content\n</p-carousel>\n<p-carousel heading=\"Some content\" skip-link-target=\"components/carousel/examples#target\">\n  Some content\n</p-carousel>\n<p-heading id=\"target\" tag=\"h2\" size=\"x-large\">Next Heading</p-heading>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "isInternallyMutated": true,
+        "props": [
+          "activeSlideIndex"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "carouselChange": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `update` event instead. Emitted when carousel's content slides.",
+        "isDeprecated": true,
+        "type": "CarouselUpdateEventDetail",
+        "typeDetail": "{ activeIndex: number; previousIndex: number }"
+      },
+      "update": {
+        "description": "Emitted when carousel's content slides.",
+        "type": "CarouselUpdateEventDetail",
+        "typeDetail": "{ activeIndex: number; previousIndex: number }"
+      }
+    },
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": true,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-link-pure",
+      "p-button-pure"
+    ],
+    "propsMeta": {
+      "activeSlideIndex": {
+        "allowedValues": "number",
+        "defaultValue": 0,
+        "description": "Defines which slide to be active (zero-based numbering).",
+        "type": "number"
+      },
+      "alignControls": {
+        "allowedValues": [
+          "start",
+          "center",
+          "auto"
+        ],
+        "defaultValue": "auto",
+        "description": "Alignment of slotted controls",
+        "type": "CarouselAlignControls"
+      },
+      "alignHeader": {
+        "allowedValues": [
+          "start",
+          "center",
+          "left"
+        ],
+        "defaultValue": "start",
+        "deprecatedValues": [
+          "left"
+        ],
+        "description": "Alignment of heading and description",
+        "type": "CarouselAlignHeader"
+      },
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "CarouselAriaAttribute"
+      },
+      "description": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Defines the description used in the carousel.",
+        "type": "string"
+      },
+      "disablePagination": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `pagination` instead. If true, the carousel will not show pagination bullets at the bottom.",
+        "isBreakpointCustomizable": true,
+        "isDeprecated": true,
+        "type": "boolean"
+      },
+      "focusOnCenterSlide": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Indicates whether focus should be set on the center slide. If true, the carousel loops by individual slide; otherwise, it loops by page.",
+        "type": "boolean"
+      },
+      "gradientColor": {
+        "allowedValues": [
+          "background-base",
+          "background-surface",
+          "none"
+        ],
+        "defaultValue": "none",
+        "description": "Adapts the background gradient for the left and right edge.",
+        "type": "CarouselGradientColor"
+      },
+      "heading": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Defines the heading used in the carousel.",
+        "type": "string"
+      },
+      "headingSize": {
+        "allowedValues": [
+          "x-large",
+          "xx-large"
+        ],
+        "defaultValue": "x-large",
+        "description": "Defines the heading size used in the carousel.",
+        "type": "CarouselHeadingSize"
+      },
+      "intl": {
+        "allowedValues": {
+          "first": "string",
+          "last": "string",
+          "next": "string",
+          "prev": "string",
+          "slide": "string",
+          "slideLabel": "string"
+        },
+        "defaultValue": null,
+        "description": "Override the default wordings that are used for aria-labels on the next/prev buttons and pagination.",
+        "type": "CarouselInternationalization"
+      },
+      "pagination": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "If false, the carousel will not show pagination bullets at the bottom.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "rewind": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "Whether the slides should rewind from last to first slide and vice versa.",
+        "type": "boolean"
+      },
+      "skipLinkTarget": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Defines target of skip link (to skip carousel entries).",
+        "type": "string"
+      },
+      "slidesPerPage": {
+        "allowedValues": [
+          "auto",
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "defaultValue": 1,
+        "description": "Sets the amount of slides visible at the same time. Can be set to `auto` if you want to define different widths per slide via CSS.",
+        "isBreakpointCustomizable": true,
+        "type": "CarouselSlidesPerPage"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color when used on dark background.",
+        "type": "Theme"
+      },
+      "trimSpace": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "Determines whether to trim spaces before/after the carousel if `focusOnCenterSlide` option is true.",
+        "type": "boolean"
+      },
+      "width": {
+        "allowedValues": [
+          "basic",
+          "extended"
+        ],
+        "defaultValue": "basic",
+        "description": "Defines the outer spacings between the carousel and the left and right screen sides.",
+        "type": "CarouselWidth"
+      },
+      "wrapContent": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "Has no effect anymore @deprecated since v3.0.0, will be removed with next major release",
+        "isDeprecated": true,
+        "type": "boolean"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the carousel slides."
+      },
+      "controls": {
+        "description": "Shows a sidebar area on the **start** side (**left** in **LTR** mode / **right** in **RTL** mode). On mobile view it transforms into a flyout."
+      },
+      "description": {
+        "description": "Shows a footer section, flowing under the content area when scrollable."
+      },
+      "heading": {
+        "description": "Renders a heading above the carousel."
+      }
+    },
+    "styling": "jss"
+  }
+}

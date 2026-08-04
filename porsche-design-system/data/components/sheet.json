@@ -1,0 +1,95 @@
+{
+  "name": "Sheet",
+  "id": "p-sheet",
+  "description": "The `p-sheet` is a temporary overlay to focus the user's attention on one or multiple tasks while the underlying page is\nstill visible but interactions with it are blocked. It should be used thoughtfully and sparingly.",
+  "code": "<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\" :theme=\"this.$store.getters.storefrontTheme\">Open Sheet</p-button>\n<p-sheet open=\"false\">\n        <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some Heading</p-heading>\n<p-button-group slot=\"footer\">\n          <p-button>Accept</p-button>\n<p-button type=\"button\" variant=\"secondary\">Deny</p-button>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Sheet</p-button>\n<p-sheet dismiss-button=\"false\" open=\"false\" aria=\"{ 'aria-label': 'Some Label' }\">\n  <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Sheet</p-button>\n<p-sheet disable-backdrop-click=\"true\" open=\"false\" aria=\"{ 'aria-label': 'Some Label' }\">\n  <p-text>Some Content</p-text>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "dismiss",
+        "props": [
+          "open"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "dismiss": {
+        "description": "Emitted when the component requests to be dismissed.",
+        "type": "void"
+      },
+      "motionHiddenEnd": {
+        "description": "Emitted when the sheet is closed and the transition is finished.",
+        "type": "SheetMotionHiddenEndEventDetail",
+        "typeDetail": "TransitionEvent"
+      },
+      "motionVisibleEnd": {
+        "description": "Emitted when the sheet is opened and the transition is finished.",
+        "type": "SheetMotionVisibleEndEventDetail",
+        "typeDetail": "TransitionEvent"
+      }
+    },
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-button"
+    ],
+    "propsMeta": {
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string",
+          "role": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "SheetAriaAttribute"
+      },
+      "disableBackdropClick": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true, the sheet will not be closable via backdrop click.",
+        "type": "boolean"
+      },
+      "dismissButton": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "If false, the sheet will not have a dismiss button.",
+        "type": "boolean"
+      },
+      "open": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true, the sheet is open.",
+        "isRequired": true,
+        "type": "boolean"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the sheet color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the main content."
+      },
+      "header": {
+        "description": "Renders a header section above the content area."
+      }
+    },
+    "styling": "jss"
+  }
+}

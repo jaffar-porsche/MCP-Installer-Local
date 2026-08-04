@@ -1,0 +1,61 @@
+{
+  "name": "Content Wrapper",
+  "id": "p-content-wrapper",
+  "description": "The `p-content-wrapper` defines the outer spacings between the content area and the left and right screen sides, as well\nas centering its content and setting a max-width.",
+  "code": "<p-content-wrapper width=\"Some content\">\n  <div class=\"example-content\">Some content</div>\n</p-content-wrapper>\n<p-content-wrapper background-color=\"Some content\">\n  <div class=\"example-content\">Some content</div>\n</p-content-wrapper>",
+  "properties": {
+    "deprecationMessage": "since v3.0.0, will be removed with next major release. Use native CSS Grid instead.",
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isDeprecated": true,
+    "isInternal": false,
+    "isThemeable": true,
+    "propsMeta": {
+      "backgroundColor": {
+        "allowedValues": [
+          "transparent",
+          "default"
+        ],
+        "defaultValue": "transparent",
+        "description": "Has no effect anymore @deprecated since v3.0.0, will be removed with next major release",
+        "isDeprecated": true,
+        "type": "ContentWrapperBackgroundColor"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Has no effect anymore @deprecated since v3.0.0, will be removed with next major release",
+        "isDeprecated": true,
+        "type": "Theme"
+      },
+      "width": {
+        "allowedValues": [
+          "narrow",
+          "basic",
+          "extended",
+          "fluid",
+          "full"
+        ],
+        "defaultValue": "extended",
+        "description": "Defines the outer spacings between the content area and the left and right screen sides, as well as centering its content and setting a max-width.",
+        "type": "ContentWrapperWidth"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for main content."
+      }
+    },
+    "styling": "jss"
+  }
+}

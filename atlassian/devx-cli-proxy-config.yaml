@@ -1,0 +1,15 @@
+general:
+  browser: chrome # possibilites are: chromium, chrome, chrome-beta, msedge, msedge-beta, msedge-dev, firefox, firefox-asan, webkit
+proxies:
+  - one:
+      debug: true
+      loginMethod: "crowd"
+      listenAddress: ":2222"
+      listenPaths:
+        - "/"
+      proxyTargetUrl: "https://skyway.porsche.com"
+      proxyValidUrlPatterns:
+        - ".*"
+      proxyAuth:
+        idp: "crowd"
+        env: "prod"

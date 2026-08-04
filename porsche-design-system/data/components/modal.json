@@ -1,0 +1,137 @@
+{
+  "name": "Modal",
+  "id": "p-modal",
+  "description": "The `p-modal` is a temporary overlay to focus the user's attention on one task while interactions with the underlying\npage are blocked. It is only used as highly disruptive modal notification to present important information until\ndismissed. Or as overlay to confirm critical user actions, such as confirming an irreversible choice. It should be used\nthoughtfully and sparingly.",
+  "code": "<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\" :theme=\"this.$store.getters.storefrontTheme\">Open Modal</p-button>\n<p-modal open=\"false\">\n        <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some Heading</p-heading>\n<p-button-group slot=\"footer\">\n          <p-button>Accept</p-button>\n<p-button type=\"button\" variant=\"secondary\">Deny</p-button>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal dismiss-button=\"false\" open=\"false\" aria=\"{ 'aria-label': 'Some Label' }\">\n  <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal disable-backdrop-click=\"true\" open=\"false\" aria=\"{ 'aria-label': 'Some Label' }\">\n    <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal backdrop=\"Some content\" aria=\"{ 'aria-label': 'Some Label' }\" open=\"false\">\n  <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal fullscreen=\"{ base: true, s: false }\" open=\"false\" aria=\"{ 'aria-label': 'Some Label' }\">\n  <p-text>Some Content</p-text>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal open=\"false\">\n  <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some Heading</p-heading>\n<p-text>Some Content Begin</p-text>\n<p-text>Some Content End</p-text>\n<p-button-group slot=\"footer\">\n    <p-button>Accept</p-button>\n<p-button type=\"button\" variant=\"secondary\">Deny</p-button>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal open=\"false\" aria=\"{ 'role': 'alertdialog' }\" disable-backdrop-click=\"true\">\n  <p-heading slot=\"header\" size=\"large\" tag=\"h2\">Some important Heading</p-heading>\n<p-text>Some important Content</p-text>\n<p-button-group slot=\"footer\">\n    <p-button type=\"button\">Accept</p-button>\n<p-button type=\"button\" variant=\"secondary\">Deny</p-button>\n<p-button type=\"button\" aria=\"{ 'aria-haspopup': 'dialog' }\">Open Modal</p-button>\n<p-modal open=\"false\" backdrop=\"shading\" aria=\"{ 'aria-label': 'Some Label' }\" style=\"--p-modal-width: Some content; --p-modal-spacing-top: Some contentpx; --p-modal-spacing-bottom: Some contentpx;\">\n  <img src=\"Some content\" class=\"Some content\">  \n</p-modal>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "dismiss",
+        "props": [
+          "open"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "close": {
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `dismiss` event instead. Emitted when the component requests to be dismissed.",
+        "isDeprecated": true,
+        "type": "void"
+      },
+      "dismiss": {
+        "description": "Emitted when the component requests to be dismissed.",
+        "type": "void"
+      },
+      "motionHiddenEnd": {
+        "description": "Emitted when the modal is closed and the transition is finished.",
+        "type": "ModalMotionHiddenEndEventDetail",
+        "typeDetail": "TransitionEvent"
+      },
+      "motionVisibleEnd": {
+        "description": "Emitted when the modal is opened and the transition is finished.",
+        "type": "ModalMotionVisibleEndEventDetail",
+        "typeDetail": "TransitionEvent"
+      }
+    },
+    "hasAriaProp": true,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": true,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-button"
+    ],
+    "propsMeta": {
+      "aria": {
+        "allowedValues": {
+          "aria-label": "string",
+          "role": "string"
+        },
+        "defaultValue": null,
+        "description": "Add ARIA attributes.",
+        "isAria": true,
+        "type": "ModalAriaAttribute"
+      },
+      "backdrop": {
+        "allowedValues": [
+          "blur",
+          "shading"
+        ],
+        "defaultValue": "blur",
+        "description": "Defines the backdrop, 'blur' (should be used when Modal is opened by user interaction, e.g. after a click on a button) and 'shading' (should be used when Modal gets opened automatically, e.g. Cookie Consent).",
+        "type": "ModalBackdrop"
+      },
+      "disableBackdropClick": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true, the modal will not be closable via backdrop click.",
+        "type": "boolean"
+      },
+      "disableCloseButton": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "If true, the modal will not have a dismiss button. @deprecated since v3.0.0, will be removed with next major release, use `dismissButton` instead.",
+        "isDeprecated": true,
+        "type": "boolean"
+      },
+      "dismissButton": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "If false, the modal will not have a dismiss button.",
+        "type": "boolean"
+      },
+      "fullscreen": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true the modal uses max viewport height and width. Should only be used for mobile.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "heading": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `header` slot instead The title of the modal",
+        "isDeprecated": true,
+        "type": "string"
+      },
+      "open": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "If true, the modal is open.",
+        "isRequired": true,
+        "type": "boolean"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the modal color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the main content."
+      },
+      "footer": {
+        "description": "Shows a sticky footer section, flowing under the content area when scrollable."
+      },
+      "header": {
+        "description": "Renders a header section above the content area."
+      },
+      "heading": {
+        "description": "Renders a heading section above the content area.",
+        "isDeprecated": true
+      }
+    },
+    "styling": "jss"
+  }
+}

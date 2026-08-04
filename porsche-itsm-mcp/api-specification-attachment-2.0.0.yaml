@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  version: 2.0.0
+  title: ITSM Attachment
+  x-ibm-name: itsm-hub-attachment-api
+  description: >
+    API to download attachments from ITSM
+
+
+    This supports [using entra client id as PAPI app
+    client.](https://developerhub.porsche.io/docs/guides/provider/enable-entra-id-as-papi-id?env=test)
+security:
+  - AzureAD:
+      - email
+    clientIdHeader: []
+servers:
+  - url: 'https://eu-1.test.api.porsche.io/porsche-group/test/itsmhub'
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  product:
+    name: itsm-hub
+    version: 2.0.1
+    title: ITSMHub
+  servers:
+    - url: 'https://eu-1.test.api.porsche.io/porsche-group/test/itsmhub'
+      description: Porsche AWS Dublin test environment
+      type:
+        - Test
+paths:
+  '/attachment/{url}':
+    parameters:
+      - name: url
+        required: true
+        schema:
+          type: string
+        in: path
+        description: >-
+          BMC Helix or SmartIT URL of the attachment, needs to be URL encoded!
+          You can use (encoded) URLs returned from other ITSMHub endpoints.
+        example: >-
+          https://helix-preprod-restapi.itsm.porsche.services/api/arsys/v1.0/entry/TMS:WorkInfo/<worklog-id>/attach/z2AF_Attachment1
+    get:
+      summary: Download attachment from ITSM
+      tags:
+        - Attachment
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  body:
+                    type: object
+                    properties:
+                      file:
+                        type: array
+                        items:
+                          type: integer
+                          format: int32
+                        description: Raw file contents as byte values
+                      transactionId:
+                        type: string
+                        example: abc123
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationHeader'
+        - $ref: '#/components/parameters/ClientIdHeader'
+        - $ref: '#/components/parameters/AcceptHeader'
+        - $ref: '#/components/parameters/ItsmUserNameHeader'
+        - $ref: '#/components/parameters/ItsmPasswordHeader'
+components:
+  securitySchemes:
+    AzureAD:
+      type: oauth2
+      x-ibm-oauth-provider: azure-ad
+      flows:
+        clientCredentials:
+          tokenUrl: >-
+            https://login.microsoftonline.com/56564e0f-83d3-4b52-92e8-a6bb9ea36564/oauth2/v2.0/token
+          scopes:
+            email: email
+            openid: openid
+            profile: profile
+            offline_access: offline_access
+    clientIdHeader:
+      in: header
+      name: x-papi-client-id
+      type: apiKey
+      x-key-type: client_id
+  parameters:
+    AuthorizationHeader:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      example: Bearer <token>
+      description: contains your Entra ID token
+    ClientIdHeader:
+      name: x-papi-client-id
+      in: header
+      required: true
+      schema:
+        type: string
+      example: '123456'
+      description: entra client id that has been enabled to be used as papi client
+    AcceptHeader:
+      name: accept
+      in: header
+      required: true
+      schema:
+        type: string
+      example: application/json
+    ItsmUserNameHeader:
+      name: itsmUser
+      in: header
+      required: true
+      schema:
+        type: string
+      example: your-itsm-username
+    ItsmPasswordHeader:
+      name: itsmPassword
+      in: header
+      required: true
+      description: your ITSM password; NEEDS TO BE base64 ENCODED!
+      schema:
+        type: string
+        format: byte
+      example: cGFzc3dvcmQ=

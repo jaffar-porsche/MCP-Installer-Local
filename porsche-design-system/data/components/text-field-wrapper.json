@@ -1,0 +1,154 @@
+{
+  "name": "Text Field Wrapper",
+  "id": "p-text-field-wrapper",
+  "description": "The `p-text-field-wrapper` component is a styling wrapper for the native HTML input types and is essential for mostly\nany form.",
+  "code": "<p-text-field-wrapper label=\"Some label\" hide-label=\"true\" action-icon=\"locate\" :action-loading=\"demoIsLoading\" v-on:action=\"onDemoAction\" :theme=\"theme\">\n    <input type=\"search\" :value=\"demoValue\" :placeholder=\"demoIsLoading ? 'Locating...' : ''\" v-on:input=\"onDemoInput\" />\n  </p-text-field-wrapper>\n<p-text :theme=\"theme\">Value: {{ demoValue }}</p-text>\n<p-text-field-wrapper label=\"Some label\" hide-label=\"Some content\">\n  <input type=\"text\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" hide-label=\"Some content\">\n  <input type=\"text\" placeholder=\"Some placeholder\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" description=\"Some description\">\n  <input type=\"text\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"text\" name=\"some-name\" value=\"Some value\" required />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"text\" name=\"some-name\" value=\"Some value\" disabled />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"text\" name=\"some-name\" value=\"Some value\" readonly />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"text\" name=\"some-name\" value=\"Some value\" maxlength=\"20\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" show-counter=\"false\">\n  <input type=\"text\" name=\"some-name\" value=\"Some value\" maxlength=\"20\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"Some content\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" description=\"The price in Euro\" unit=\"EUR\" unit-position=\"Some content\">\n  <input type=\"number\" name=\"some-name\" value=\"500\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"password\" name=\"some-name\" value=\"some password\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\">\n  <input type=\"search\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" submit-button=\"Some content\">\n    <input type=\"search\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" action-icon=\"locate\">\n  <input type=\"search\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" action-icon=\"locate\">\n    <input type=\"search\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" action-icon=\"locate\" action-loading=\"true\">\n  <input type=\"search\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" action-icon=\"locate\" action-loading=\"true\">\n    <input type=\"search\" name=\"some-name\" />\n  </p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" state=\"Some content\" Some content>\n  <input type=\"text\" name=\"some-name\" />\n</p-text-field-wrapper>\n<p-text-field-wrapper state=\"error\">\n  <span slot=\"label\" id=\"some-label-id\">Some label with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n  <span slot=\"description\" id=\"some-description-id\">Some description with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n  <input type=\"text\" name=\"some-name\" aria-labelledby=\"some-label-id\" aria-describedby=\"some-description-id some-message-id\" />\n  <span slot=\"message\" id=\"some-message-id\">Some error message with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n</p-text-field-wrapper>\n<p-text-field-wrapper label=\"Some label\" id=\"date-mask\">\n      <input type=\"text\" />\n    </p-text-field-wrapper>",
+  "properties": {
+    "eventsMeta": {
+      "action": {
+        "description": "Emitted when the action button is clicked.",
+        "type": "void"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": true,
+    "hasObserveAttributes": true,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-button-pure",
+      "p-icon"
+    ],
+    "observedAttributes": [
+      "disabled",
+      "readonly",
+      "required",
+      "maxlength"
+    ],
+    "propsMeta": {
+      "actionIcon": {
+        "allowedValues": [
+          null,
+          "locate"
+        ],
+        "defaultValue": null,
+        "description": "Action icon can be set to `locate` for `input type=\"search\"` in order to display an action button.",
+        "type": "TextFieldWrapperActionIcon"
+      },
+      "actionLoading": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Disables the action button and shows a loading indicator. No events will be triggered while loading state is active.",
+        "type": "boolean"
+      },
+      "description": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The description text.",
+        "type": "string"
+      },
+      "hideLabel": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Show or hide label and description text. For better accessibility it is recommended to show the label.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "label": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The label text.",
+        "type": "string"
+      },
+      "message": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The message styled depending on validation state.",
+        "type": "string"
+      },
+      "showCharacterCount": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `showCounter` instead. Show or hide max character count.",
+        "isDeprecated": true,
+        "type": "boolean"
+      },
+      "showCounter": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "Show or hide max character count.",
+        "type": "boolean"
+      },
+      "showPasswordToggle": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "@experimental Show or hide password toggle for `input type=\"password\"`.",
+        "isExperimental": true,
+        "type": "boolean"
+      },
+      "state": {
+        "allowedValues": [
+          "none",
+          "error",
+          "success"
+        ],
+        "defaultValue": "none",
+        "description": "The validation state.",
+        "type": "TextFieldWrapperState"
+      },
+      "submitButton": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "Show search button if wrapped inside a form.",
+        "type": "boolean"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color depending on the theme.",
+        "type": "Theme"
+      },
+      "unit": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The unit text.",
+        "type": "string"
+      },
+      "unitPosition": {
+        "allowedValues": [
+          "prefix",
+          "suffix"
+        ],
+        "defaultValue": "prefix",
+        "description": "The unit position.",
+        "type": "TextFieldWrapperUnitPosition"
+      }
+    },
+    "requiredChild": "input type=text",
+    "requiredChildSelector": "input[type=text],input[type=number],input[type=email],input[type=tel],input[type=search],input[type=url],input[type=date],input[type=time],input[type=month],input[type=week],input[type=password]",
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the input."
+      },
+      "description": {
+        "description": "Shows a description. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "label": {
+        "description": "Shows a label. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "message": {
+        "description": "Shows a state message. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      }
+    },
+    "styling": "jss"
+  }
+}

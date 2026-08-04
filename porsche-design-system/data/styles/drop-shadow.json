@@ -1,0 +1,37 @@
+{
+  "name": "Drop Shadow",
+  "id": "drop-shadow",
+  "description": "The Porsche Design System provides consistent drop shadow styles for creating depth and elevation in UI elements.",
+  "properties": {
+    "dropShadow": {
+      "description": "Drop shadow styles with different intensities for creating depth and elevation.",
+      "values": [
+        {
+          "name": "Low",
+          "value": "0 2px 4px rgba(0, 0, 0, 0.1)",
+          "cssVariable": "$pds-drop-shadow-low",
+          "jsVariable": "dropShadowLowStyle",
+          "description": "Subtle shadow for slightly elevated elements."
+        },
+        {
+          "name": "Medium",
+          "value": "0 4px 8px rgba(0, 0, 0, 0.15)",
+          "cssVariable": "$pds-drop-shadow-medium",
+          "jsVariable": "dropShadowMediumStyle",
+          "description": "Medium shadow for moderately elevated elements."
+        },
+        {
+          "name": "High",
+          "value": "0 8px 16px rgba(0, 0, 0, 0.2)",
+          "cssVariable": "$pds-drop-shadow-high",
+          "jsVariable": "dropShadowHighStyle",
+          "description": "Pronounced shadow for highly elevated elements."
+        }
+      ]
+    }
+  },
+  "examples": {
+    "angular": "styles-drop-shadow-example.component.ts",
+    "react": "StylesDropShadowExample.tsx"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "name": "Textarea Wrapper",
+  "id": "p-textarea-wrapper",
+  "description": "The `p-textarea-wrapper` component is a styling wrapper for the native HTML `<textarea>` form element. Don't use a\nTextarea component if you want to allow users to enter shorter responses that are no longer than a single line, such as\na phone number or name. In this case, you should use the Text Field component.",
+  "code": "<p-textarea-wrapper label=\"Some label\" hide-label=\"Some content\">\n  <textarea name=\"some-name\"></textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\" hide-label=\"Some content\">\n  <textarea name=\"some-name\" placeholder=\"Some placeholder\"></textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\" description=\"Some description\">\n  <textarea name=\"some-name\"></textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\">\n  <textarea name=\"some-name\" required>Some value</textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\">\n  <textarea name=\"some-name\" disabled>Some value</textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\">\n  <textarea name=\"some-name\" readonly>Some value</textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\">\n  <textarea name=\"some-name\" maxlength=\"200\">Some value</textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\" show-counter=\"false\">\n  <textarea name=\"some-name\" maxlength=\"200\">Some value</textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper label=\"Some label\" state=\"Some content\" Some content>\n  <textarea aria-invalid=\"Some content\" name=\"some-name\">Some value</textarea>\n</p-textarea-wrapper>\n<p-textarea-wrapper state=\"error\">\n  <span slot=\"label\" id=\"some-label-id\">Some label with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n  <span slot=\"description\" id=\"some-description-id\">Some description with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n  <textarea name=\"some-name\" aria-labelledby=\"some-label-id\" aria-describedby=\"some-description-id some-message-id\"></textarea>\n  <span slot=\"message\" id=\"some-message-id\">Some error message with a <a href=\"https://designsystem.porsche.com\">link</a>.</span>\n</p-textarea-wrapper>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": true,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-icon"
+    ],
+    "observedAttributes": [
+      "disabled",
+      "readonly",
+      "required",
+      "maxlength"
+    ],
+    "propsMeta": {
+      "description": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The description text.",
+        "type": "string"
+      },
+      "hideLabel": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Show or hide label. For better accessibility it is recommended to show the label.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "label": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The label text.",
+        "type": "string"
+      },
+      "message": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The message styled depending on validation state.",
+        "type": "string"
+      },
+      "showCharacterCount": {
+        "allowedValues": "boolean",
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `showCounter` instead. Show or hide max character count.",
+        "isDeprecated": true,
+        "type": "boolean"
+      },
+      "showCounter": {
+        "allowedValues": "boolean",
+        "defaultValue": true,
+        "description": "Show or hide max character count.",
+        "type": "boolean"
+      },
+      "state": {
+        "allowedValues": [
+          "none",
+          "error",
+          "success"
+        ],
+        "defaultValue": "none",
+        "description": "The validation state.",
+        "type": "TextareaWrapperState"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color depending on the theme.",
+        "type": "Theme"
+      }
+    },
+    "requiredChild": "textarea",
+    "requiredChildSelector": "textarea",
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the textarea."
+      },
+      "description": {
+        "description": "Shows a description. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "label": {
+        "description": "Shows a label. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "message": {
+        "description": "Shows a state message. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      }
+    },
+    "styling": "jss"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Border",
+  "id": "border",
+  "description": "The Porsche Design System provides consistent border styles for UI elements, including border radius and border width options.",
+  "properties": {
+    "borderRadius": {
+      "description": "Border radius values for creating rounded corners on UI elements.",
+      "values": [
+        {
+          "name": "Small",
+          "value": "2px",
+          "cssVariable": "$pds-border-radius-small",
+          "jsVariable": "borderRadiusSmall"
+        },
+        {
+          "name": "Medium",
+          "value": "4px",
+          "cssVariable": "$pds-border-radius-medium",
+          "jsVariable": "borderRadiusMedium"
+        },
+        {
+          "name": "Large",
+          "value": "8px",
+          "cssVariable": "$pds-border-radius-large",
+          "jsVariable": "borderRadiusLarge"
+        }
+      ]
+    },
+    "borderWidth": {
+      "description": "Border width values for defining the thickness of borders.",
+      "values": [
+        {
+          "name": "Base",
+          "value": "1px",
+          "cssVariable": "$pds-border-width-base",
+          "jsVariable": "borderWidthBase"
+        },
+        {
+          "name": "Thin",
+          "value": "0.5px",
+          "cssVariable": "$pds-border-width-thin",
+          "jsVariable": "borderWidthThin"
+        }
+      ]
+    }
+  },
+  "examples": {
+    "angular": "styles-border-example.component.ts",
+    "react": "StylesBorderExample.tsx"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "Divider",
+  "id": "p-divider",
+  "description": "The `p-divider` is used as 'horizontal or vertical rule' and displays a dividing line. The component is self-closing.\nSlotted content between the component tags won't be displayed.",
+  "code": "<p-divider></p-divider>\n<p-divider direction=\"vertical\"></p-divider>\n<p-divider direction=\"{base: 'horizontal', l: 'vertical'}\"></p-divider>\n<p-divider color=\"Some content\"></p-divider>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": false,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": true,
+    "propsMeta": {
+      "color": {
+        "allowedValues": [
+          "contrast-low",
+          "contrast-medium",
+          "contrast-high",
+          "neutral-contrast-high",
+          "neutral-contrast-medium",
+          "neutral-contrast-low"
+        ],
+        "defaultValue": "contrast-low",
+        "deprecatedValues": [
+          "neutral-contrast-high",
+          "neutral-contrast-medium",
+          "neutral-contrast-low"
+        ],
+        "description": "Defines color depending on theme.",
+        "type": "DividerColor"
+      },
+      "direction": {
+        "allowedValues": [
+          "vertical",
+          "horizontal"
+        ],
+        "defaultValue": "horizontal",
+        "description": "Defines direction.",
+        "isBreakpointCustomizable": true,
+        "type": "DividerDirection"
+      },
+      "orientation": {
+        "allowedValues": [
+          null,
+          "vertical",
+          "horizontal"
+        ],
+        "defaultValue": null,
+        "description": "@deprecated since v3.0.0, will be removed with next major release, use `direction` instead. Defines orientation.",
+        "isBreakpointCustomizable": true,
+        "isDeprecated": true,
+        "type": "DividerOrientation"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts color depending on theme.",
+        "type": "Theme"
+      }
+    },
+    "styling": "jss"
+  }
+}

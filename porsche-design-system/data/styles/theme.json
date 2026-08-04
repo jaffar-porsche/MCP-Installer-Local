@@ -1,0 +1,301 @@
+{
+  "name": "Theme",
+  "id": "theme",
+  "description": "The Porsche Design System provides a comprehensive theming system with light and dark modes, including color variables for backgrounds, text, states, and notifications.",
+  "properties": {
+    "light": {
+      "description": "Light theme color variables.",
+      "values": [
+        {
+          "name": "Primary",
+          "value": "#000000",
+          "cssVariable": "$pds-theme-light-primary",
+          "jsVariable": "themeLightPrimary",
+          "description": "Primary text color for the light theme."
+        },
+        {
+          "name": "Background Base",
+          "value": "#FFFFFF",
+          "cssVariable": "$pds-theme-light-background-base",
+          "jsVariable": "themeLightBackgroundBase",
+          "description": "Base background color for the light theme."
+        },
+        {
+          "name": "Background Surface",
+          "value": "#F7F7F7",
+          "cssVariable": "$pds-theme-light-background-surface",
+          "jsVariable": "themeLightBackgroundSurface",
+          "description": "Surface background color for the light theme."
+        },
+        {
+          "name": "Background Shading",
+          "value": "#E6E6E6",
+          "cssVariable": "$pds-theme-light-background-shading",
+          "jsVariable": "themeLightBackgroundShading",
+          "description": "Shading background color for the light theme."
+        },
+        {
+          "name": "Background Frosted",
+          "value": "rgba(255, 255, 255, 0.8)",
+          "cssVariable": "$pds-theme-light-background-frosted",
+          "jsVariable": "themeLightBackgroundFrosted",
+          "description": "Frosted background color for the light theme."
+        },
+        {
+          "name": "Contrast Low",
+          "value": "#E6E6E6",
+          "cssVariable": "$pds-theme-light-contrast-low",
+          "jsVariable": "themeLightContrastLow",
+          "description": "Low contrast color for the light theme."
+        },
+        {
+          "name": "Contrast Medium",
+          "value": "#CCCCCC",
+          "cssVariable": "$pds-theme-light-contrast-medium",
+          "jsVariable": "themeLightContrastMedium",
+          "description": "Medium contrast color for the light theme."
+        },
+        {
+          "name": "Contrast High",
+          "value": "#999999",
+          "cssVariable": "$pds-theme-light-contrast-high",
+          "jsVariable": "themeLightContrastHigh",
+          "description": "High contrast color for the light theme."
+        },
+        {
+          "name": "Notification Success",
+          "value": "#28A745",
+          "cssVariable": "$pds-theme-light-notification-success",
+          "jsVariable": "themeLightNotificationSuccess",
+          "description": "Success notification color for the light theme."
+        },
+        {
+          "name": "Notification Success Soft",
+          "value": "rgba(40, 167, 69, 0.1)",
+          "cssVariable": "$pds-theme-light-notification-success-soft",
+          "jsVariable": "themeLightNotificationSuccessSoft",
+          "description": "Soft success notification color for the light theme."
+        },
+        {
+          "name": "Notification Warning",
+          "value": "#FFC107",
+          "cssVariable": "$pds-theme-light-notification-warning",
+          "jsVariable": "themeLightNotificationWarning",
+          "description": "Warning notification color for the light theme."
+        },
+        {
+          "name": "Notification Warning Soft",
+          "value": "rgba(255, 193, 7, 0.1)",
+          "cssVariable": "$pds-theme-light-notification-warning-soft",
+          "jsVariable": "themeLightNotificationWarningSoft",
+          "description": "Soft warning notification color for the light theme."
+        },
+        {
+          "name": "Notification Error",
+          "value": "#DC3545",
+          "cssVariable": "$pds-theme-light-notification-error",
+          "jsVariable": "themeLightNotificationError",
+          "description": "Error notification color for the light theme."
+        },
+        {
+          "name": "Notification Error Soft",
+          "value": "rgba(220, 53, 69, 0.1)",
+          "cssVariable": "$pds-theme-light-notification-error-soft",
+          "jsVariable": "themeLightNotificationErrorSoft",
+          "description": "Soft error notification color for the light theme."
+        },
+        {
+          "name": "Notification Info",
+          "value": "#17A2B8",
+          "cssVariable": "$pds-theme-light-notification-info",
+          "jsVariable": "themeLightNotificationInfo",
+          "description": "Info notification color for the light theme."
+        },
+        {
+          "name": "Notification Info Soft",
+          "value": "rgba(23, 162, 184, 0.1)",
+          "cssVariable": "$pds-theme-light-notification-info-soft",
+          "jsVariable": "themeLightNotificationInfoSoft",
+          "description": "Soft info notification color for the light theme."
+        },
+        {
+          "name": "State Hover",
+          "value": "rgba(0, 0, 0, 0.05)",
+          "cssVariable": "$pds-theme-light-state-hover",
+          "jsVariable": "themeLightStateHover",
+          "description": "Hover state color for the light theme."
+        },
+        {
+          "name": "State Active",
+          "value": "rgba(0, 0, 0, 0.1)",
+          "cssVariable": "$pds-theme-light-state-active",
+          "jsVariable": "themeLightStateActive",
+          "description": "Active state color for the light theme."
+        },
+        {
+          "name": "State Focus",
+          "value": "rgba(0, 0, 0, 0.2)",
+          "cssVariable": "$pds-theme-light-state-focus",
+          "jsVariable": "themeLightStateFocus",
+          "description": "Focus state color for the light theme."
+        },
+        {
+          "name": "State Disabled",
+          "value": "rgba(0, 0, 0, 0.3)",
+          "cssVariable": "$pds-theme-light-state-disabled",
+          "jsVariable": "themeLightStateDisabled",
+          "description": "Disabled state color for the light theme."
+        }
+      ]
+    },
+    "dark": {
+      "description": "Dark theme color variables.",
+      "values": [
+        {
+          "name": "Primary",
+          "value": "#FFFFFF",
+          "cssVariable": "$pds-theme-dark-primary",
+          "jsVariable": "themeDarkPrimary",
+          "description": "Primary text color for the dark theme."
+        },
+        {
+          "name": "Background Base",
+          "value": "#000000",
+          "cssVariable": "$pds-theme-dark-background-base",
+          "jsVariable": "themeDarkBackgroundBase",
+          "description": "Base background color for the dark theme."
+        },
+        {
+          "name": "Background Surface",
+          "value": "#1A1A1A",
+          "cssVariable": "$pds-theme-dark-background-surface",
+          "jsVariable": "themeDarkBackgroundSurface",
+          "description": "Surface background color for the dark theme."
+        },
+        {
+          "name": "Background Shading",
+          "value": "#333333",
+          "cssVariable": "$pds-theme-dark-background-shading",
+          "jsVariable": "themeDarkBackgroundShading",
+          "description": "Shading background color for the dark theme."
+        },
+        {
+          "name": "Background Frosted",
+          "value": "rgba(0, 0, 0, 0.8)",
+          "cssVariable": "$pds-theme-dark-background-frosted",
+          "jsVariable": "themeDarkBackgroundFrosted",
+          "description": "Frosted background color for the dark theme."
+        },
+        {
+          "name": "Contrast Low",
+          "value": "#333333",
+          "cssVariable": "$pds-theme-dark-contrast-low",
+          "jsVariable": "themeDarkContrastLow",
+          "description": "Low contrast color for the dark theme."
+        },
+        {
+          "name": "Contrast Medium",
+          "value": "#666666",
+          "cssVariable": "$pds-theme-dark-contrast-medium",
+          "jsVariable": "themeDarkContrastMedium",
+          "description": "Medium contrast color for the dark theme."
+        },
+        {
+          "name": "Contrast High",
+          "value": "#999999",
+          "cssVariable": "$pds-theme-dark-contrast-high",
+          "jsVariable": "themeDarkContrastHigh",
+          "description": "High contrast color for the dark theme."
+        },
+        {
+          "name": "Notification Success",
+          "value": "#28A745",
+          "cssVariable": "$pds-theme-dark-notification-success",
+          "jsVariable": "themeDarkNotificationSuccess",
+          "description": "Success notification color for the dark theme."
+        },
+        {
+          "name": "Notification Success Soft",
+          "value": "rgba(40, 167, 69, 0.2)",
+          "cssVariable": "$pds-theme-dark-notification-success-soft",
+          "jsVariable": "themeDarkNotificationSuccessSoft",
+          "description": "Soft success notification color for the dark theme."
+        },
+        {
+          "name": "Notification Warning",
+          "value": "#FFC107",
+          "cssVariable": "$pds-theme-dark-notification-warning",
+          "jsVariable": "themeDarkNotificationWarning",
+          "description": "Warning notification color for the dark theme."
+        },
+        {
+          "name": "Notification Warning Soft",
+          "value": "rgba(255, 193, 7, 0.2)",
+          "cssVariable": "$pds-theme-dark-notification-warning-soft",
+          "jsVariable": "themeDarkNotificationWarningSoft",
+          "description": "Soft warning notification color for the dark theme."
+        },
+        {
+          "name": "Notification Error",
+          "value": "#DC3545",
+          "cssVariable": "$pds-theme-dark-notification-error",
+          "jsVariable": "themeDarkNotificationError",
+          "description": "Error notification color for the dark theme."
+        },
+        {
+          "name": "Notification Error Soft",
+          "value": "rgba(220, 53, 69, 0.2)",
+          "cssVariable": "$pds-theme-dark-notification-error-soft",
+          "jsVariable": "themeDarkNotificationErrorSoft",
+          "description": "Soft error notification color for the dark theme."
+        },
+        {
+          "name": "Notification Info",
+          "value": "#17A2B8",
+          "cssVariable": "$pds-theme-dark-notification-info",
+          "jsVariable": "themeDarkNotificationInfo",
+          "description": "Info notification color for the dark theme."
+        },
+        {
+          "name": "Notification Info Soft",
+          "value": "rgba(23, 162, 184, 0.2)",
+          "cssVariable": "$pds-theme-dark-notification-info-soft",
+          "jsVariable": "themeDarkNotificationInfoSoft",
+          "description": "Soft info notification color for the dark theme."
+        },
+        {
+          "name": "State Hover",
+          "value": "rgba(255, 255, 255, 0.05)",
+          "cssVariable": "$pds-theme-dark-state-hover",
+          "jsVariable": "themeDarkStateHover",
+          "description": "Hover state color for the dark theme."
+        },
+        {
+          "name": "State Active",
+          "value": "rgba(255, 255, 255, 0.1)",
+          "cssVariable": "$pds-theme-dark-state-active",
+          "jsVariable": "themeDarkStateActive",
+          "description": "Active state color for the dark theme."
+        },
+        {
+          "name": "State Focus",
+          "value": "rgba(255, 255, 255, 0.2)",
+          "cssVariable": "$pds-theme-dark-state-focus",
+          "jsVariable": "themeDarkStateFocus",
+          "description": "Focus state color for the dark theme."
+        },
+        {
+          "name": "State Disabled",
+          "value": "rgba(255, 255, 255, 0.3)",
+          "cssVariable": "$pds-theme-dark-state-disabled",
+          "jsVariable": "themeDarkStateDisabled",
+          "description": "Disabled state color for the dark theme."
+        }
+      ]
+    }
+  },
+  "examples": {
+    "angular": "styles-theme-example.component.ts",
+    "react": "StylesThemeExample.tsx"
+  }
+}

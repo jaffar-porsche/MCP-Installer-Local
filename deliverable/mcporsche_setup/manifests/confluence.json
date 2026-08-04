@@ -1,0 +1,52 @@
+{
+  "$schema": "manifest-v1",
+  "key": "confluence",
+  "display_name": "Confluence MCP Server",
+  "server_dir_name": "confluence-mcp",
+  "default_port": 8001,
+  "app_module": "mcp_server:app",
+  "health_path": "/health/pat",
+  "myself_path": "/rest/api/user/current",
+  "base_url_env": "CONFLUENCE_BASE_URL",
+  "token_env": "CONFLUENCE_PAT",
+  "fields": [
+    {
+      "key": "CONFLUENCE_BASE_URL",
+      "label": "Confluence base URL",
+      "category": "Connection",
+      "default": "https://api.skyway.porsche.com/confluence",
+      "help_text": "Confluence REST API base URL.",
+      "validator": "url"
+    },
+    {
+      "key": "CONFLUENCE_PAT",
+      "label": "Confluence Personal Access Token",
+      "category": "Auth",
+      "secret": true,
+      "required": true,
+      "help_text": "Create/rotate in Confluence → Profile → Personal Access Tokens.",
+      "help_url": "https://skyway.porsche.com/confluence/plugins/personalaccesstokens/usertokens.action",
+      "validator": "pat_shape"
+    },
+    {
+      "key": "CERT_PATH",
+      "label": "Client certificate (.p12)",
+      "category": "Auth",
+      "help_text": "Optional. Only set if you use certificate-based auth."
+    },
+    {
+      "key": "CERT_PASSWORD",
+      "label": "Certificate password",
+      "category": "Auth",
+      "secret": true
+    },
+    {
+      "key": "MCP_PORT",
+      "label": "Local server port",
+      "category": "Advanced",
+      "default": "8001",
+      "validator": "port"
+    }
+  ],
+  "include_common": ["proxy", "advanced_transport"]
+}

@@ -1,0 +1,118 @@
+sequenceDiagram
+    participant Client as MCP Client
+    participant DCR as DCR Proxy<br/>(localhost:3000)
+    participant Azure as Azure Entra ID
+    participant Auth as authMiddleware<br/>(requireDcrProxyBearerAuth)
+    participant MCP as mcpPostHandler<br/>(MCP Server)
+    participant Graph as Microsoft Graph API
+
+    Note over Client, Graph: Phase 0: Initial Unauthenticated Request
+
+    Client->>Auth: POST /mcp<br/>{"method": "initialize", ...}<br/>(No Authorization header)
+    
+    Note right of Auth: requireDcrProxyBearerAuth middleware:<br/>1. No Bearer token found<br/>2. Return 401 Unauthorized<br/>3. Include WWW-Authenticate header<br/>4. Include resource metadata URL
+    
+    Auth-->>Client: HTTP 401 Unauthorized<br/>WWW-Authenticate: Bearer realm="MCP Server"<br/>Link: </.well-known/oauth-protected-resource>
+
+    Note right of Client: Client discovers OAuth endpoints<br/>from resource metadata
+
+    Client->>DCR: GET /.well-known/oauth-protected-resource
+    DCR-->>Client: {"authorization_servers": ["http://localhost:3000/.well-known/oauth-authorization-server"]}
+
+    Client->>DCR: GET /.well-known/oauth-authorization-server
+    DCR-->>Client: OAuth metadata (authorization_endpoint, token_endpoint, etc.)
+
+    Note over Client, Graph: Phase 1: OAuth 2.0 Authentication Flow
+
+    %% Optional Client Registration
+    rect rgb(245, 245, 255)
+        Client->>DCR: POST /.well-known/oauth-authorization-server/register
+        Note right of DCR: DemoInMemoryClientsStore<br/>stores client registration
+        DCR-->>Client: client_id (generated)
+    end
+
+    %% Authorization Flow
+    Client->>DCR: GET /authorize?response_type=code&client_id=...&code_challenge=CLIENT_CHALLENGE
+    Note right of DCR: DcrProxyOAuthServerProvider.authorize():<br/>1. Generate proxy PKCE (codeVerifier, codeChallenge)<br/>2. Store in DemoInMemoryDcrProxyStore:<br/>   - clientCodeChallenge (from client)<br/>   - codeVerifier (proxy's for Azure)<br/>   - clientState, redirectUri, etc.
+    DCR->>Azure: Redirect with proxy credentials + proxy PKCE
+    Azure-->>Client: Login form
+
+    Client->>Azure: User authentication & consent
+    Azure->>DCR: GET /callback?code=AZURE_CODE&state=PROXY_STATE
+
+    DCR->>Azure: POST /token<br/>(grant_type=authorization_code<br/>code_verifier=PROXY_VERIFIER)
+    Azure-->>DCR: Azure tokens (access_token, id_token, refresh_token)
+    
+    Note right of DCR: 1. Generate sessionKey (UUID)<br/>2. Store session with Azure tokens<br/>3. Generate encrypted sessionId<br/>4. Map authCode → sessionKey
+    
+    DCR-->>Client: Redirect with authorization code
+
+    Client->>DCR: POST /token<br/>(code_verifier=CLIENT_VERIFIER)
+    Note right of DCR: 1. Verify client PKCE<br/>2. Return encrypted sessionId as access_token
+    DCR-->>Client: access_token: ENCRYPTED_SESSION_ID
+
+    Note over Client, Graph: Phase 2: MCP Session Initialization (Retry with Token)
+
+    Client->>Auth: POST /mcp<br/>Authorization: Bearer ENCRYPTED_SESSION_ID<br/>{"method": "initialize", ...}
+    
+    Note right of Auth: requireDcrProxyBearerAuth middleware:<br/>1. Extract Bearer token (sessionId)<br/>2. sessionIdTranslator.translateSessionId()<br/>   - Decrypt sessionId → sessionKey<br/>   - Get Azure tokens from session<br/>3. tokenVerifier.verifyAccessToken()<br/>   - JWT decode Azure token<br/>   - Parse with PayloadSchema (appid, scp, exp)<br/>4. Set authInfo in request
+    
+    Auth->>MCP: Authenticated request with authInfo
+    
+    Note right of MCP: mcpPostHandler logic:<br/>1. sessionId = req.headers['mcp-session-id'] (undefined)<br/>2. isInitializeRequest(req.body) = true<br/>3. Create new StreamableHTTPServerTransport<br/>4. Set onsessioninitialized callback<br/>5. transport.onclose cleanup handler<br/>6. server.connect(transport)<br/>7. transport.handleRequest()
+    
+    Note right of MCP: Transport creates MCP session:<br/>sessionIdGenerator: () => randomUUID()
+    
+    MCP-->>Client: HTTP 200<br/>Mcp-Session-Id: MCP_SESSION_UUID<br/>{"result": {"capabilities": {"tools": {}}, ...}}
+    
+    Note right of MCP: onsessioninitialized callback:<br/>transports[MCP_SESSION_UUID] = transport
+
+    Note over Client, Graph: Phase 3: Tool Call Execution
+
+    Client->>Auth: POST /mcp<br/>Authorization: Bearer ENCRYPTED_SESSION_ID<br/>Mcp-Session-Id: MCP_SESSION_UUID<br/>{"method": "tools/call", "params": {"name": "me"}}
+    
+    Note right of Auth: Same auth middleware process:<br/>Decrypt → Verify → Set authInfo
+    
+    Auth->>MCP: Authenticated request with authInfo
+    
+    Note right of MCP: mcpPostHandler logic:<br/>1. sessionId = MCP_SESSION_UUID<br/>2. transports[sessionId] exists<br/>3. Use existing transport<br/>4. transport.handleRequest()
+    
+    Note right of MCP: Tool 'me' execution:<br/>1. Access authInfo from request context<br/>2. getClient(authInfo) creates Graph client<br/>3. authProvider uses authInfo.token (Azure token)
+    
+    MCP->>Graph: GET /me<br/>Authorization: Bearer AZURE_ACCESS_TOKEN
+    Graph-->>MCP: {"id": "...", "displayName": "...", ...}
+    
+    MCP-->>Client: HTTP 200<br/>{"result": {"content": [{"type": "text", "text": "JSON_USER_DATA"}]}}
+
+    Note over Client, Graph: Phase 4: Session Termination (Optional)
+
+    Client->>Auth: DELETE /mcp<br/>Mcp-Session-Id: MCP_SESSION_UUID
+    Auth->>MCP: mcpDeleteHandler
+    
+    Note right of MCP: 1. Get transport by sessionId<br/>2. transport.handleRequest() for termination<br/>3. transport.onclose() triggered<br/>4. delete transports[sessionId]
+    
+    MCP-->>Client: HTTP 200 (session terminated)
+
+    rect rgb(255, 245, 245)
+        Note over DCR: DcrProxyOAuthServerProvider Components:
+        Note over DCR: • DemoInMemoryClientsStore (client registrations)
+        Note over DCR: • DemoInMemoryDcrProxyStore (sessions, auth mappings)
+        Note over DCR: • Session encryption (AES-256-CBC)
+        Note over DCR: • PKCE verification (double-layer)
+    end
+
+    rect rgb(245, 255, 245)
+        Note over MCP: MCP Server Components:
+        Note over MCP: • transports: {[sessionId]: StreamableHTTPServerTransport}
+        Note over MCP: • InMemoryEventStore (resumability)
+        Note over MCP: • Microsoft Graph Client per request
+        Note over MCP: • Session lifecycle management
+    end
+
+    rect rgb(255, 255, 245)
+        Note over Auth: Authentication Middleware Chain:
+        Note over Auth: • Extract Bearer token from Authorization header
+        Note over Auth: • Decrypt sessionId → get Azure tokens
+        Note over Auth: • Verify JWT token (appid, scp, exp)
+        Note over Auth: • Inject authInfo into request context
+    end

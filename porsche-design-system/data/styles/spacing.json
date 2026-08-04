@@ -1,0 +1,105 @@
+{
+  "name": "Spacing",
+  "id": "spacing",
+  "description": "The Porsche Design System provides a consistent spacing system with fluid and static spacing values for creating harmonious layouts and component spacing.",
+  "properties": {
+    "spacingFluid": {
+      "description": "Fluid spacing values that scale based on viewport size, providing responsive spacing across different screen sizes.",
+      "values": [
+        {
+          "name": "X-Small",
+          "value": "0.5rem",
+          "cssVariable": "$pds-spacing-fluid-x-small",
+          "jsVariable": "spacingFluidXSmall",
+          "description": "Extra small fluid spacing, suitable for tight spacing between small elements."
+        },
+        {
+          "name": "Small",
+          "value": "1rem",
+          "cssVariable": "$pds-spacing-fluid-small",
+          "jsVariable": "spacingFluidSmall",
+          "description": "Small fluid spacing, suitable for general spacing between related elements."
+        },
+        {
+          "name": "Medium",
+          "value": "1.5rem",
+          "cssVariable": "$pds-spacing-fluid-medium",
+          "jsVariable": "spacingFluidMedium",
+          "description": "Medium fluid spacing, suitable for spacing between distinct elements."
+        },
+        {
+          "name": "Large",
+          "value": "2rem",
+          "cssVariable": "$pds-spacing-fluid-large",
+          "jsVariable": "spacingFluidLarge",
+          "description": "Large fluid spacing, suitable for significant separation between sections."
+        },
+        {
+          "name": "X-Large",
+          "value": "3rem",
+          "cssVariable": "$pds-spacing-fluid-x-large",
+          "jsVariable": "spacingFluidXLarge",
+          "description": "Extra large fluid spacing, suitable for major section divisions."
+        },
+        {
+          "name": "XX-Large",
+          "value": "4rem",
+          "cssVariable": "$pds-spacing-fluid-xx-large",
+          "jsVariable": "spacingFluidXXLarge",
+          "description": "Double extra large fluid spacing, suitable for very significant separations."
+        }
+      ]
+    },
+    "spacingStatic": {
+      "description": "Static spacing values that remain consistent regardless of viewport size, providing predictable spacing for specific use cases.",
+      "values": [
+        {
+          "name": "X-Small",
+          "value": "4px",
+          "cssVariable": "$pds-spacing-static-x-small",
+          "jsVariable": "spacingStaticXSmall",
+          "description": "Extra small static spacing, suitable for tight spacing between small elements."
+        },
+        {
+          "name": "Small",
+          "value": "8px",
+          "cssVariable": "$pds-spacing-static-small",
+          "jsVariable": "spacingStaticSmall",
+          "description": "Small static spacing, suitable for general spacing between related elements."
+        },
+        {
+          "name": "Medium",
+          "value": "16px",
+          "cssVariable": "$pds-spacing-static-medium",
+          "jsVariable": "spacingStaticMedium",
+          "description": "Medium static spacing, suitable for spacing between distinct elements."
+        },
+        {
+          "name": "Large",
+          "value": "24px",
+          "cssVariable": "$pds-spacing-static-large",
+          "jsVariable": "spacingStaticLarge",
+          "description": "Large static spacing, suitable for significant separation between sections."
+        },
+        {
+          "name": "X-Large",
+          "value": "32px",
+          "cssVariable": "$pds-spacing-static-x-large",
+          "jsVariable": "spacingStaticXLarge",
+          "description": "Extra large static spacing, suitable for major section divisions."
+        },
+        {
+          "name": "XX-Large",
+          "value": "48px",
+          "cssVariable": "$pds-spacing-static-xx-large",
+          "jsVariable": "spacingStaticXXLarge",
+          "description": "Double extra large static spacing, suitable for very significant separations."
+        }
+      ]
+    }
+  },
+  "examples": {
+    "angular": "styles-spacing-example.component.ts",
+    "react": "StylesSpacingExample.tsx"
+  }
+}

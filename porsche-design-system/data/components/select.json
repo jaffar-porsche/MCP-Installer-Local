@@ -1,0 +1,158 @@
+{
+    "name": "Select",
+    "id": "p-select",
+    "description": "The `p-select` component is a versatile custom form element that enables the selection of a single options. It can be used within a form or in a controlled manner.",
+    "code": "<input type=\ncheckbox\n id=\nrequired\n name=\nrequired\n checked=\nchecked\n />\n<label for=\nrequired\n>Required</label>\n<input type=\ncheckbox\n id=\ndeselection\n name=\ndeselection\n />\n<label for=\ndeselection\n>Allow deselection</label>\n<form>\n<p-select name=\noptions\n label=\nSome Label\n required>\n<p-select-option value=\n1\n>Option 1</p-select-option>\n<p-select-option value=\n2\n>Option 2</p-select-option>\n<p-select-option value=\n3\n>Option 3</p-select-option>\n</p-select>\n<button type=\nsubmit\n>Submit</button>\n</form>\n<p-text>Last submitted data: none</p-text>\n<script>\nconst select = document.querySelector('p-select');\nconst required = document.querySelector('#required');\nconst deselection = document.querySelector('#deselection');\nrequired.addEventListener('change', (e) => {\nselect.toggleAttribute('required', e.target.checked);\n});\n  deselection.addEventListener('change', (e) => {\n    if (e.target.checked) {\n      select.prepend(document.createElement('p-select-option'));\n    } else {\n      document.querySelector('p-select-option:not([value])').remove();\n    }\n  });\n  const debugElement = document.querySelector('p-text');\n  const form = document.querySelector('form');\n  form.addEventListener('submit', (e) => {\n    e.preventDefault();\n    const formData = new FormData(form);\n    debugElement.innerText = `Last submitted data: ${formData.get('options')}`;\n  });\n</script>",
+    "properties": {
+        "controlledMeta": [
+          {
+            "event": "update",
+            "isInternallyMutated": true,
+            "props": [
+              "value"
+            ]
+          }
+        ],
+        "eventsMeta": {
+          "update": {
+            "description": "Emitted when the selection is changed.",
+            "type": "SelectUpdateEventDetail",
+            "typeDetail": "{ name: string; value: string }"
+          }
+        },
+        "hasAriaProp": false,
+        "hasElementInternals": true,
+        "hasEvent": true,
+        "hasObserveAttributes": false,
+        "hasObserveChildren": false,
+        "hasSlot": true,
+        "isChunked": true,
+        "isDelegatingFocus": true,
+        "isInternal": false,
+        "isThemeable": true,
+        "nestedComponents": [
+          "p-icon"
+        ],
+        "propsMeta": {
+          "compact": {
+            "allowedValues": "boolean",
+            "defaultValue": false,
+            "description": "Displays as compact version.",
+            "type": "boolean"
+          },
+          "description": {
+            "allowedValues": "string",
+            "defaultValue": "",
+            "description": "The description text.",
+            "type": "string"
+          },
+          "disabled": {
+            "allowedValues": "boolean",
+            "defaultValue": false,
+            "description": "Disables the select.",
+            "propOptions": {
+              "mutable": true
+            },
+            "type": "boolean"
+          },
+          "dropdownDirection": {
+            "allowedValues": [
+              "down",
+              "up",
+              "auto"
+            ],
+            "defaultValue": "auto",
+            "description": "Changes the direction to which the dropdown list appears.",
+            "type": "SelectDropdownDirection"
+          },
+          "form": {
+            "allowedValues": "string",
+            "defaultValue": null,
+            "description": "The id of a form element the select should be associated with.",
+            "propOptions": {
+              "reflect": true
+            },
+            "type": "string"
+          },
+          "hideLabel": {
+            "allowedValues": "boolean",
+            "defaultValue": false,
+            "description": "Show or hide label. For better accessibility it is recommended to show the label.",
+            "isBreakpointCustomizable": true,
+            "type": "boolean"
+          },
+          "label": {
+            "allowedValues": "string",
+            "defaultValue": "",
+            "description": "The label text.",
+            "type": "string"
+          },
+          "message": {
+            "allowedValues": "string",
+            "defaultValue": "",
+            "description": "The message styled depending on validation state.",
+            "type": "string"
+          },
+          "name": {
+            "allowedValues": "string",
+            "defaultValue": null,
+            "description": "The name of the control.",
+            "isRequired": true,
+            "propOptions": {
+              "reflect": true
+            },
+            "type": "string"
+          },
+          "required": {
+            "allowedValues": "boolean",
+            "defaultValue": false,
+            "description": "A Boolean attribute indicating that an option with a non-empty string value must be selected.",
+            "type": "boolean"
+          },
+          "state": {
+            "allowedValues": [
+              "none",
+              "error",
+              "success"
+            ],
+            "defaultValue": "none",
+            "description": "The validation state.",
+            "type": "SelectState"
+          },
+          "theme": {
+            "allowedValues": [
+              "light",
+              "dark",
+              "auto"
+            ],
+            "defaultValue": "light",
+            "description": "Adapts the select color depending on the theme.",
+            "type": "Theme"
+          },
+          "value": {
+            "allowedValues": "string",
+            "defaultValue": null,
+            "description": "The selected value.",
+            "propOptions": {
+              "mutable": true
+            },
+            "type": "string"
+          }
+        },
+        "slotsMeta": {
+          "": {
+            "description": "Default slot for the `p-select-option` tags."
+          },
+          "description": {
+            "description": "Shows a description. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+          },
+          "label": {
+            "description": "Shows a label. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+          },
+          "message": {
+            "description": "Shows a state message. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+          }
+        },
+        "styling": "jss"
+      }
+}

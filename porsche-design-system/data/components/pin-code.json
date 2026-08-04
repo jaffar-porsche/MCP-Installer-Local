@@ -1,0 +1,164 @@
+{
+  "name": "Pin Code",
+  "id": "p-pin-code",
+  "description": "The `p-pin-code` component is optimized for entering sequences of digits. The most common use case is for entering\none-time-passwords (OTP) or pin codes. The input fields allow only one digit at a time. When a digit is entered, the\nfocus shifts automatically to the next input, until every input is filled.",
+  "code": "<p-pin-code :theme=\"theme\" label=\"Some Label\" name=\"pin-code\"></p-pin-code>\n<p-button :theme=\"theme\" type=\"submit\" style=\"margin: 1rem 0\">Submit</p-button>\n<p-text :theme=\"theme\">Last submitted data: {{ submittedValue }}</p-text>\n<p-pin-code :theme=\"theme\" label=\"Some Label\" :value=\"currentValueControlled\" @update=\"onUpdate\"></p-pin-code>\n<p-text :theme=\"theme\" style=\"margin: 1rem 0\">Current value: {{currentValueControlled}}</p-text>\n<p-text :theme=\"theme\">Completely filled: {{isComplete}}</p-text>\n<p-pin-code label=\"Some label\" hide-label=\"Some content\"></p-pin-code>\n<p-pin-code label=\"Some label\" description=\"Some description\"></p-pin-code>\n<p-pin-code label=\"Some label\" length=\"Some content\"></p-pin-code>\n<p-pin-code label=\"Some label\" type=\"Some content\"></p-pin-code>\n<p-pin-code label=\"Some label\" state=\"Some content\" Some content></p-pin-code>\n<p-pin-code label=\"Some label\" disabled=\"true\"></p-pin-code>\n<p-pin-code label=\"Some label\" loading=\"true\"></p-pin-code>\n<p-pin-code label=\"Some label\" required=\"true\"></p-pin-code>\n<p-pin-code state=\"error\">\n    <span slot=\"label\" id=\"some-label-id\">\n      Some label with a <a href=\"https://designsystem.porsche.com\">link</a>.\n    </span>\n    <span slot=\"description\" id=\"some-description-id\">\n      Some description with a <a href=\"https://designsystem.porsche.com\">link</a>.\n    </span>\n    <span slot=\"message\" id=\"some-message-id\">\n      Some error message with a <a href=\"https://designsystem.porsche.com\">link</a>.\n    </span>\n  </p-pin-code>",
+  "properties": {
+    "controlledMeta": [
+      {
+        "event": "update",
+        "isInternallyMutated": true,
+        "props": [
+          "value"
+        ]
+      }
+    ],
+    "eventsMeta": {
+      "update": {
+        "description": "Emitted when selected element changes.",
+        "type": "PinCodeUpdateEventDetail",
+        "typeDetail": "{ value: string; isComplete: boolean }"
+      }
+    },
+    "hasAriaProp": false,
+    "hasElementInternals": true,
+    "hasEvent": true,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": true,
+    "isInternal": false,
+    "isThemeable": true,
+    "nestedComponents": [
+      "p-spinner",
+      "p-icon"
+    ],
+    "propsMeta": {
+      "description": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The description text.",
+        "type": "string"
+      },
+      "disabled": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Disables the Pin Code. No events will be triggered while disabled state is active.",
+        "type": "boolean"
+      },
+      "form": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "The id of a form element the pin-code should be associated with.",
+        "propOptions": {
+          "reflect": true
+        },
+        "type": "string"
+      },
+      "hideLabel": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Show or hide label and description text. For better accessibility it is recommended to show the label.",
+        "isBreakpointCustomizable": true,
+        "type": "boolean"
+      },
+      "label": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The label text.",
+        "type": "string"
+      },
+      "length": {
+        "allowedValues": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "defaultValue": 4,
+        "description": "Number of characters of the Pin Code.",
+        "type": "PinCodeLength"
+      },
+      "loading": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Disables the Pin Code and shows a loading indicator. No events will be triggered while loading state is active.",
+        "type": "boolean"
+      },
+      "message": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "The message styled depending on validation state.",
+        "type": "string"
+      },
+      "name": {
+        "allowedValues": "string",
+        "defaultValue": null,
+        "description": "Name of the control.",
+        "propOptions": {
+          "reflect": true
+        },
+        "type": "string"
+      },
+      "required": {
+        "allowedValues": "boolean",
+        "defaultValue": false,
+        "description": "Marks the Pin Code as required.",
+        "type": "boolean"
+      },
+      "state": {
+        "allowedValues": [
+          "none",
+          "error",
+          "success"
+        ],
+        "defaultValue": "none",
+        "description": "The validation state.",
+        "type": "PinCodeState"
+      },
+      "theme": {
+        "allowedValues": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "defaultValue": "light",
+        "description": "Adapts the color depending on the theme.",
+        "type": "Theme"
+      },
+      "type": {
+        "allowedValues": [
+          "number",
+          "password"
+        ],
+        "defaultValue": "number",
+        "description": "Pin Code type.",
+        "type": "PinCodeType"
+      },
+      "value": {
+        "allowedValues": "string",
+        "defaultValue": "",
+        "description": "Sets the initial value of the Pin Code.",
+        "propOptions": {
+          "mutable": true
+        },
+        "type": "string"
+      }
+    },
+    "slotsMeta": {
+      "description": {
+        "description": "Shows a description. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "label": {
+        "description": "Shows a label. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      },
+      "message": {
+        "description": "Shows a state message. Only [phrasing content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content) is allowed."
+      }
+    },
+    "styling": "jss"
+  }
+}

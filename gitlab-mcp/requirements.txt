@@ -1,0 +1,9 @@
+fastapi-mcp>=0.1.0,<0.5.0
+# fastapi-mcp 0.4.x is incompatible with mcp>=2.0 (Server.__init__ signature change)
+mcp>=1.0.0,<2.0.0
+fastapi>=0.104.0
+httpx>=0.25.0
+uvicorn[standard]>=0.24.0
+python-gitlab>=4.0.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0

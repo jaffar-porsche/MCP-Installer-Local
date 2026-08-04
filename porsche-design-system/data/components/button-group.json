@@ -1,0 +1,39 @@
+{
+  "name": "Button Group",
+  "id": "p-button group",
+  "description": "The `p-button-group` is a component for wrapping multiple buttons and display them in vertical or horizontal groups with\ncorresponding spacing and width. By default buttons are displayed in full-width as a vertical stacked group for mobile\nviewports (breakpoint XS) and side-by-side in a row for larger viewports.",
+  "code": "<p-button-group>\n  <p-button variant=\"primary\">Some label</p-button>\n<p-button variant=\"secondary\">Some label</p-button>\n<p-button-group direction=\"{base: 'column', s: 'row'}\">\n  <p-button variant=\"primary\">Some label</p-button>\n<p-button variant=\"secondary\">Some label</p-button>",
+  "properties": {
+    "hasAriaProp": false,
+    "hasElementInternals": false,
+    "hasEvent": false,
+    "hasObserveAttributes": false,
+    "hasObserveChildren": false,
+    "hasSlot": true,
+    "isChunked": true,
+    "isDelegatingFocus": false,
+    "isInternal": false,
+    "isThemeable": false,
+    "propsMeta": {
+      "direction": {
+        "allowedValues": [
+          "row",
+          "column"
+        ],
+        "defaultValue": {
+          "base": "column",
+          "xs": "row"
+        },
+        "description": "Defines the direction of the main and cross axis. The default is ’{base: ‘column’, xs: ‘row’}' showing buttons vertically stacked on mobile viewports and side-by-side in a horizontal row from breakpoint ‘xs’. You always need to provide a base value when using breakpoints.",
+        "isBreakpointCustomizable": true,
+        "type": "ButtonGroupDirection"
+      }
+    },
+    "slotsMeta": {
+      "": {
+        "description": "Default slot for the buttons to group."
+      }
+    },
+    "styling": "jss"
+  }
+}
