@@ -6,7 +6,7 @@ on:
       - 'deliverable-electron/**'
       - '.github/workflows/ci.yml'
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'deliverable-electron/**'
       - '.github/workflows/ci.yml'
