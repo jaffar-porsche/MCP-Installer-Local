@@ -77,7 +77,7 @@ nsis:
   createStartMenuShortcut: true
   shortcutName: MCP-Installer
   runAfterFinish: true
-  deleteAppDataOnUninstall: false
+  deleteAppDataOnUninstall: true
   differentialPackage: true
 
 publish:
