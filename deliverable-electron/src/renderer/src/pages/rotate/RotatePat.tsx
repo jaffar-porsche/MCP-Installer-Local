@@ -32,7 +32,9 @@ export default function RotatePat({ serverKey }: Props) {
         return;
       }
 
-      const env = await window.api.env.read(serverKey).catch(() => ({}));
+      const env: Record<string, string> = await window.api.env
+        .read(serverKey)
+        .catch((): Record<string, string> => ({}));
       if (cancelled) return;
 
       setSpec(nextSpec);
