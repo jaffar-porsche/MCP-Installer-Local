@@ -64,7 +64,7 @@ export default function ControlPanel() {
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-pag-text">Servers</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-pag-text">SERVERS</h1>
           <p className="text-sm text-pag-text-muted">
             Nothing runs until you press <strong>Start</strong>.
           </p>

@@ -16,11 +16,11 @@ const config: Config = {
       colors: {
         pag: {
           red: {
-            DEFAULT: '#D5001C',
-            hover: '#EE0024',
-            dark: '#B30017',
-            faint: '#FDE9EC',
-          },
+  DEFAULT: '#8CCBFF',
+  hover: '#66B7F5',
+  dark: '#4696DC',
+  faint: '#E6F4FF',
+},
           ink: {
             DEFAULT: '#0A0A0A',
             soft: '#171717',

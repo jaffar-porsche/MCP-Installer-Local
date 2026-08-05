@@ -7,9 +7,9 @@
    The renderer is fully themeable through these CSS variables.
    ------------------------------------------------------------------------- */
 :root {
-  --brand-red: 213 0 28;         /* #D5001C */
-  --brand-red-hover: 238 0 36;   /* #EE0024 */
-  --brand-red-dark: 179 0 23;    /* #B30017 */
+  --brand-blue: 140 203 255;        /* #8CCBFF */
+  --brand-blue-hover: 102 183 245;  /* #66B7F5 */
+  --brand-blue-dark: 70 150 220;    /* #4696DC */
 
   color-scheme: light;
 }
@@ -51,7 +51,5 @@ button {
 /* Subtle gradient used as the app background canvas */
 .canvas-gradient {
   background:
-    radial-gradient(1200px 800px at 90% -10%, rgba(213, 0, 28, 0.05), transparent 60%),
-    radial-gradient(1000px 600px at -10% 100%, rgba(9, 9, 11, 0.04), transparent 60%),
     theme('colors.pag.bg.DEFAULT');
 }
