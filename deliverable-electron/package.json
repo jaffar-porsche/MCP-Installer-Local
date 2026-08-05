@@ -16,12 +16,12 @@
     "build": "electron-vite build",
     "build:win": "electron-vite build && electron-builder --win --config electron-builder.yml",
     "build:win:safe": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\build.ps1",
+    "notify:teams": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\notify-teams.ps1",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "lint": "eslint . --ext .ts,.tsx",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "electron-updater": "^6.3.0",
     "lucide-react": "^0.400.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

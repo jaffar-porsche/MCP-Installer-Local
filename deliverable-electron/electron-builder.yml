@@ -78,11 +78,4 @@ nsis:
   shortcutName: MCP-Installer
   runAfterFinish: true
   deleteAppDataOnUninstall: true
-  differentialPackage: true
-
-publish:
-  provider: github
-  owner: porsche-code
-  repo: MCP-Installer
-  releaseType: release
-  channel: latest
+  differentialPackage: false

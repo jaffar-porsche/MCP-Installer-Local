@@ -25,7 +25,6 @@ import { testConnection } from './services/connectionTester';
 import { ServerController } from './services/serverController';
 import { createOrRepair as createShortcut, info as shortcutInfo, remove as removeShortcut } from './services/shortcutManager';
 import { integrateAll } from './services/vscodeIntegrator';
-import { startAutoUpdates } from './services/autoUpdater';
 import { detectPython } from './services/pythonDetector';
 import { bulkBootstrap } from './services/serverBootstrap';
 import { markWizardCompleted, wizardCompleted } from './services/installationStore';
@@ -286,9 +285,6 @@ if (!gotTheLock) {
     replaceController();
 
     registerIpc();
-
-    // Kick off auto-updates (packaged builds only — no-op in dev).
-    startAutoUpdates();
 
     const target = decideInitialWindow();
     if (target === 'wizard') await ensureWizardWindow();
