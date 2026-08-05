@@ -9,6 +9,8 @@ import os
 import tempfile
 import base64
 
+import pat_status
+
 load_dotenv()
 
 # Configuration
@@ -44,14 +46,36 @@ if HTTP_PROXY or HTTPS_PROXY:
     if proxies:
         gl.session.proxies.update(proxies)
 
+def _startup_auth_status_code(exc: Exception) -> int | None:
+    """Classify GitLab startup auth failures without crashing the server."""
+    response = getattr(exc, "response", None)
+    status_code = getattr(response, "status_code", None)
+    if status_code in (401, 403):
+        return int(status_code)
+
+    text = str(exc)
+    lowered = text.lower()
+    if "403" in text or "forbidden" in lowered:
+        return 403
+    if "401" in text or "unauthorized" in lowered or "authentication" in lowered:
+        return 401
+    return None
+
+
 # Test connection
 try:
     gl.auth()  # This returns None on success, raises exception on failure
     current_user = gl.user
     print(f"Connected to GitLab as: {current_user.name} ({current_user.username})")
+    pat_status.record_success(200)
 except Exception as e:
-    print(f"Failed to connect to GitLab: {e}")
-    raise
+    code = _startup_auth_status_code(e)
+    if code is not None:
+        pat_status.record_unauthorized(code, str(e))
+        print(f"GitLab PAT invalid or expired: {e}")
+    else:
+        print(f"Failed to connect to GitLab: {e}")
+        raise
 
 app = FastAPI(title="GitLab MCP Server", version="1.0.0")
 
@@ -59,8 +83,6 @@ app = FastAPI(title="GitLab MCP Server", version="1.0.0")
 # --------------------------------------------------------------------------- #
 # MCPorsche health endpoints — polled by the Control Panel & tray icon
 # --------------------------------------------------------------------------- #
-
-import pat_status  # noqa: E402
 
 
 @app.get("/health", summary="Liveness probe", operation_id="health_liveness")

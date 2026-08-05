@@ -2,15 +2,23 @@ import { useEffect, useState } from 'react';
 
 import Wizard from './pages/wizard/Wizard';
 import ControlPanel from './pages/panel/ControlPanel';
+import RotatePat from './pages/rotate/RotatePat';
 import BrandFrame from './components/BrandFrame';
 
-type Route = 'wizard' | 'panel';
+type Route =
+  | { kind: 'wizard' }
+  | { kind: 'panel' }
+  | { kind: 'rotate'; serverKey: string };
 
 function readInitialRoute(): Route {
-  // Preferred: `#/wizard` or `#/panel` set by the main process when loading.
-  const hash = window.location.hash.replace('#/', '').replace('#', '');
-  if (hash === 'wizard' || hash === 'panel') return hash;
-  return 'panel';
+  const hash = window.location.hash.replace(/^#\/?/, '');
+  if (hash === 'wizard') return { kind: 'wizard' };
+  if (hash === 'panel') return { kind: 'panel' };
+  if (hash.startsWith('rotate/')) {
+    const serverKey = hash.slice('rotate/'.length).trim();
+    if (serverKey) return { kind: 'rotate', serverKey };
+  }
+  return { kind: 'panel' };
 }
 
 export default function App() {
@@ -23,8 +31,8 @@ export default function App() {
   }, []);
 
   return (
-    <BrandFrame variant={route === 'wizard' ? 'wizard' : 'panel'}>
-      {route === 'wizard' ? <Wizard /> : <ControlPanel />}
+    <BrandFrame variant={route.kind === 'panel' ? 'panel' : 'wizard'}>
+      {route.kind === 'wizard' ? <Wizard /> : route.kind === 'rotate' ? <RotatePat serverKey={route.serverKey} /> : <ControlPanel />}
     </BrandFrame>
   );
 }

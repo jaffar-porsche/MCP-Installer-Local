@@ -107,7 +107,7 @@ export default function ControlPanel() {
               onStop={() => stop(spec.key)}
               onRestart={() => restart(spec.key)}
               onLog={() => window.api.serverControl.openLog(spec.key)}
-              onRotate={() => window.api.windows.openWizard()}
+              onRotate={() => window.api.windows.openPatRotation(spec.key)}
             />
           );
         })}
@@ -117,7 +117,7 @@ export default function ControlPanel() {
         <div className="flex gap-2">
           <Button variant="secondary" onClick={() => window.api.windows.openWizard()}>
             <Settings2 className="h-4 w-4" />
-            Reconfigure (Wizard)
+            Reconfigure Wizard
           </Button>
           <Button
             variant="secondary"

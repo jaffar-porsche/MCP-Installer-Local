@@ -60,6 +60,7 @@ const api: Api = {
   },
   windows: {
     openWizard: () => ipcRenderer.invoke(IPC.windows_openWizard),
+    openPatRotation: (serverKey) => ipcRenderer.invoke(IPC.windows_openPatRotation, serverKey),
     openControlPanel: () => ipcRenderer.invoke(IPC.windows_openControlPanel),
     closeCurrent: () => ipcRenderer.invoke(IPC.windows_closeCurrent),
   },

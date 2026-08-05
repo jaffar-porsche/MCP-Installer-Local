@@ -58,15 +58,17 @@ export class ServerController extends EventEmitter {
   constructor(private readonly specs: ServerSpec[]) {
     super();
     for (const spec of specs) {
-      // 🚨 FIX: never auto-attach to old processes
-this.procs.set(spec.key, {
-  spec,
-  child: null,
-  pid: null,
-  state: 'STOPPED',
-  message: '',
-  displayUser: null,
-});
+      const pid = readPidFile(spec.key);
+      this.procs.set(spec.key, {
+        spec,
+        child: null,
+        pid: pid && isPidAlive(pid) ? pid : null,
+        state: 'STOPPED',
+        message: '',
+        displayUser: null,
+      });
+
+      if (pid && !isPidAlive(pid)) clearPidFile(spec.key);
     }
   }
 
@@ -250,14 +252,21 @@ const args = [
       const resp = await fetch(url, { signal: AbortSignal.timeout(2000) });
       if (resp.status === 200) {
         const body = await resp.text();
+        const patState = extractPatState(body);
         proc.displayUser = extractUser(body);
-        this.set(
-          proc,
-          'RUNNING_OK',
-          `Running on port ${port}.${proc.displayUser ? ` User: ${proc.displayUser}` : ''}`,
-        );
+        if (patState === 'UNKNOWN') {
+          this.set(proc, 'STARTING', `Server responding on port ${port}. Verifying PAT…`);
+        } else if (patState === 'INVALID') {
+          this.set(proc, 'RUNNING_PAT_BAD', 'PAT is invalid or expired.');
+        } else {
+          this.set(
+            proc,
+            'RUNNING_OK',
+            `Running on port ${port}.${proc.displayUser ? ` User: ${proc.displayUser}` : ''}`,
+          );
+        }
       } else if (resp.status === 401) {
-        this.set(proc, 'RUNNING_PAT_BAD', 'Server up, but the PAT is invalid or expired.');
+        this.set(proc, 'RUNNING_PAT_BAD', 'PAT is invalid or expired.');
       } else {
         this.set(proc, 'ERROR', `HTTP ${resp.status} from /health/pat`);
       }
@@ -397,4 +406,14 @@ function extractUser(body: string): string | null {
     /* ignore */
   }
   return null;
+}
+
+function extractPatState(body: string): string | null {
+  try {
+    const data = JSON.parse(body);
+    const state = data?.pat?.state;
+    return typeof state === 'string' ? state : null;
+  } catch {
+    return null;
+  }
 }

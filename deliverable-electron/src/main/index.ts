@@ -40,6 +40,8 @@ let controller: ServerController | null = null;
 let wizardWindow: BrowserWindow | null = null;
 let controlPanelWindow: BrowserWindow | null = null;
 
+type AppRoute = 'wizard' | 'panel' | `rotate/${string}`;
+
 function replaceController(): void {
   controller?.stopPoller();
   const next = new ServerController(specs);
@@ -83,16 +85,21 @@ function commonWindowOptions(): Electron.BrowserWindowConstructorOptions {
   };
 }
 
-async function ensureWizardWindow(): Promise<BrowserWindow> {
+async function ensureWizardWindow(route: AppRoute = 'wizard'): Promise<BrowserWindow> {
   if (wizardWindow && !wizardWindow.isDestroyed()) {
+    const rotate = route.startsWith('rotate/');
+    wizardWindow.setMinimumSize(rotate ? 640 : 780, rotate ? 520 : 640);
+    wizardWindow.setSize(rotate ? 700 : 900, rotate ? 600 : 720);
+    await loadRoute(wizardWindow, route);
     wizardWindow.focus();
     return wizardWindow;
   }
+  const rotate = route.startsWith('rotate/');
   wizardWindow = new BrowserWindow({
-    width: 900,
-    height: 720,
-    minWidth: 780,
-    minHeight: 640,
+    width: rotate ? 700 : 900,
+    height: rotate ? 600 : 720,
+    minWidth: rotate ? 640 : 780,
+    minHeight: rotate ? 520 : 640,
     title: 'MCP-Installer — Setup',
     ...commonWindowOptions(),
   });
@@ -101,7 +108,7 @@ async function ensureWizardWindow(): Promise<BrowserWindow> {
 wizardWindow.focus();
 
 console.log('[MAIN] WINDOW CREATED');
-  await loadRoute(wizardWindow, 'wizard');
+  await loadRoute(wizardWindow, route);
   wizardWindow.once('ready-to-show', () => wizardWindow?.show());
   wizardWindow.on('closed', () => (wizardWindow = null));
   return wizardWindow;
@@ -130,7 +137,7 @@ controlPanelWindow.focus();
   return controlPanelWindow;
 }
 
-async function loadRoute(win: BrowserWindow, route: 'wizard' | 'panel'): Promise<void> {
+async function loadRoute(win: BrowserWindow, route: AppRoute): Promise<void> {
   const devServer = process.env.ELECTRON_RENDERER_URL;
   if (devServer) {
     await win.loadURL(`${devServer}/#/${route}`);
@@ -207,6 +214,7 @@ function registerIpc(): void {
   });
 
   ipcMain.handle(IPC.windows_openWizard, () => ensureWizardWindow());
+  ipcMain.handle(IPC.windows_openPatRotation, (_e, serverKey: string) => ensureWizardWindow(`rotate/${serverKey}`));
   ipcMain.handle(IPC.windows_openControlPanel, () => ensureControlPanelWindow());
   ipcMain.handle(IPC.windows_closeCurrent, (e) => {
     const win = BrowserWindow.fromWebContents(e.sender);

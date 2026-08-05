@@ -3,13 +3,30 @@ import logging
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+import requests
 
 from client import confluence
-from config import CONFLUENCE_BASE_URL
+from config import CONFLUENCE_BASE_URL, CONFLUENCE_PAT, PROXIES
 import pat_status
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Health"])
+
+
+def _auth_error_status(exc: Exception) -> int | None:
+    """Extract 401/403 auth failures from Atlassian client exceptions."""
+    response = getattr(exc, "response", None)
+    status_code = getattr(response, "status_code", None)
+    if status_code in (401, 403):
+        return int(status_code)
+
+    text = str(exc)
+    lowered = text.lower()
+    if "403" in text or "forbidden" in lowered:
+        return 403
+    if "401" in text or "unauthorized" in lowered:
+        return 401
+    return None
 
 
 @router.get("/health", summary="Health check endpoint", operation_id="health_check")
@@ -52,19 +69,26 @@ async def health_pat() -> JSONResponse:
 
 
 def _probe_myself() -> None:
-    """Best-effort authenticated call; records result in pat_status."""
+    """Best-effort PAT-only call; records bearer-token validity in pat_status."""
     try:
-        user_info = confluence.get_current_user()
-        # atlassian-python-api raises on 4xx, so reaching here == 200-ish.
-        pat_status.record_success(200)
-        _ = user_info  # noqa: F841 — kept for future logging
-    except Exception as e:
-        text = str(e)
-        code = 401 if ("401" in text or "unauthorized" in text.lower()) else 500
-        if code == 401:
-            pat_status.record_unauthorized(code, text)
+        response = requests.get(
+            f"{CONFLUENCE_BASE_URL}/rest/api/user/current",
+            headers={
+                "Authorization": f"Bearer {CONFLUENCE_PAT}",
+                "Accept": "application/json",
+                "User-Agent": "confluence-mcp/2.0",
+            },
+            proxies=PROXIES,
+            timeout=6,
+        )
+        if response.status_code == 200:
+            pat_status.record_success(200)
+        elif response.status_code in (401, 403):
+            pat_status.record_unauthorized(response.status_code, response.text or "")
         else:
-            logger.info("Confluence PAT probe unexpected error: %s", text)
+            logger.info("Confluence PAT probe unexpected status: %s", response.status_code)
+    except Exception as e:
+        logger.info("Confluence PAT probe unexpected error: %s", e)
 
 
 @router.get("/test_connection", summary="Test Confluence connection and authentication", operation_id="test_connection")
@@ -82,6 +106,17 @@ async def test_connection():
             "message": "Authentication successful"
         }
     except Exception as e:
+        msg = str(e)
+        code = _auth_error_status(e)
+        if code is not None:
+            pat_status.record_unauthorized(code, msg)
+            return {
+                "status": "failed",
+                "error": msg,
+                "base_url": CONFLUENCE_BASE_URL,
+                "message": "Authentication or connectivity failed"
+            }
+
         try:
             spaces = confluence.get_all_spaces(start=0, limit=1)
             pat_status.record_success(200)
@@ -93,13 +128,14 @@ async def test_connection():
                 "spaces_available": len(spaces.get("results", []))
             }
         except Exception as fallback_error:
-            msg = str(e)
-            if "401" in msg or "unauthorized" in msg.lower():
-                pat_status.record_unauthorized(401, msg)
+            fallback_msg = str(fallback_error)
+            fallback_code = _auth_error_status(fallback_error)
+            if fallback_code is not None:
+                pat_status.record_unauthorized(fallback_code, fallback_msg)
             return {
                 "status": "failed",
                 "error": msg,
-                "fallback_error": str(fallback_error),
+                "fallback_error": fallback_msg,
                 "base_url": CONFLUENCE_BASE_URL,
                 "message": "Authentication or connectivity failed"
             }

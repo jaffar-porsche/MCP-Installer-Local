@@ -1,11 +1,20 @@
 """Tests for Confluence MCP endpoints."""
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 import pytest
+
+import pat_status
+from routes import health as health_routes
 
 
 class TestHealthEndpoints:
     """Tests for health check endpoints."""
+
+    @pytest.fixture(autouse=True)
+    def reset_pat_status(self):
+        pat_status._status = pat_status.PATStatus()
+        yield
+        pat_status._status = pat_status.PATStatus()
 
     def test_health_check(self, client):
         """Test health check returns healthy status."""
@@ -22,6 +31,45 @@ class TestHealthEndpoints:
         data = response.json()
         assert data["status"] == "connected"
         assert "user" in data
+
+    def test_health_pat_marks_forbidden_pat_invalid(self, client, mock_confluence):
+        """Health probe should surface 403 PAT failures as invalid."""
+        with patch.object(health_routes.requests, "get") as mock_get:
+            mock_get.return_value = MagicMock(status_code=403, text="Forbidden")
+
+            response = client.get("/health/pat")
+
+        assert response.status_code == 401
+        data = response.json()
+        assert data["pat"]["state"] == "INVALID"
+        assert data["pat"]["last_status_code"] == 403
+
+    def test_health_pat_uses_pat_only_probe_even_if_client_auth_would_succeed(self, client, mock_confluence):
+        """PAT health should not be masked by certificate-backed client auth."""
+        mock_confluence.get_current_user.return_value = {"displayName": "Cert User"}
+
+        with patch.object(health_routes.requests, "get") as mock_get:
+            mock_get.return_value = MagicMock(status_code=401, text="Unauthorized")
+
+            response = client.get("/health/pat")
+
+        assert response.status_code == 401
+        data = response.json()
+        assert data["pat"]["state"] == "INVALID"
+        assert data["pat"]["last_status_code"] == 401
+        mock_confluence.get_current_user.assert_not_called()
+
+    def test_test_connection_returns_failed_for_forbidden_pat(self, client, mock_confluence):
+        """Direct auth failures should not be masked by fallback calls."""
+        mock_confluence.get_current_user.side_effect = Exception("403 Forbidden")
+
+        response = client.get("/test_connection")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "failed"
+        assert data["message"] == "Authentication or connectivity failed"
+        mock_confluence.get_all_spaces.assert_not_called()
 
 
 class TestPageEndpoints:

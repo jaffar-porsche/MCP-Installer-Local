@@ -194,6 +194,7 @@ export interface Api {
   };
   windows: {
     openWizard: () => Promise<void>;
+    openPatRotation: (serverKey: string) => Promise<void>;
     openControlPanel: () => Promise<void>;
     closeCurrent: () => Promise<void>;
   };
@@ -241,6 +242,7 @@ export const IPC = {
   shortcuts_remove: 'shortcuts:remove',
   vscode_integrate: 'vscode:integrate',
   windows_openWizard: 'windows:openWizard',
+  windows_openPatRotation: 'windows:openPatRotation',
   windows_openControlPanel: 'windows:openControlPanel',
   windows_closeCurrent: 'windows:closeCurrent',
   python_detect: 'python:detect',
