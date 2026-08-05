@@ -1,7 +1,7 @@
 {
   "$schema": "manifest-v1",
   "key": "gitlab",
-  "display_name": "GitLab MCP Server",
+  "display_name": "GitLab",
   "server_dir_name": "gitlab-mcp",
   "default_port": 8003,
   "app_module": "mcp_server:app",

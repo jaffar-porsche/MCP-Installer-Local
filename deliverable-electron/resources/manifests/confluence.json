@@ -1,7 +1,7 @@
 {
   "$schema": "manifest-v1",
   "key": "confluence",
-  "display_name": "Confluence MCP Server",
+  "display_name": "Confluence",
   "server_dir_name": "confluence-mcp",
   "default_port": 8001,
   "app_module": "mcp_server:app",

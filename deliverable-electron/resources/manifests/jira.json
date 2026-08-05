@@ -1,7 +1,7 @@
 {
   "$schema": "manifest-v1",
   "key": "jira",
-  "display_name": "Jira MCP Server",
+  "display_name": "Jira",
   "server_dir_name": "jira-mcp",
   "default_port": 8000,
   "app_module": "mcp_server:app",

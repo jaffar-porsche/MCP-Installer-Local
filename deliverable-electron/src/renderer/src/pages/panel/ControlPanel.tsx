@@ -64,9 +64,9 @@ export default function ControlPanel() {
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-pag-text">SERVERS</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-pag-text">MCP SERVERS</h1>
           <p className="text-sm text-pag-text-muted">
-            Nothing runs until you press <strong>Start</strong>.
+            Click <strong>Start</strong> to launch servers. Closing this window will stop all servers.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -75,7 +75,7 @@ export default function ControlPanel() {
             onClick={async () => {
               const snaps = await window.api.serverControl.startAll();
               setStatus(index(snaps));
-              toast.success('Starting all servers…');
+              toast.success('Starting all servers...');
             }}
           >
             <PlayCircle className="h-4 w-4" />
@@ -134,7 +134,7 @@ export default function ControlPanel() {
             VS Code integration
           </Button>
           <Button variant="secondary" onClick={() => setShowShortcuts(true)}>
-            Shortcuts…
+            Shortcuts
           </Button>
         </div>
         <Button variant="ghost" onClick={() => window.api.system.quit()}>
