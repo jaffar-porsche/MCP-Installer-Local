@@ -21,43 +21,32 @@ extraFiles:
   - from: ../jira-mcp
     to: mcp-servers/jira-mcp
     filter:
-      - "**/*"
-      - "!venv/**"
-      - "!__pycache__/**"
-      - "!**/__pycache__/**"
-      - "!.pytest_cache/**"
-      - "!.env"
-      - "!tests/**"
-      - "!examples/**"
-      - "!*.log"
-      - "!Dockerfile"
-      - "!*.md"
+      - "mcp_server.py"
+      - "client.py"
+      - "config.py"
+      - "cert_loader.py"
+      - "pat_status.py"
+      - "requirements.txt"
+      - "routes/**/*"
+      - "utils/**/*"
   - from: ../confluence-mcp
     to: mcp-servers/confluence-mcp
     filter:
-      - "**/*"
-      - "!venv/**"
-      - "!__pycache__/**"
-      - "!**/__pycache__/**"
-      - "!.pytest_cache/**"
-      - "!.env"
-      - "!tests/**"
-      - "!*.log"
-      - "!Dockerfile"
-      - "!*.md"
+      - "mcp_server.py"
+      - "client.py"
+      - "config.py"
+      - "cert_loader.py"
+      - "html_utils.py"
+      - "models.py"
+      - "pat_status.py"
+      - "requirements.txt"
+      - "routes/**/*"
   - from: ../gitlab-mcp
     to: mcp-servers/gitlab-mcp
     filter:
-      - "**/*"
-      - "!venv/**"
-      - "!__pycache__/**"
-      - "!**/__pycache__/**"
-      - "!.pytest_cache/**"
-      - "!.env"
-      - "!tests/**"
-      - "!*.log"
-      - "!Dockerfile"
-      - "!*.md"
+      - "mcp_server.py"
+      - "pat_status.py"
+      - "requirements.txt"
 
 win:
   target:
