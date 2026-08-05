@@ -46,14 +46,14 @@ export default function Wizard() {
     return [
       {
         key: 'welcome',
-        title: 'Welcome to MCPorsche',
+        title: 'Welcome to MCP-Installer',
         subtitle: 'This wizard configures your MCP servers step by step.',
         render: () => <WelcomeStep />,
       },
       {
         key: 'python',
         title: 'Python runtime',
-        subtitle: 'MCPorsche needs Python to run the MCP servers.',
+        subtitle: 'MCP-Installer needs Python to run the MCP servers.',
         render: () => <PythonCheckStep onReady={setPythonReady} />,
       },
       {

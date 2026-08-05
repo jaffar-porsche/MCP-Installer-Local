@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* -------------------------------------------------------------------------
-   Porsche Engineering — MCPorsche internal design tokens.
+   Porsche Engineering — MCP-Installer internal design tokens.
    The renderer is fully themeable through these CSS variables.
    ------------------------------------------------------------------------- */
 :root {

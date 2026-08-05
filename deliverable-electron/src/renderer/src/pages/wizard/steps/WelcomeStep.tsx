@@ -6,8 +6,8 @@ export default function WelcomeStep() {
     <div className="space-y-4">
       <Card className="border-l-4 border-l-pag-red">
         <p className="text-sm leading-relaxed text-pag-text">
-          MCPorsche gives you fast, local access to <strong>Jira</strong>, <strong>Confluence</strong>,
-          and <strong>GitLab</strong> from AI assistants such as GitHub Copilot and Claude Code.
+          MCP-Installer gives you fast, local access to <strong>Jira</strong>, <strong>Confluence</strong>,
+          and <strong>GitLab</strong> from AI assistants such as GitHub Copilot,Claude Code and Codex.
           The next few screens will:
         </p>
         <ul className="mt-4 space-y-2">

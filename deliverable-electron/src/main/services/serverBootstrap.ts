@@ -62,7 +62,7 @@ export async function bulkBootstrap(opts: BulkBootstrapOptions): Promise<void> {
 
   for (const spec of specs) {
     if (!existsSync(serverDir(spec.serverDirName))) {
-      throw new Error(`Missing sources: ${serverDir(spec.serverDirName)}. Reinstall MCPorsche.`);
+      throw new Error(`Missing sources: ${serverDir(spec.serverDirName)}. Reinstall MCP-Installer.`);
     }
   }
 
@@ -93,7 +93,7 @@ export async function bulkBootstrap(opts: BulkBootstrapOptions): Promise<void> {
     await writeEnv(
       envFile(spec.serverDirName),
       values,
-      'MCPorsche — configured by the Setup Wizard.',
+      'MCP-Installer — configured by the Setup Wizard.',
     );
     markServerBootstrapped(spec.key, { requirementsHash: '', sourceHash: '' });
     await appendLog(`[${spec.key}] bootstrap complete\n`);

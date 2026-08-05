@@ -67,8 +67,8 @@ function replaceController(): void {
 
 const preloadPath = join(__dirname, '..', 'preload', 'index.js');
 console.log('[MAIN] preload path:', preloadPath);
-console.log('[MCPorsche] preload:', preloadPath);
-console.log('[MCPorsche] preload exists:', existsSync(preloadPath));
+console.log('[MCP-Installer] preload:', preloadPath);
+console.log('[MCP-Installer] preload exists:', existsSync(preloadPath));
 function commonWindowOptions(): Electron.BrowserWindowConstructorOptions {
   return {
     show: false,
@@ -93,7 +93,7 @@ async function ensureWizardWindow(): Promise<BrowserWindow> {
     height: 720,
     minWidth: 780,
     minHeight: 640,
-    title: 'MCPorsche — Setup',
+    title: 'MCP-Installer — Setup',
     ...commonWindowOptions(),
   });
   console.log('[MAIN] wizard window created');
@@ -117,7 +117,7 @@ async function ensureControlPanelWindow(): Promise<BrowserWindow> {
     height: 760,
     minWidth: 820,
     minHeight: 640,
-    title: 'MCPorsche — Control Panel',
+    title: 'MCP-Installer — Control Panel',
     ...commonWindowOptions(),
   });
   console.log('[MAIN] control window created');
@@ -165,7 +165,7 @@ function registerIpc(): void {
       if (err && f.required) throw new Error(`${f.label}: ${err}`);
     }
     const path = envFile(spec.serverDirName);
-    await writeEnv(path, values, 'MCPorsche — written by the Setup Wizard.');
+    await writeEnv(path, values, 'MCP-Installer — written by the Setup Wizard.');
     return { path };
   });
 
@@ -259,7 +259,7 @@ function decideInitialWindow(): 'wizard' | 'panel' {
   return wizardCompleted() ? 'panel' : 'wizard';
 }
 
-app.setName('MCPorsche');
+app.setName('MCP-Installer');
 
 // Single-instance lock — clicking the shortcut a second time just focuses.
 const gotTheLock = app.requestSingleInstanceLock();
@@ -273,7 +273,7 @@ if (!gotTheLock) {
   app.whenReady().then(async () => {
     ensureDataDirs();
     const manifestSource = describeSource();
-    console.log(`[MCPorsche] Manifests: ${manifestSource.dir} (${manifestSource.found.join(', ')})`);
+    console.log(`[MCP-Installer] Manifests: ${manifestSource.dir} (${manifestSource.found.join(', ')})`);
     specs = loadManifests();
     replaceController();
 

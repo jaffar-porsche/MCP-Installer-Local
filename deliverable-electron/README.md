@@ -1,4 +1,4 @@
-# MCPorsche — Electron edition
+# MCP-Installer — Electron edition
 
 **Powered by PEG-IT (Porsche Engineering)**
 
@@ -14,7 +14,7 @@ Same UX guarantees as the Python edition, now with:
 - No CMD flashes — MCP servers spawn under `pythonw.exe`, detached and
   process-grouped, so closing the app keeps them running.
 - Live health status via `/health/pat` polled every 3 s.
-- Plug-and-play server registry: drop a `mcporsche.json` in any
+- Plug-and-play server registry: drop a `MCP-Installer.json` in any
   `<name>-mcp/` folder or in `resources/manifests/` — no code changes.
 
 ## Distribution — how end users get the `.exe`
@@ -26,7 +26,7 @@ VS Code / Slack / Teams:
 Maintainer                       End user
 ──────────                       ────────
 git tag v2.0.0                   Open GitHub Releases page for this repo
-git push --tags                  Click the "MCPorsche-Setup-2.0.0.exe" asset
+git push --tags                  Click the "MCP-Installer-Setup-2.0.0.exe" asset
    │                             Double-click the download
    ▼                             NSIS installer runs (Next → Install → Done)
 GitHub Actions builds            App auto-updates from every future release.
@@ -50,14 +50,14 @@ Release page publishes the .exe
 3. The [release workflow](../.github/workflows/release.yml) runs on the tag:
    - Sets up Node 20 on `windows-latest`.
    - `npm ci`, `npm run typecheck`, `npm run build:win -- --publish always`.
-   - `electron-builder` uploads `dist\MCPorsche-Setup-2.0.0.exe` and a
+   - `electron-builder` uploads `dist\MCP-Installer-Setup-2.0.0.exe` and a
      matching `latest.yml` (the auto-update manifest) to the GitHub Release.
 4. Send users this one link:
-   `https://github.com/<org>/mcporsche/releases/latest`
+   `https://github.com/<org>/MCP-Installer/releases/latest`
 
 ### For end users — installing
 
-1. Download **MCPorsche-Setup-<version>.exe** from the link above.
+1. Download **MCP-Installer-Setup-<version>.exe** from the link above.
 2. Double-click it. If Windows shows a SmartScreen warning
    ("Unknown publisher"), click **More info → Run anyway** — this happens
    because the `.exe` isn't code-signed by default (see next section).
@@ -70,7 +70,7 @@ Release page publishes the .exe
 ### Prerequisites the user still needs
 
 - **Windows 10 or 11 (x64)** — the release build targets `--win --x64`.
-- **Python 3.10+** on PATH — MCPorsche launches the Python-based MCP
+- **Python 3.10+** on PATH — MCP-Installer launches the Python-based MCP
   servers under `pythonw.exe`. Install once from
   [python.org](https://www.python.org/downloads/) or the Microsoft Store.
 - **Corporate proxy access** to `skyway.porsche.com` (or DevX CLI proxy).
@@ -99,7 +99,7 @@ cd deliverable-electron
 npm install
 npm run dev           # HMR dev with electron-vite
 npm run build         # Type-check and bundle to out/
-npm run build:win     # Full installer at dist\MCPorsche-Setup-<version>.exe
+npm run build:win     # Full installer at dist\MCP-Installer-Setup-<version>.exe
 ```
 
 ## Architecture
@@ -140,8 +140,8 @@ Adding a new MCP server:
 
 1. Create `foo-mcp/` next to the others with its own venv and `mcp_server.py`.
 2. Copy the `/health/pat` pattern from `jira-mcp/routes/health.py`.
-3. Drop `foo-mcp/mcporsche.json` — a copy of one of the built-ins with your keys.
-4. Restart MCPorsche. Your server appears in the wizard and the panel.
+3. Drop `foo-mcp/MCP-Installer.json` — a copy of one of the built-ins with your keys.
+4. Restart MCP-Installer. Your server appears in the wizard and the panel.
 
 See `resources/manifests/` for shipped examples and the schema.
 
@@ -162,8 +162,8 @@ Header, red brand bar, wordmark, and "Powered by PEG-IT" footer are all in
 Both editions share the same on-disk state:
 
 - `.env` files under each `<name>-mcp/`.
-- `%APPDATA%\MCPorsche\state\enabled_servers.json`.
-- `%APPDATA%\MCPorsche\backups\*.env.*.bak`.
+- `%APPDATA%\MCP-Installer\state\enabled_servers.json`.
+- `%APPDATA%\MCP-Installer\backups\*.env.*.bak`.
 
 Users who already installed the Python edition can uninstall the Python
 Start Menu entries and install this Electron edition — nothing else needs

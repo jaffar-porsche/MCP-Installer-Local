@@ -1,5 +1,5 @@
-appId: com.porsche-engineering.mcporsche
-productName: MCPorsche
+appId: com.porsche-engineering.MCP-Installer
+productName: MCP-Installer
 copyright: © Porsche Engineering — PEG-IT
 directories:
   buildResources: build
@@ -14,7 +14,7 @@ extraResources:
     to: manifests
     filter: ['**/*.json']
 
-# Ship Python server sources as siblings of MCPorsche.exe so users see them
+# Ship Python server sources as siblings of MCP-Installer.exe so users see them
 # in the extracted folder. venv/ and .env live in the same folder — the whole
 # thing is portable and self-contained.
 extraFiles:
@@ -70,19 +70,19 @@ win:
 
 nsis:
   # oneClick + no admin so the same installer works on any user's laptop.
-  # extraFiles put mcp-servers next to MCPorsche.exe in the install folder.
+  # extraFiles put mcp-servers next to MCP-Installer.exe in the install folder.
   oneClick: true
   perMachine: false
   createDesktopShortcut: true
   createStartMenuShortcut: true
-  shortcutName: MCPorsche
+  shortcutName: MCP-Installer
   runAfterFinish: true
   deleteAppDataOnUninstall: false
   differentialPackage: true
 
 publish:
   provider: github
-  owner: porsche-engineering
-  repo: mcporsche
+  owner: porsche-code
+  repo: MCP-Installer
   releaseType: release
   channel: latest

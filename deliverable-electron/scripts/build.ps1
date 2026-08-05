@@ -1,6 +1,6 @@
 #requires -Version 5.1
 <#
-    Build the MCPorsche installer with corporate-AV cache-race recovery.
+    Build the MCP-Installer installer with corporate-AV cache-race recovery.
 
     Corporate AV / EDR (Defender + Zscaler + CrowdStrike, etc.) intermittently
     denies the atomic rename electron-builder needs to promote a downloaded

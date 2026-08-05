@@ -7,7 +7,7 @@ interface Props {
 
 /**
  * The BrandFrame is the persistent chrome around both windows:
- *   • Top wordmark "MCPorsche" + subtle red bar
+ *   • Top wordmark "MCP-Installer" + subtle red bar
  *   • Ambient canvas gradient
  *   • Footer "Powered by PEG-IT"
  *
@@ -41,7 +41,7 @@ export default function BrandFrame({ children, variant }: PropsWithChildren<Prop
 
       <footer className="border-t border-pag-border bg-pag-bg-surface/60">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-2 text-xxs uppercase tracking-widest text-pag-text-faint">
-          <span>MCPorsche · {new Date().getFullYear()}</span>
+          <span>MCP-Installer · {new Date().getFullYear()}</span>
           <span>Powered by PEG-IT</span>
         </div>
       </footer>
@@ -53,11 +53,11 @@ function Wordmark() {
   return (
     <div className="flex items-center gap-2">
       <div className="grid h-8 w-8 place-items-center rounded-md bg-pag-ink text-pag-bg-surface">
-        <span className="font-bold text-sm tracking-tight">MC</span>
+        <span className="font-bold text-sm tracking-tight">MCP</span>
       </div>
       <div className="leading-none">
         <div className="text-lg font-semibold tracking-tight text-pag-text">
-          MC<span className="text-pag-red">Porsche</span>
+          MCP<span className="text-pag-red">Installer</span>
         </div>
         <div className="text-xxs uppercase tracking-widest text-pag-text-faint">
           MCP Server Suite

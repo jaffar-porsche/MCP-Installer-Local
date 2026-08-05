@@ -11,9 +11,9 @@ interface Props {
 }
 
 const LOCATIONS: Array<{ id: ShortcutLocation; title: string; description: string }> = [
-  { id: 'start_menu', title: 'Start Menu shortcut', description: 'Type “MCPorsche” in Windows Start.' },
+  { id: 'start_menu', title: 'Start Menu shortcut', description: 'Type “MCP-Installer” in Windows Start.' },
   { id: 'desktop', title: 'Desktop shortcut', description: 'The icon most users double-click.' },
-  { id: 'startup', title: 'Auto-start on login', description: 'Launch MCPorsche every time you log in to Windows.' },
+  { id: 'startup', title: 'Auto-start on login', description: 'Launch MCP-Installer every time you log in to Windows.' },
 ];
 
 export default function ShortcutDialog({ onClose }: Props) {
@@ -78,7 +78,7 @@ export default function ShortcutDialog({ onClose }: Props) {
         <div className="flex items-center justify-between">
           <div>
             <div className="text-base font-semibold text-pag-text">Shortcuts</div>
-            <div className="text-xs text-pag-text-muted">Choose where the MCPorsche shortcut should live.</div>
+            <div className="text-xs text-pag-text-muted">Choose where the MCP-Installer shortcut should live.</div>
           </div>
           <button
             className="rounded-md p-1 text-pag-text-muted hover:bg-pag-bg-muted"

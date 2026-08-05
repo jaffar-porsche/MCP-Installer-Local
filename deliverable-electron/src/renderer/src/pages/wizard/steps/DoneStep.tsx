@@ -14,7 +14,7 @@ export default function DoneStep() {
           <div>
             <div className="text-base font-semibold text-pag-text">Configuration saved</div>
             <p className="mt-1 text-sm text-pag-text-muted">
-              <code>.env</code> files were written, virtual environments were created, and MCPorsche is
+              <code>.env</code> files were written, virtual environments were created, and MCP-Installer is
               now registered in VS Code and Claude Desktop.
             </p>
           </div>
@@ -26,7 +26,7 @@ export default function DoneStep() {
         <div className="mt-2 space-y-1">
           <Checkbox
             label="Add a Start Menu shortcut"
-            description="Type “MCPorsche” in Windows Start to launch."
+            description="Type “MCP-Installer” in Windows Start to launch."
             checked={s.createStartMenu}
             onChange={(e) => s.setDone({ createStartMenu: e.target.checked })}
           />

@@ -1,5 +1,5 @@
 /**
- * Auto-updater wiring for MCPorsche.
+ * Auto-updater wiring for MCP-Installer.
  *
  * `electron-updater` reads the same feed that `electron-builder` publishes to
  * (GitHub Releases, per `electron-builder.yml`). When a newer version is
@@ -38,7 +38,7 @@ export function startAutoUpdates(): void {
       buttons: ['Restart now', 'Later'],
       defaultId: 0,
       cancelId: 1,
-      title: 'MCPorsche — update ready',
+      title: 'MCP-Installer — update ready',
       message: `Version ${info.version} downloaded.`,
       detail: 'Restart the app to complete the update.',
     });

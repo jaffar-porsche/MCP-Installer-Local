@@ -27,7 +27,7 @@ export default function PythonCheckStep({ onReady }: Props) {
     <div className="space-y-4">
       <Card className="border-l-4 border-l-pag-red">
         <p className="text-sm leading-relaxed text-pag-text">
-          MCPorsche runs Python-based MCP servers. It bundles the server code, but{' '}
+          MCP-Installer runs Python-based MCP servers. It bundles the server code, but{' '}
           <strong>Python {info?.minSupported ?? '3.10'}+ must be installed</strong> on this
           machine so we can create isolated virtual environments and install dependencies.
         </p>

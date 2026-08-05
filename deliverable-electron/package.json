@@ -1,7 +1,7 @@
 {
-  "name": "mcporsche",
-  "productName": "MCPorsche",
-  "version": "2.0.0",
+  "name": "MCP-Installer",
+  "productName": "MCP-Installer",
+  "version": "1.0.0",
   "description": "Configure, run and monitor Porsche MCP servers. Powered by PEG-IT.",
   "author": {
     "name": "Porsche Engineering — PEG-IT",

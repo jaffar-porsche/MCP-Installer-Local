@@ -16,7 +16,7 @@ import type {
   TestResult,
   VsCodeIntegrationResult,
 } from '@shared/types';
-console.log('[MCPorsche] preload loaded');
+console.log('[MCP-Installer] preload loaded');
 const api: Api = {
   system: {
     getPlatform: () => ipcRenderer.invoke(IPC.system_getPlatform),
@@ -87,4 +87,4 @@ const api: Api = {
 
 contextBridge.exposeInMainWorld('api', api);
 
-console.log('[MCPorsche] exposed:', Object.keys(api));
+console.log('[MCP-Installer] exposed:', Object.keys(api));

@@ -60,7 +60,7 @@ export default function InstallProgress({ error }: Props) {
       <p className="text-xs text-pag-text-muted">
         Each server is set up in turn — reliable on corporate networks even
         when pip has to fetch large wheels through a proxy. Watch the full
-        pip output in <code>%APPDATA%\MCPorsche\logs\bootstrap.log</code>.
+        pip output in <code>%APPDATA%\MCP-Installer\logs\bootstrap.log</code>.
       </p>
     </div>
   );

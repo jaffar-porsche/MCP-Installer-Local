@@ -1,5 +1,5 @@
 /**
- * Register MCPorsche endpoints in VS Code / Claude Desktop config files.
+ * Register MCP-Installer endpoints in VS Code / Claude Desktop config files.
  *
  * We *merge* — never replace — the existing config so any other MCP servers
  * the user has stay intact.

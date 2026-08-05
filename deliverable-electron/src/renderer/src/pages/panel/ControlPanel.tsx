@@ -66,7 +66,7 @@ export default function ControlPanel() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-pag-text">Servers</h1>
           <p className="text-sm text-pag-text-muted">
-            Nothing runs until you press <strong>Start</strong>. Closing this window keeps servers running in the background.
+            Nothing runs until you press <strong>Start</strong>.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

@@ -37,7 +37,7 @@ export async function testConnection(
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
-        'User-Agent': 'MCPorsche-Configurator/2.0',
+        'User-Agent': 'MCP-Installer-Configurator/2.0',
       },
       signal: controller.signal,
     };

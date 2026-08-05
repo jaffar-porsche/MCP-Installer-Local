@@ -1,7 +1,7 @@
 /**
  * Filesystem paths used by the deliverable.
  *
- * User-writable data lives under %APPDATA%\MCPorsche\ so the installed app
+ * User-writable data lives under %APPDATA%\MCP-Installer\ so the installed app
  * bundle stays read-only and upgradable. Everything server-related is
  * derived from a ServerSpec.serverDirName so this module knows nothing
  * about specific MCP servers.
@@ -12,7 +12,7 @@ import { dirname, join, resolve } from 'node:path';
 
 const APPDATA = process.env.APPDATA ?? app.getPath('appData');
 
-export const DATA_ROOT = join(APPDATA, 'MCPorsche');
+export const DATA_ROOT = join(APPDATA, 'MCP-Installer');
 export const STATE_DIR = join(DATA_ROOT, 'state');
 export const LOG_DIR = join(DATA_ROOT, 'logs');
 export const BACKUP_DIR = join(DATA_ROOT, 'backups');
@@ -30,7 +30,7 @@ export function ensureDataDirs(): void {
 
 /**
  * Portable root: the folder where the user extracted the ZIP. Contains
- * MCPorsche.exe + mcp-servers/ + all Electron internals.
+ * MCP-Installer.exe + mcp-servers/ + all Electron internals.
  *
  * In dev, we sit at deliverable-electron/; the "sibling servers" live one
  * level up.

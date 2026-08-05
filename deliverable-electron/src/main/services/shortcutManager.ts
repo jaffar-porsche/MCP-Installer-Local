@@ -14,7 +14,7 @@ import type { ShortcutInfo, ShortcutLocation } from '@shared/types';
 
 const pExecFile = promisify(execFile);
 
-const SHORTCUT_NAME = 'MCPorsche.lnk';
+const SHORTCUT_NAME = 'MCP-Installer.lnk';
 
 export function pathFor(location: ShortcutLocation): string {
   const appdata = process.env.APPDATA ?? '';
@@ -62,7 +62,7 @@ export async function createOrRepair(
     `$l.Arguments = [string]'${escape(args)}'; ` +
     (workdir ? `$l.WorkingDirectory = [string]'${escape(workdir)}'; ` : '') +
     `$l.IconLocation = [string]'${escape(target)},0'; ` +
-    "$l.Description = 'MCPorsche — Powered by PEG-IT'; " +
+    "$l.Description = 'MCP-Installer — Powered by PEG-IT'; " +
     '$l.Save()';
   await pExecFile('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps], {
     windowsHide: true,

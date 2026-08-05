@@ -3,7 +3,7 @@
  *
  * Discovery order (later wins on key clash):
  *   1. Built-in manifests shipped with the app under resources/manifests/*.json
- *   2. Repo-local manifests at <repo-root>/<name>-mcp/mcporsche.json
+ *   2. Repo-local manifests at <repo-root>/<name>-mcp/MCP-Installer.json
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
@@ -116,7 +116,7 @@ export function loadManifests(): ServerSpec[] {
   if (root && existsSync(root)) {
     for (const entry of readdirSync(root)) {
       if (!entry.endsWith('-mcp')) continue;
-      const path = join(root, entry, 'mcporsche.json');
+      const path = join(root, entry, 'MCP-Installer.json');
       if (!existsSync(path)) continue;
       const raw = readJson<RawManifest>(path);
       if (raw) byKey.set(raw.key, makeSpec(raw, common));
