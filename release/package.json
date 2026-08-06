@@ -1,0 +1,17 @@
+{
+  "name": "release-mailer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local tool to send MCP Installer release emails",
+  "main": "send.js",
+  "type": "commonjs",
+  "scripts": {
+    "send": "node send.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
