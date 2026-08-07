@@ -39,6 +39,7 @@ coverage.xml
 **/.env.test.local
 **/.env.production.local
 **/env.txt
+**/release/config.json
 
 # Node.js dependencies
 **/node_modules/
