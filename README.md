@@ -26,9 +26,9 @@ Contribution Guidelines
 
 To maintain code quality and stability, follow this process for changes:
 
-1. Create a separate branch (do not commit to `master`). Use descriptive names like `feature/*`, `fix/*`, `chore/*`.
+1. Create a separate branch (do not commit to the default branch, e.g. `main`). Use descriptive names like `feature/*`, `fix/*`, `chore/*`.
 2. Implement and test locally. Keep changes focused and follow existing conventions.
-3. Open a Pull Request to `master` with a clear description of changes and rationale.
+3. Open a Pull Request to the default branch (e.g. `main`) with a clear description of changes and rationale.
 4. Require at least one reviewer approval before merging. Address review feedback.
 5. Merge only after approval; do not self-merge unless explicitly authorized.
 
