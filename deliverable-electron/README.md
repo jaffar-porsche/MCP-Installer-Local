@@ -21,7 +21,7 @@ The project uses a manual release process for Windows installers.
 
 1. Build the installer locally.
 2. Upload the generated `.exe` to the GitHub release in the web UI.
-3. Optionally send a Teams notification with the release link.
+3. See the `release/` folder for packaging notes and release-specific instructions.
 
 There is no GitHub Actions-based installer publishing step and no in-app
 automatic update check.
@@ -41,18 +41,7 @@ npm run build:win:safe
 
 4. Create or edit the GitHub release and upload the generated installer from
    `dist\MCP-Installer-Setup-<version>.exe`.
-5. Share the release URL with users.
-6. Optionally send a Teams notification:
-
-```powershell
-$env:TEAMS_WEBHOOK_URL = 'https://outlook.office.com/webhook/...'
-npm run notify:teams
-```
-
-The Teams notification script reads the application version from
-[package.json](package.json) and posts the latest release URL by default. To
-target a specific release page, set `MCP_INSTALLER_RELEASE_URL` or pass
-`-ReleaseUrl` to the script.
+5. Share the release URL with users. See `release/` for additional release helpers.
 
 ## Installation and Updates
 
@@ -87,7 +76,6 @@ npm run dev
 npm run typecheck
 npm run build
 npm run build:win
-npm run notify:teams
 ```
 
 ## Architecture
