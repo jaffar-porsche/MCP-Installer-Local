@@ -135,11 +135,21 @@ export default function Wizard() {
       return;
     }
     if (isDone) {
-      await applyDoneChoices();
+      setBusy(true);
+      try {
+        await applyDoneChoices();
+      } finally {
+        // Keep busy true briefly so user sees the spinner while the window closes.
+      }
       await window.api.windows.closeCurrent();
       return;
     }
     setStepIdx((i) => Math.min(i + 1, steps.length - 1));
+    setTimeout(() => {
+      const main = document.querySelector('main');
+      if (main && typeof (main as HTMLElement).scrollTo === 'function') (main as HTMLElement).scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      else window.scrollTo?.(0, 0);
+    }, 0);
   }
 
   const showBack = !isProgress && !isDone;

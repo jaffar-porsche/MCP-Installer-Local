@@ -202,7 +202,7 @@ function registerIpc(): void {
     // Shortcut targets the current Electron executable — clicking it opens
     // the Control Panel window directly.
     const target = process.execPath;
-    const args = '--open-panel';
+    const args = location === 'startup' ? '--open-panel --start-servers' : '--open-panel';
     return createShortcut(location, target, args);
   });
   ipcMain.handle(IPC.shortcuts_remove, (_e, location: ShortcutLocation) => removeShortcut(location));
@@ -285,6 +285,13 @@ if (!gotTheLock) {
     replaceController();
 
     registerIpc();
+
+    // If launched from the startup shortcut, auto-start all servers so the
+    // UI opening on login also ensures MCP servers are running.
+    if (process.argv.includes('--start-servers')) {
+      // controller is initialized in replaceController(); start all known servers.
+      void controller?.startAll();
+    }
 
     const target = decideInitialWindow();
     if (target === 'wizard') await ensureWizardWindow();
