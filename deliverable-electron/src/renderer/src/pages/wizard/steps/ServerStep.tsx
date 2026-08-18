@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { PlugZap } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -25,6 +25,13 @@ export default function ServerStep({ spec }: Props) {
 
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<TestResult | null>(null);
+
+  // Reset the last test result whenever the values or proxy settings change
+  // so stale "OK"/error indicators don't persist when moving between servers.
+  // Also reset when the spec changes.
+  useEffect(() => {
+    setResult(null);
+  }, [spec.key, values, proxyHttp, proxyHttps]);
 
   const groups = useMemo(() => {
     const byCategory: Record<FieldCategory, FieldSpec[]> = {
