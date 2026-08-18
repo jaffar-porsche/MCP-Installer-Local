@@ -50,7 +50,6 @@ export const useWizardStore = create<WizardState>((set, get) => ({
   async bootstrap() {
     if (get().loaded) return;
     const specs = await window.api.manifests.list();
-    const proxy = await window.api.proxy.detect().catch(() => ({ http: null, https: null, source: 'none' as const }));
     const values: WizardState['values'] = {};
     for (const spec of specs) {
       let existing: Record<string, string> = {};
@@ -72,8 +71,8 @@ export const useWizardStore = create<WizardState>((set, get) => ({
       specs,
       selectedKeys,
       values,
-      proxyHttp: proxy.http ?? '',
-      proxyHttps: proxy.https ?? '',
+      proxyHttp: '',
+      proxyHttps: '',
     });
   },
 
