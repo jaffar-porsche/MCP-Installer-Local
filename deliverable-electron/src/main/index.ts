@@ -290,7 +290,9 @@ if (!gotTheLock) {
     // UI opening on login also ensures MCP servers are running.
     if (process.argv.includes('--start-servers')) {
       // controller is initialized in replaceController(); start all known servers.
-      void controller?.startAll();
+      void controller?.startAll().catch((err) => {
+        console.error('[MCP-Installer] Failed to auto-start servers:', err);
+      });
     }
 
     const target = decideInitialWindow();
