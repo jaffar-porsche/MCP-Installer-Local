@@ -47,6 +47,13 @@ extraFiles:
       - "mcp_server.py"
       - "pat_status.py"
       - "requirements.txt"
+  - from: ../mlb-testplan-mcp
+    to: mcp-servers/mlb-testplan-mcp
+    filter:
+      - "server.py"
+      - "requirements.txt"
+      - "dashboard.html"
+      - "911Porscha.ttf"
 
 win:
   target:

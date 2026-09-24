@@ -16,7 +16,7 @@ export default function ChooseServersStep() {
             checked={selected.includes(spec.key)}
             onChange={() => toggle(spec.key)}
             label={spec.displayName}
-            description={`Runs locally on port ${spec.defaultPort} · env: ${spec.tokenEnv}`}
+            description={describeSpec(spec)}
           />
         ))}
       </div>
@@ -25,4 +25,9 @@ export default function ChooseServersStep() {
       </p>
     </Card>
   );
+}
+
+function describeSpec(spec: { defaultPort: number; tokenEnv?: string | null }): string {
+  const auth = spec.tokenEnv ? `env: ${spec.tokenEnv}` : 'no PAT required';
+  return `Runs locally on port ${spec.defaultPort} · ${auth}`;
 }

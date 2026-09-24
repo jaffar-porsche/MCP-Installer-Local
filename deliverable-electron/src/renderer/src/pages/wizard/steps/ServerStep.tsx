@@ -22,16 +22,10 @@ export default function ServerStep({ spec }: Props) {
   const setValue = useWizardStore((s) => s.setValue);
   const proxyHttp = useWizardStore((s) => s.proxyHttp);
   const proxyHttps = useWizardStore((s) => s.proxyHttps);
+  const hasConnectionTest = Boolean(spec.baseUrlEnv && spec.tokenEnv && spec.myselfPath);
 
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<TestResult | null>(null);
-
-  // Reset the last test result whenever the values or proxy settings change
-  // so stale "OK"/error indicators don't persist when moving between servers.
-  // Also reset when the spec changes.
-  useEffect(() => {
-    setResult(null);
-  }, [spec.key, values, proxyHttp, proxyHttps]);
 
   const groups = useMemo(() => {
     const byCategory: Record<FieldCategory, FieldSpec[]> = {
@@ -52,7 +46,11 @@ export default function ServerStep({ spec }: Props) {
       const r = await window.api.tester.test(spec.key, merged);
       setResult(r);
       if (r.status === 'OK') {
-        toast.success(`PAT accepted${r.displayName ? ` — signed in as ${r.displayName}` : ''}.`);
+        toast.success(
+          hasConnectionTest
+            ? `PAT accepted${r.displayName ? ` — signed in as ${r.displayName}` : ''}.`
+            : r.message,
+        );
       } else {
         toast.error(r.message);
       }
@@ -91,24 +89,32 @@ export default function ServerStep({ spec }: Props) {
         </Card>
       ))}
 
-      <Card padding="sm" className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm text-pag-text">
-          <StatusDot tier={pillTier as any} pulse={busy} />
-          <span className="font-medium">
-            {result ? statusLabel(result) : 'PAT not tested yet.'}
-          </span>
-          {result?.hint && <span className="text-pag-text-muted">— {result.hint}</span>}
-        </div>
-        <Button variant="secondary" onClick={() => void runTest()} disabled={busy}>
-          <PlugZap className="h-4 w-4" />
-          {busy ? 'Testing…' : 'Test connection'}
-        </Button>
-      </Card>
+      {hasConnectionTest ? (
+        <>
+          <Card padding="sm" className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm text-pag-text">
+              <StatusDot tier={pillTier as any} pulse={busy} />
+              <span className="font-medium">
+                {result ? statusLabel(result) : 'PAT not tested yet.'}
+              </span>
+              {result?.hint && <span className="text-pag-text-muted">— {result.hint}</span>}
+            </div>
+            <Button variant="secondary" onClick={() => void runTest()} disabled={busy}>
+              <PlugZap className="h-4 w-4" />
+              {busy ? 'Testing…' : 'Test connection'}
+            </Button>
+          </Card>
 
-      <p className="text-xs text-pag-text-muted">
-        Only the PAT is validated by this test. If you also configured a client certificate (mTLS), the
-        running server will use both — the test only checks the token itself.
-      </p>
+          <p className="text-xs text-pag-text-muted">
+            Only the PAT is validated by this test. If you also configured a client certificate (mTLS), the
+            running server will use both — the test only checks the token itself.
+          </p>
+        </>
+      ) : (
+        <p className="text-xs text-pag-text-muted">
+          This server does not require a PAT. Review any optional settings above, then continue.
+        </p>
+      )}
     </div>
   );
 }

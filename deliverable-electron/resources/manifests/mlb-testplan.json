@@ -1,0 +1,43 @@
+{
+  "$schema": "manifest-v1",
+  "key": "mlb-testplan",
+  "display_name": "MLB TestPlan",
+  "server_dir_name": "mlb-testplan-mcp",
+  "default_port": 8080,
+  "app_module": "server:app",
+  "health_path": "/",
+  "fields": [
+    {
+      "key": "XRAY_BASE_URL",
+      "label": "Jira MCP base URL",
+      "category": "Connection",
+      "default": "http://localhost:8000",
+      "help_text": "Local Jira MCP endpoint used for Xray and Jira-backed operations.",
+      "validator": "url"
+    },
+    {
+      "key": "LOCAL_API_URL",
+      "label": "Confluence MCP base URL",
+      "category": "Connection",
+      "default": "http://localhost:8001",
+      "help_text": "Local Confluence MCP endpoint used for page-backed operations.",
+      "validator": "url"
+    },
+    {
+      "key": "CONFLUENCE_PAGE_ID",
+      "label": "Default Confluence page ID",
+      "category": "Advanced",
+      "default": "2378907792",
+      "help_text": "Optional default page ID for dashboard and test-plan workflows."
+    },
+    {
+      "key": "MCP_PORT",
+      "label": "Local server port",
+      "category": "Advanced",
+      "default": "8080",
+      "help_text": "Port the MLB TestPlan server listens on.",
+      "validator": "port"
+    }
+  ],
+  "include_common": ["proxy", "advanced_transport"]
+}

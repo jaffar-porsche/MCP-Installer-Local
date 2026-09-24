@@ -107,7 +107,7 @@ export default function ControlPanel() {
               onStop={() => stop(spec.key)}
               onRestart={() => restart(spec.key)}
               onLog={() => window.api.serverControl.openLog(spec.key)}
-              onRotate={() => window.api.windows.openPatRotation(spec.key)}
+              onRotate={hasPatRotation(spec) ? () => window.api.windows.openPatRotation(spec.key) : undefined}
             />
           );
         })}
@@ -154,7 +154,7 @@ interface RowProps {
   onStop: () => void;
   onRestart: () => void;
   onLog: () => void;
-  onRotate: () => void;
+  onRotate?: () => void;
 }
 
 function ServerRow({ spec, status, onStart, onStop, onRestart, onLog, onRotate }: RowProps) {
@@ -197,10 +197,12 @@ function ServerRow({ spec, status, onStart, onStop, onRestart, onLog, onRotate }
             Restart
           </Button>
           <div className="mx-1 h-6 w-px bg-pag-border" />
-          <Button variant="ghost" size="sm" onClick={onRotate}>
-            <KeyRound className="h-4 w-4" />
-            Rotate PAT
-          </Button>
+          {onRotate && (
+            <Button variant="ghost" size="sm" onClick={onRotate}>
+              <KeyRound className="h-4 w-4" />
+              Rotate PAT
+            </Button>
+          )}
           <Button variant="ghost" size="sm" onClick={onLog}>
             <ScrollText className="h-4 w-4" />
             Logs
@@ -246,4 +248,8 @@ function index(snaps: RuntimeSnapshot[]): Record<string, RuntimeSnapshot> {
 
 function label(specs: ServerSpec[], key: string): string {
   return specs.find((s) => s.key === key)?.displayName ?? key;
+}
+
+function hasPatRotation(spec: ServerSpec): boolean {
+  return Boolean(spec.tokenEnv && spec.fields.some((field) => field.key === spec.tokenEnv));
 }

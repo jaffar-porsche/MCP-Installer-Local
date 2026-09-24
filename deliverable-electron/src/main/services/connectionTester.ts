@@ -16,6 +16,13 @@ export async function testConnection(
   values: Record<string, string>,
   timeoutMs = 8000,
 ): Promise<TestResult> {
+  if (!spec.baseUrlEnv || !spec.tokenEnv || !spec.myselfPath) {
+    return {
+      status: 'OK',
+      message: 'No PAT test required for this server.',
+    };
+  }
+
   const baseUrl = (values[spec.baseUrlEnv] ?? '').trim();
   const token = (values[spec.tokenEnv] ?? '').trim();
   if (!baseUrl) return { status: 'UNKNOWN', message: 'Base URL is empty. Fill it before testing.' };

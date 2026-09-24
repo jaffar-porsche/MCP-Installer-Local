@@ -1,0 +1,3478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testplan Analysis Dashboard — Porsche</title>
+
+  <!-- Porsche Next font -->
+  <link rel="preconnect" href="https://fonts.porsche.com" crossorigin />
+  <style>
+    @font-face {
+      font-family: '911Porscha';
+      src: url('911Porscha.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Porsche Next';
+      src: url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-la-semi-bold.min.woff2') format('woff2');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Porsche Next';
+      src: url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-la-bold.min.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+
+    /* ── Design tokens (Porsche Design System v3) ── */
+    :root {
+      --pds-color-primary:        #1d2d3f;
+      --pds-color-background:     #eaeff3;
+      --pds-color-surface:        #ffffff;
+      --pds-color-brand:          #2f6690;
+      --pds-color-neutral-1:      #626669;
+      --pds-color-neutral-2:      #c9cacb;
+      --pds-color-neutral-3:      #e3e4e5;
+      --pds-color-neutral-4:      #f2f2f2;
+      --pds-color-success:        #018a16;
+      --pds-color-warning:        #ff9b00;
+      --pds-color-error:          #d5001c;
+      --pds-color-notification:   #0061bd;
+      --pds-border-radius:        6px;
+      --pds-border-radius-sm:     4px;
+      --pds-shadow-low:           0 2px 8px rgba(1,2,5,.08), 0 0 1px rgba(1,2,5,.06);
+      --pds-shadow-medium:        0 8px 24px rgba(1,2,5,.10), 0 0 1px rgba(1,2,5,.06);
+      --pds-transition:           cubic-bezier(0.25, 0.1, 0.25, 1);
+      --pds-font:                 'Porsche Next', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--pds-font);
+      background: var(--pds-color-background);
+      color: var(--pds-color-primary);
+      min-height: 100vh;
+    }
+
+    /* ── Global nav header (Porsche-style) ── */
+    .pds-header {
+      background: #ffffff;
+      color: var(--pds-color-primary);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--pds-color-neutral-3);
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+    .pds-header__logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+    }
+    .pds-header__crest {
+      height: 28px;
+      width: auto;
+    }
+    .pds-header__wordmark {
+      font-family: 'Porsche Next', 'Arial Narrow', Arial, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--pds-color-brand);
+      line-height: 1;
+    }
+    .pds-header__wordmark-sub {
+      font-family: 'Porsche Next', 'Arial Narrow', Arial, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: normal;
+      color: var(--pds-color-brand);
+    }
+    .pds-header__divider {
+      width: 1px;
+      height: 20px;
+      background: var(--pds-color-neutral-3);
+    }
+    .pds-header__title {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--pds-color-neutral-1);
+    }
+    .pds-header__badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--pds-color-brand);
+      background: rgba(47,102,144,.12);
+      padding: 4px 10px;
+      border: 1px solid rgba(47,102,144,.3);
+    }
+
+    /* ── Page wrapper ── */
+    .pds-page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+
+    /* ── Page title ── */
+    .pds-page-title {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--pds-color-primary);
+      margin-bottom: 4px;
+    }
+    .pds-page-subtitle {
+      font-size: 0.9rem;
+      color: var(--pds-color-neutral-1);
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+    .pds-page-title span {
+      color: var(--pds-color-brand);
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--pds-color-surface);
+      border: 1px solid var(--pds-color-neutral-3);
+      padding: 32px;
+      box-shadow: var(--pds-shadow-low);
+      margin-bottom: 24px;
+      transition: box-shadow .2s var(--pds-transition);
+    }
+    .card:hover {
+      box-shadow: var(--pds-shadow-medium);
+    }
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--pds-color-primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--pds-color-neutral-3);
+    }
+    .card h2::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 18px;
+      background: var(--pds-color-brand);
+      flex-shrink: 0;
+    }
+
+    /* ── Textarea ── */
+    textarea {
+      width: 100%;
+      min-height: 96px;
+      border: 1px solid var(--pds-color-neutral-2);
+      border-radius: var(--pds-border-radius-sm);
+      padding: 14px 16px;
+      font-family: var(--pds-font);
+      font-size: 0.95rem;
+      resize: vertical;
+      transition: border-color .2s var(--pds-transition), box-shadow .2s var(--pds-transition);
+      outline: none;
+      color: var(--pds-color-primary);
+      background: var(--pds-color-surface);
+    }
+    textarea:focus {
+      border-color: var(--pds-color-primary);
+      box-shadow: 0 0 0 2px rgba(1,2,5,.12);
+    }
+    textarea::placeholder { color: var(--pds-color-neutral-2); }
+
+    /* ── Buttons (Porsche Design System style) ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: 1px solid transparent;
+      border-radius: var(--pds-border-radius-sm);
+      font-family: var(--pds-font);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .18s var(--pds-transition),
+                  color .18s var(--pds-transition),
+                  border-color .18s var(--pds-transition),
+                  transform .12s var(--pds-transition),
+                  box-shadow .18s var(--pds-transition);
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+    /* ripple */
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.0);
+      transition: background .2s;
+    }
+    .btn:not(:disabled):active::after { background: rgba(255,255,255,.15); }
+
+    .btn:disabled { opacity: .38; cursor: not-allowed; transform: none !important; }
+    .btn:not(:disabled):hover { transform: translateY(-1px); }
+    .btn:not(:disabled):active { transform: translateY(0) scale(.99); }
+
+    /* Primary — teal-blue */
+    .btn-primary {
+      background: var(--pds-color-brand);
+      color: #fff;
+      border-color: var(--pds-color-brand);
+    }
+    .btn-primary:not(:disabled):hover {
+      background: #244f70;
+      box-shadow: 0 4px 16px rgba(47,102,144,.30);
+    }
+
+    /* Brand — Porsche red */
+    .btn-brand {
+      background: var(--pds-color-brand);
+      color: #fff;
+      border-color: var(--pds-color-brand);
+    }
+    .btn-brand:not(:disabled):hover {
+      background: #b30018;
+      box-shadow: 0 4px 16px rgba(213,0,28,.30);
+    }
+
+    /* Secondary — outlined teal-blue */
+    .btn-secondary {
+      background: transparent;
+      color: var(--pds-color-brand);
+      border-color: var(--pds-color-brand);
+    }
+    .btn-secondary:not(:disabled):hover {
+      background: var(--pds-color-brand);
+      color: #fff;
+    }
+
+    /* Danger */
+    .btn-danger {
+      background: var(--pds-color-error);
+      color: #fff;
+      border-color: var(--pds-color-error);
+    }
+    .btn-danger:not(:disabled):hover {
+      background: #b30018;
+      box-shadow: 0 4px 16px rgba(213,0,28,.30);
+    }
+
+    /* Warning */
+    .btn-warn {
+      background: transparent;
+      color: var(--pds-color-warning);
+      border-color: var(--pds-color-warning);
+    }
+    .btn-warn:not(:disabled):hover {
+      background: var(--pds-color-warning);
+      color: #fff;
+    }
+
+    .action-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .field-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: end; margin-top: 20px; }
+    .field-group { min-width: 280px; flex: 1 1 320px; }
+    .field-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--pds-color-neutral-1);
+      margin-bottom: 8px;
+    }
+    .field-help {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--pds-color-neutral-1);
+    }
+    .secret-editor-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: end;
+    }
+    .secret-editor-row .field-group {
+      min-width: 220px;
+    }
+    .secret-editor-input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--pds-color-neutral-2);
+      border-radius: var(--pds-border-radius-sm);
+      padding: 0 14px;
+      font-family: var(--pds-font);
+      font-size: 0.95rem;
+      color: var(--pds-color-primary);
+      background: var(--pds-color-surface);
+      outline: none;
+      transition: border-color .2s var(--pds-transition), box-shadow .2s var(--pds-transition);
+    }
+    .secret-editor-input:focus {
+      border-color: var(--pds-color-primary);
+      box-shadow: 0 0 0 2px rgba(1,2,5,.12);
+    }
+    .secret-editor-note {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--pds-color-neutral-1);
+    }
+    .secret-editor-note strong {
+      color: var(--pds-color-primary);
+    }
+    .page-picker-wrap {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 520px;
+      position: relative;
+      padding: 10px;
+      border: 1px solid rgba(47,102,144,.12);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.98) 0%, rgba(234,239,243,.92) 100%);
+      box-shadow: 0 10px 30px rgba(29,45,63,.08);
+      overflow: visible;
+    }
+    .page-picker-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(47,102,144,.08), transparent 42%, rgba(29,45,63,.04));
+      pointer-events: none;
+    }
+    .page-picker-select {
+      flex: 0 1 340px;
+      min-width: 220px;
+      position: relative;
+      z-index: 1;
+      border-radius: 14px;
+      border-color: rgba(47,102,144,.18);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.96), rgba(242,242,242,.92));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 10px 20px rgba(29,45,63,.08);
+      transition: transform .22s var(--pds-transition), border-color .22s var(--pds-transition), box-shadow .22s var(--pds-transition), background .22s var(--pds-transition);
+    }
+    .page-picker-select:hover {
+      transform: translateY(-1px);
+      border-color: rgba(47,102,144,.34);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 24px rgba(29,45,63,.12);
+    }
+    .page-picker-select:focus {
+      transform: translateY(-1px);
+      border-color: var(--pds-color-brand);
+      box-shadow: 0 0 0 4px rgba(47,102,144,.14), 0 14px 24px rgba(29,45,63,.14);
+    }
+    .page-picker-delete {
+      width: 48px;
+      min-width: 48px;
+      height: 48px;
+      padding: 0;
+      font-size: 1rem;
+      letter-spacing: 0;
+      position: relative;
+      z-index: 1;
+      border-radius: 14px;
+      border-color: rgba(29,45,63,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(242,242,242,.92));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 10px 18px rgba(29,45,63,.08);
+      transition: transform .22s var(--pds-transition), box-shadow .22s var(--pds-transition), border-color .22s var(--pds-transition), color .22s var(--pds-transition);
+    }
+    .page-picker-delete:hover,
+    .page-picker-delete:focus {
+      transform: translateY(-1px) rotate(-6deg);
+      border-color: rgba(213,0,28,.24);
+      color: var(--pds-color-error);
+      box-shadow: 0 14px 22px rgba(213,0,28,.16);
+    }
+    .page-picker-add-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      max-width: 520px;
+      padding: 12px;
+      border: 1px solid rgba(47,102,144,.12);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(242,242,242,.92));
+      box-shadow: 0 12px 28px rgba(29,45,63,.07);
+    }
+    .page-picker-add-row input {
+      flex: 0 1 240px;
+      min-width: 180px;
+      height: 48px;
+      border: 1px solid rgba(47,102,144,.16);
+      border-radius: 14px;
+      padding: 0 16px;
+      font-family: var(--pds-font);
+      font-size: 0.95rem;
+      color: var(--pds-color-primary);
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,249,250,.94));
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 8px 18px rgba(29,45,63,.05);
+      transition: transform .22s var(--pds-transition), border-color .22s var(--pds-transition), box-shadow .22s var(--pds-transition), background .22s var(--pds-transition);
+    }
+    .page-picker-add-row input:hover {
+      transform: translateY(-1px);
+      border-color: rgba(47,102,144,.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 12px 22px rgba(29,45,63,.08);
+    }
+    .page-picker-add-row input:focus {
+      transform: translateY(-1px);
+      border-color: var(--pds-color-brand);
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(244,248,251,.98));
+      box-shadow: 0 0 0 4px rgba(47,102,144,.12), 0 14px 24px rgba(29,45,63,.10);
+    }
+    .page-picker-add-row input::placeholder {
+      color: #8a939d;
+      transition: color .22s var(--pds-transition), transform .22s var(--pds-transition);
+    }
+    .page-picker-add-row input:focus::placeholder {
+      color: #a8afb7;
+      transform: translateX(2px);
+    }
+    .page-picker-add-btn {
+      min-width: 126px;
+      height: 48px;
+      border-radius: 14px;
+      border-color: rgba(47,102,144,.18);
+      background: linear-gradient(135deg, rgba(47,102,144,.10), rgba(255,255,255,.96));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 10px 20px rgba(29,45,63,.08);
+      transition: transform .22s var(--pds-transition), box-shadow .22s var(--pds-transition), border-color .22s var(--pds-transition), color .22s var(--pds-transition);
+    }
+    .page-picker-add-btn:hover,
+    .page-picker-add-btn:focus {
+      transform: translateY(-1px);
+      border-color: rgba(47,102,144,.34);
+      color: var(--pds-color-brand);
+      box-shadow: 0 16px 24px rgba(47,102,144,.16);
+    }
+    .page-delete-list {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(360px, 92vw);
+      background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(242,245,247,.97));
+      border: 1px solid rgba(47,102,144,.14);
+      border-radius: 20px;
+      box-shadow: 0 24px 50px rgba(29,45,63,.18), 0 0 0 1px rgba(255,255,255,.55) inset;
+      padding: 16px;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      transform-origin: top right;
+      animation: pagePanelIn .22s var(--pds-transition);
+    }
+    .page-delete-list[hidden] {
+      display: none;
+    }
+    @keyframes pagePanelIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .page-delete-list-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--pds-color-brand);
+      margin-bottom: 4px;
+    }
+    .page-delete-list-subtitle {
+      margin-bottom: 12px;
+      font-size: 0.82rem;
+      color: var(--pds-color-neutral-1);
+      line-height: 1.45;
+    }
+    .page-delete-list-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .page-delete-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(47,102,144,.10);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(245,247,248,.96));
+      box-shadow: 0 10px 20px rgba(29,45,63,.05);
+      transition: transform .2s var(--pds-transition), border-color .2s var(--pds-transition), box-shadow .2s var(--pds-transition);
+    }
+    .page-delete-item:hover {
+      transform: translateY(-1px);
+      border-color: rgba(47,102,144,.22);
+      box-shadow: 0 14px 24px rgba(29,45,63,.08);
+    }
+    .page-delete-item-text {
+      min-width: 0;
+      font-size: 0.82rem;
+      color: var(--pds-color-primary);
+      line-height: 1.35;
+    }
+    .page-delete-item-text strong {
+      display: block;
+      font-size: 0.92rem;
+      letter-spacing: .01em;
+    }
+    .page-delete-item-text span {
+      display: block;
+      color: var(--pds-color-neutral-1);
+    }
+    .page-delete-item-fixed {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pds-color-neutral-1);
+      flex-shrink: 0;
+    }
+    .page-delete-item-main {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .page-delete-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .page-delete-rename-btn {
+      height: 36px;
+      min-width: 74px;
+      padding: 0 12px;
+      letter-spacing: 0.04em;
+      font-size: 0.72rem;
+      border-radius: 12px;
+    }
+    .page-delete-secondary-btn {
+      min-width: 72px;
+      height: 36px;
+      padding: 0 12px;
+      letter-spacing: 0.04em;
+      font-size: 0.72rem;
+      border-radius: 12px;
+    }
+    .page-delete-item-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0;
+      letter-spacing: 0;
+      flex-shrink: 0;
+      border-radius: 12px;
+    }
+    .page-rename-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(1,2,5,.48);
+      backdrop-filter: blur(6px);
+      z-index: 1200;
+    }
+    .page-rename-overlay[hidden] {
+      display: none;
+    }
+    .page-rename-dialog {
+      width: min(460px, calc(100vw - 32px));
+      padding: 22px 22px 18px;
+      border: 1px solid rgba(47,102,144,.14);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(246,249,252,.98));
+      box-shadow: 0 32px 72px rgba(16,24,40,.24), 0 12px 28px rgba(29,45,63,.12);
+      animation: pagePanelIn .2s var(--pds-transition);
+    }
+    .page-rename-dialog-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .page-rename-dialog-title {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--pds-color-primary);
+      letter-spacing: 0.01em;
+    }
+    .page-rename-dialog-subtitle {
+      margin: 6px 0 0;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: var(--pds-color-neutral-1);
+    }
+    .page-rename-dialog-close {
+      border: none;
+      background: transparent;
+      color: var(--pds-color-neutral-1);
+      font-size: 1.45rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .page-rename-dialog-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(47,102,144,.08);
+      color: var(--pds-color-primary);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .page-rename-dialog input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid rgba(47,102,144,.16);
+      border-radius: 14px;
+      padding: 0 14px;
+      font-family: var(--pds-font);
+      font-size: 0.9rem;
+      color: var(--pds-color-primary);
+      background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,249,250,.96));
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.92);
+      transition: border-color .2s var(--pds-transition), box-shadow .2s var(--pds-transition), transform .2s var(--pds-transition);
+    }
+    .page-rename-dialog input:focus {
+      transform: translateY(-1px);
+      border-color: var(--pds-color-brand);
+      box-shadow: 0 0 0 3px rgba(47,102,144,.12), 0 10px 18px rgba(29,45,63,.08);
+    }
+    .page-rename-dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    select {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--pds-color-neutral-2);
+      border-radius: var(--pds-border-radius-sm);
+      padding: 0 14px;
+      font-family: var(--pds-font);
+      font-size: 0.95rem;
+      color: var(--pds-color-primary);
+      background: var(--pds-color-surface);
+      outline: none;
+      transition: border-color .2s var(--pds-transition), box-shadow .2s var(--pds-transition);
+    }
+    select:focus {
+      border-color: var(--pds-color-primary);
+      box-shadow: 0 0 0 2px rgba(1,2,5,.12);
+    }
+
+    /* ── Status banner ── */
+    .status {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      border-left: 3px solid transparent;
+      transition: all .2s var(--pds-transition);
+    }
+    .status.show { display: flex; }
+    .status.loading {
+      background: #e8f0fc;
+      color: var(--pds-color-notification);
+      border-left-color: var(--pds-color-notification);
+    }
+    .status.success {
+      background: #e6f4e8;
+      color: var(--pds-color-success);
+      border-left-color: var(--pds-color-success);
+    }
+    .status.error {
+      background: #fce8eb;
+      color: var(--pds-color-error);
+      border-left-color: var(--pds-color-error);
+    }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.855rem;
+    }
+    thead tr { background: var(--pds-color-neutral-4); }
+    th {
+      text-align: left;
+      padding: 11px 14px;
+      font-weight: 700;
+      color: var(--pds-color-neutral-1);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--pds-color-neutral-3);
+    }
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--pds-color-neutral-3);
+      vertical-align: top;
+      color: var(--pds-color-primary);
+      word-break: break-word;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--pds-color-neutral-4); transition: background .15s; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+    .badge-red    { background: rgba(213,0,28,.1);  color: var(--pds-color-error); }
+    .badge-green  { background: rgba(1,138,22,.1);  color: var(--pds-color-success); }
+    .badge-yellow { background: rgba(255,155,0,.12); color: #a65f00; }
+    .badge-gray   { background: var(--pds-color-neutral-3); color: var(--pds-color-neutral-1); }
+    .badge-blue   { background: rgba(0,97,189,.1);  color: var(--pds-color-notification); }
+
+    .empty {
+      color: var(--pds-color-neutral-1);
+      font-style: italic;
+      padding: 24px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* ── Summary pills ── */
+    .summary-pill {
+      background: var(--pds-color-neutral-4);
+      border: 1px solid var(--pds-color-neutral-3);
+      padding: 14px 20px;
+      min-width: 100px;
+    }
+    .summary-pill__label {
+      font-size: 0.65rem;
+      color: var(--pds-color-neutral-1);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .summary-pill__value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    /* ── kpm ── */
+    .kpm {
+      font-family: 'Courier New', monospace;
+      background: var(--pds-color-neutral-4);
+      border: 1px solid var(--pds-color-neutral-3);
+      padding: 2px 7px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--pds-color-primary);
+      border-radius: 2px;
+    }
+    .badge-no-kpm {
+      background: var(--pds-color-neutral-3);
+      color: var(--pds-color-neutral-1);
+      border: 1px solid var(--pds-color-error);
+    }
+    .nested { font-size: 0.78rem; color: var(--pds-color-neutral-1); }
+
+    /* ── Placeholder ── */
+    #statusPlaceholder {
+      color: var(--pds-color-neutral-1);
+      font-size: 0.875rem;
+      padding: 8px 0;
+    }
+
+    /* ── Export strip ── */
+    .export-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--pds-color-neutral-3);
+      margin-bottom: 20px;
+    }
+
+    /* ── Footer ── */
+    .pds-footer {
+      background: var(--pds-color-primary);
+      color: rgba(255,255,255,.45);
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .pds-footer a { color: rgba(255,255,255,.55); text-decoration: none; }
+    .pds-footer a:hover { color: #fff; }
+  </style>
+
+  <!-- jsPDF + autoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <!-- SheetJS for Excel export -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- ── Porsche Header ── -->
+<header class="pds-header">
+  <a class="pds-header__logo" href="#">
+    <img class="pds-header__crest" style="display:none;"
+         src="https://cdn.ui.porsche.com/porsche-design-system/crest/porsche-crest.2245c45@2x.webp"
+         alt="Porsche" />
+    <div class="pds-header__divider"></div>
+    <span class="pds-header__wordmark">Porsche <span class="pds-header__wordmark-sub">Engineering</span></span>
+    <div class="pds-header__divider"></div>
+    <span class="pds-header__title">MLBEVO · Testing SOP Tools</span>
+  </a>
+  <span class="pds-header__badge">Internal</span>
+</header>
+
+<!-- ── Page ── -->
+<div class="pds-page">
+
+  <h1 class="pds-page-title">Testplan Analysis <span>Dashboard</span></h1>
+  <p class="pds-page-subtitle">Resolve test plan keys, analyse FAIL &amp; BLOCKED reports, and trigger mail notifications.</p>
+
+<!-- ── Input Card ── -->
+<div class="card">
+  <h2>Analyze Test Plan</h2>
+  <div class="field-row">
+    <div class="field-group">
+      <label class="field-label" for="pageIdSelect">Confluence Source Page</label>
+      <div class="page-picker-wrap">
+        <select id="pageIdSelect" class="page-picker-select" onchange="handlePageSelectionChange()"></select>
+        <button class="btn btn-secondary page-picker-delete" type="button" id="deletePageIdBtn" onclick="toggleDeletePageList()" title="Manage custom page IDs" aria-label="Manage custom page IDs">&#128465;</button>
+        <div id="pageDeleteList" class="page-delete-list" hidden>
+          <div class="page-delete-list-title">Manage Page IDs</div>
+          <div class="page-delete-list-subtitle">Rename labels, review defaults, and remove only the custom entries you no longer need.</div>
+          <div id="pageDeleteListItems" class="page-delete-list-items"></div>
+        </div>
+      </div>
+      <div id="patModalOverlay" class="page-rename-overlay" onclick="closePatModal(event)" hidden>
+        <div class="page-rename-dialog" onclick="event.stopPropagation()">
+          <div class="page-rename-dialog-header">
+            <div>
+              <h3 class="page-rename-dialog-title">Update PAT</h3>
+              <p class="page-rename-dialog-subtitle">Update the local Jira or Confluence PAT. Azure Container Apps still need their own PAT change in Azure separately.</p>
+            </div>
+            <button class="page-rename-dialog-close" type="button" onclick="closePatModal()" aria-label="Close PAT dialog">&times;</button>
+          </div>
+          <div class="secret-editor-row">
+            <div class="field-group">
+              <label class="field-label" for="patTypeSelect">PAT Type</label>
+              <select id="patTypeSelect">
+                <option value="jira">Jira</option>
+                <option value="confluence">Confluence</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="patValueInput">PAT Value</label>
+              <input id="patValueInput" class="secret-editor-input" type="password" placeholder="Paste new PAT value" autocomplete="off" />
+            </div>
+          </div>
+          <div id="patUpdateStatus" class="status" style="margin-top:16px;margin-bottom:0;"></div>
+          <p class="secret-editor-note"><strong>Local only:</strong> this updates the local service <code>.env</code> file and the running dashboard process where possible.</p>
+          <div class="page-rename-dialog-actions">
+            <button class="btn btn-secondary page-delete-secondary-btn" type="button" onclick="closePatModal()">Cancel</button>
+            <button class="btn btn-primary" id="btnUpdatePat" type="button" onclick="updatePatConfig()">Update</button>
+          </div>
+        </div>
+      </div>
+      <div id="pageRenameModalOverlay" class="page-rename-overlay" onclick="closePageRenameModal(event)" hidden>
+        <div class="page-rename-dialog" onclick="event.stopPropagation()">
+          <div class="page-rename-dialog-header">
+            <div>
+              <h3 class="page-rename-dialog-title">Rename Page Label</h3>
+              <p class="page-rename-dialog-subtitle">Update the display name used in the page selector while keeping the original page ID unchanged.</p>
+            </div>
+            <button class="page-rename-dialog-close" type="button" onclick="closePageRenameModal()" aria-label="Close rename dialog">&times;</button>
+          </div>
+          <div id="pageRenameModalPageId" class="page-rename-dialog-meta"></div>
+          <input id="pageRenameModalInput" type="text" aria-label="Rename selected page" />
+          <div class="page-rename-dialog-actions">
+            <button class="btn btn-secondary page-delete-secondary-btn" type="button" onclick="closePageRenameModal()">Cancel</button>
+            <button class="btn btn-secondary page-delete-rename-btn" type="button" onclick="savePageRenameModal()">Save</button>
+          </div>
+        </div>
+      </div>
+      <div id="pageDeleteConfirmOverlay" class="page-rename-overlay" onclick="closePageDeleteConfirm(event)" hidden>
+        <div class="page-rename-dialog" onclick="event.stopPropagation()">
+          <div class="page-rename-dialog-header">
+            <div>
+              <h3 class="page-rename-dialog-title">Delete Page ID</h3>
+              <p class="page-rename-dialog-subtitle">Confirm before removing this custom page ID from your saved list.</p>
+            </div>
+            <button class="page-rename-dialog-close" type="button" onclick="closePageDeleteConfirm()" aria-label="Close delete dialog">&times;</button>
+          </div>
+          <div id="pageDeleteConfirmPageId" class="page-rename-dialog-meta"></div>
+          <p id="pageDeleteConfirmLabel" class="page-rename-dialog-subtitle" style="margin:0 0 16px;color:var(--pds-color-primary);"></p>
+          <div class="page-rename-dialog-actions">
+            <button class="btn btn-secondary page-delete-secondary-btn" type="button" onclick="closePageDeleteConfirm()">Cancel</button>
+            <button class="btn btn-secondary page-delete-rename-btn" type="button" onclick="confirmDeletePageModal()">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="page-picker-add-row">
+        <input id="newPageIdInput" type="text" inputmode="text" placeholder="Add new page ID" aria-label="Add new page ID" />
+        <input id="newPageNameInput" type="text" inputmode="text" placeholder="Add page name" aria-label="Add page name" />
+        <button class="btn btn-secondary page-picker-add-btn" type="button" onclick="addPageIdOption()">Add Page ID</button>
+      </div>
+      <div class="field-help" id="pageIdHelp">Using Workstream Applications (2378907792).</div>
+    </div>
+  </div>
+  <textarea id="prompt" placeholder='e.g. "Show me the fail status for MLBEVO-17818" or "Navigation ECE failed tests"'></textarea>
+  <div class="action-row">
+    <button class="btn btn-primary" id="btnAnalyze" onclick="runAnalysis()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 1l9 5-9 5V1z" fill="currentColor"/></svg>
+      Analyze
+    </button>
+    <button class="btn btn-secondary" type="button" onclick="openPatModal()">Update PAT</button>
+    <button class="btn btn-secondary" id="btnAiPrompt" onclick="runAiPrompt()" style="border-color:#8b5cf6;color:#8b5cf6;">Ask AI</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('failOverviewLaunchCard').scrollIntoView({behavior:'smooth',block:'start'})" style="display:none;border-color:#6366f1;color:#6366f1;">&#128202; FAIL Overview</button>
+    <button class="btn btn-secondary" id="btnPriority" onclick="openPriorityModal()">Priority</button>
+    <button class="btn btn-secondary" id="btnFailAll" onclick="openFailAllModal()">FAIL All</button>
+    <button class="btn btn-secondary" id="btnBlockedAll" onclick="openBlockedAllModal()">BLOCKED All</button>
+    <button class="btn btn-secondary" id="btnCloneConfluence" onclick="cloneConfluence()">Clone Confluence</button>
+    <button class="btn btn-secondary" id="btnSallyTest" onclick="testSallyConnection()" style="display:none;border-color:#0d9488;color:#0d9488;">Test Sally</button>
+  </div>
+  <pre id="aiPromptResult" style="display:none;white-space:pre-wrap;max-height:420px;overflow:auto;margin-top:12px;background:#0d1117;color:#c9d1d9;padding:12px;border-radius:8px;font-size:0.85rem;"></pre>
+</div>
+
+<!-- ── FAIL All Modal ── -->
+<div id="failAllModalOverlay" onclick="closeFailAllModal(event)" style="display:none;position:fixed;inset:0;background:rgba(1,2,5,.55);z-index:1100;">
+  <div id="failAllModal" onclick="event.stopPropagation()" style="position:relative;max-width:1040px;width:94vw;margin:4vh auto;max-height:92vh;overflow-y:auto;background:var(--pds-color-surface);border:1px solid var(--pds-color-neutral-3);box-shadow:var(--pds-shadow-medium);padding:32px;font-family:var(--pds-font);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <h2 style="margin:0;font-size:1rem;color:var(--pds-color-primary);font-weight:700;">FAIL All — Every FAIL under a Region OR Working Group</h2>
+      <button onclick="closeFailAllModal()" style="background:none;border:none;color:var(--pds-color-neutral-1);font-size:1.6rem;cursor:pointer;line-height:1;">&times;</button>
+    </div>
+    <p style="color:var(--pds-color-neutral-1);font-size:.85rem;margin-bottom:18px;">Pick a Region OR a Working Group — every matching Test Plan is resolved and scanned concurrently for FAIL results.</p>
+
+    <!-- Step 1: Mode toggle -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;">
+      <button class="btn btn-secondary" id="failAllModeRegionBtn" onclick="failAllSetMode('region')">By Region</button>
+      <button class="btn btn-secondary" id="failAllModeWgBtn" onclick="failAllSetMode('working_group')">By Working Group</button>
+    </div>
+
+    <!-- Step 2: Region buttons -->
+    <div id="failAllRegionStep" style="display:none;">
+      <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Select a Region</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;" id="failAllRegionButtons">
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing ECE','ECE')">ECE</button>
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing NAR','NAR')">NAR</button>
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing JPN','JPN')">JPN</button>
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing KOR','KOR')">KOR</button>
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing TWN','TWN')">TWN</button>
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing Hong-Kong','HKG')">Hong Kong</button>
+        <button class="btn btn-secondary" onclick="failAllRun('region','Testing Macau','MAC')">Macau</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Working Group buttons -->
+    <div id="failAllWgStep" style="display:none;">
+      <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Select a Working Group</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;" id="failAllWgButtons"></div>
+    </div>
+
+    <!-- Step 3: Results -->
+    <div id="failAllResultStep" style="display:none;margin-top:24px;">
+      <div class="status" id="failAllResultStatus"></div>
+      <details id="failAllJqlBox" style="margin:12px 0;background:var(--pds-color-background-surface,#f7f7f9);border:1px solid var(--pds-color-neutral-3);padding:10px 14px;font-size:.75rem;">
+        <summary style="cursor:pointer;font-weight:700;color:var(--pds-color-neutral-1);">Combined JQL</summary>
+        <code id="failAllJqlText" style="display:block;white-space:pre-wrap;word-break:break-all;margin-top:8px;color:var(--pds-color-primary);"></code>
+      </details>
+      <div id="failAllTableArea"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BLOCKED All Modal ── -->
+<div id="blockedAllModalOverlay" onclick="closeBlockedAllModal(event)" style="display:none;position:fixed;inset:0;background:rgba(1,2,5,.55);z-index:1100;">
+  <div id="blockedAllModal" onclick="event.stopPropagation()" style="position:relative;max-width:1040px;width:94vw;margin:4vh auto;max-height:92vh;overflow-y:auto;background:var(--pds-color-surface);border:1px solid var(--pds-color-neutral-3);box-shadow:var(--pds-shadow-medium);padding:32px;font-family:var(--pds-font);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <h2 style="margin:0;font-size:1rem;color:var(--pds-color-primary);font-weight:700;">BLOCKED All — Every BLOCKED under a Region OR Working Group</h2>
+      <button onclick="closeBlockedAllModal()" style="background:none;border:none;color:var(--pds-color-neutral-1);font-size:1.6rem;cursor:pointer;line-height:1;">&times;</button>
+    </div>
+    <p style="color:var(--pds-color-neutral-1);font-size:.85rem;margin-bottom:18px;">Pick a Region OR a Working Group — every matching Test Plan is resolved and scanned concurrently for BLOCKED results.</p>
+
+    <!-- Step 1: Mode toggle -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;">
+      <button class="btn btn-secondary" id="blockedAllModeRegionBtn" onclick="blockedAllSetMode('region')">By Region</button>
+      <button class="btn btn-secondary" id="blockedAllModeWgBtn" onclick="blockedAllSetMode('working_group')">By Working Group</button>
+    </div>
+
+    <!-- Step 2: Region buttons -->
+    <div id="blockedAllRegionStep" style="display:none;">
+      <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Select a Region</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;" id="blockedAllRegionButtons">
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing ECE','ECE')">ECE</button>
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing NAR','NAR')">NAR</button>
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing JPN','JPN')">JPN</button>
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing KOR','KOR')">KOR</button>
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing TWN','TWN')">TWN</button>
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing Hong-Kong','HKG')">Hong Kong</button>
+        <button class="btn btn-secondary" onclick="blockedAllRun('region','Testing Macau','MAC')">Macau</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Working Group buttons -->
+    <div id="blockedAllWgStep" style="display:none;">
+      <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Select a Working Group</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;" id="blockedAllWgButtons"></div>
+    </div>
+
+    <!-- Step 3: Results -->
+    <div id="blockedAllResultStep" style="display:none;margin-top:24px;">
+      <div class="status" id="blockedAllResultStatus"></div>
+      <details id="blockedAllJqlBox" style="margin:12px 0;background:var(--pds-color-background-surface,#f7f7f9);border:1px solid var(--pds-color-neutral-3);padding:10px 14px;font-size:.75rem;">
+        <summary style="cursor:pointer;font-weight:700;color:var(--pds-color-neutral-1);">Combined JQL</summary>
+        <code id="blockedAllJqlText" style="display:block;white-space:pre-wrap;word-break:break-all;margin-top:8px;color:var(--pds-color-primary);"></code>
+      </details>
+      <div id="blockedAllTableArea"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Priority Modal ── -->
+<div id="priorityModalOverlay" onclick="closePriorityModal(event)" style="display:none;position:fixed;inset:0;background:rgba(1,2,5,.55);z-index:1100;">
+  <div id="priorityModal" onclick="event.stopPropagation()" style="position:relative;max-width:920px;width:92vw;margin:4vh auto;max-height:92vh;overflow-y:auto;background:var(--pds-color-surface);border:1px solid var(--pds-color-neutral-3);box-shadow:var(--pds-shadow-medium);padding:32px;font-family:var(--pds-font);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <h2 style="margin:0;font-size:1rem;color:var(--pds-color-primary);font-weight:700;">FAILs by Priority — Browse by Region &amp; Working Group</h2>
+      <button onclick="closePriorityModal()" style="background:none;border:none;color:var(--pds-color-neutral-1);font-size:1.6rem;cursor:pointer;line-height:1;">&times;</button>
+    </div>
+    <p id="prioritySubtitle" style="color:var(--pds-color-neutral-1);font-size:.85rem;margin-bottom:18px;">Select a region to list test plans, then click a plan to view all FAILs with timestamp, tester and KPM links.</p>
+
+    <!-- Step 1: Region -->
+    <div id="priorityRegionStep">
+      <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">1. Select a Region</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;" id="priorityRegionButtons">
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing ECE','ECE')">ECE</button>
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing NAR','NAR')">NAR</button>
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing JPN','JPN')">JPN</button>
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing KOR','KOR')">KOR</button>
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing TWN','TWN')">TWN</button>
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing Hong-Kong','HKG')">Hong Kong</button>
+        <button class="btn btn-secondary" onclick="prioritySelectRegion('Testing Macau','MAC')">Macau</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Working Group -->
+    <div id="priorityWgStep" style="display:none;margin-top:22px;">
+      <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">2. Select a Working Group <span id="priorityWgRegionLabel" style="color:var(--pds-color-brand);text-transform:none;letter-spacing:normal;"></span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;" id="priorityWgButtons"></div>
+    </div>
+
+    <!-- Step 3: Results -->
+    <div id="priorityResultStep" style="display:none;margin-top:24px;">
+      <div class="status" id="priorityResultStatus"></div>
+      <div id="prioritySummaryRow" style="display:flex;gap:16px;flex-wrap:wrap;margin:14px 0;"></div>
+      <div id="priorityBuckets"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── Status Banner ── -->
+<div class="card" style="padding:14px 24px;">
+  <div class="status" id="statusBanner">
+    <div class="spinner" id="statusSpinner"></div>
+    <span id="statusText"></span>
+  </div>
+  <div id="statusPlaceholder">Results will appear here after you click Analyze.</div>
+</div>
+
+<!-- ── Expand Cards (multi-region / multi-WG picker) ── -->
+<div class="card" id="expandCard" style="display:none;">
+  <h2 id="expandTitle">Select a Test Plan</h2>
+  <p id="expandSubtitle" style="color:#9ca3af;font-size:.85rem;margin-bottom:18px;"></p>
+  <div id="expandGrid" style="display:flex;flex-wrap:wrap;gap:14px;"></div>
+</div>
+
+<!-- ── Metadata Card ── -->
+<div class="card" id="metaCard" style="display:none;">
+  <h2>Test Plan Metadata</h2>
+  <div id="metaTable"></div>
+  <div class="action-row" style="margin-top:18px;">
+    <button class="btn btn-danger"  id="btnFailHistorical" onclick="loadFail('historical')" disabled>Fail Report — Historical</button>
+    <button class="btn btn-secondary" id="btnFailLatest"    onclick="loadFail('latest')"    disabled style="border-color:var(--pds-color-error);color:var(--pds-color-error);">Fail Report — Latest</button>
+    <button class="btn btn-warn"    id="btnBlocked" onclick="loadBlocked()" disabled>Blocked Report</button>
+    <button class="btn btn-secondary" id="btnMail"  onclick="loadMailCandidates()" disabled>Trigger Mail</button>
+    <button class="btn btn-secondary" id="btnJqlPaste" onclick="openJqlDrawer()" style="border-color:#6366f1;color:#6366f1;">&#128203; Paste &amp; Export</button>
+  </div>
+</div>
+
+<!-- ── Fail Report Card ── -->
+<div class="card" id="failCard" style="display:none;">
+  <h2>Historical Fail Report</h2>
+  <div class="status" id="failStatus"></div>
+  <div id="failSummaryRow" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;"></div>
+  <div id="failExports" class="export-strip" style="display:none;">
+    <button class="btn btn-primary" id="btnExportFailExcel" onclick="exportFailExcel()">Export Excel</button>
+    <button class="btn btn-secondary" id="btnExportFailCSV" style="display:none;" onclick="exportFailCSV()">Export CSV</button>
+    <button class="btn btn-secondary" id="btnExportFailPDF" onclick="exportFailPDF()">Export PDF</button>
+    <button class="btn btn-secondary" id="btnExportFailXLSX" style="display:none;" onclick="exportFailServerXLSX()">Server XLSX</button>
+    <button class="btn btn-secondary" id="btnExportFailServerPDF" style="display:none;" onclick="exportFailServerPDF()">Server PDF</button>
+  </div>
+  <div id="failTable"></div>
+</div>
+
+<!-- ── Blocked Report Card ── -->
+<div class="card" id="blockedCard" style="display:none;">
+  <h2>Blocked Report</h2>
+  <div class="status" id="blockedStatus"></div>
+  <div id="blockedSummaryRow" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;"></div>
+  <div id="blockedExports" class="export-strip" style="display:none;">
+    <button class="btn btn-primary" id="btnExportBlockedExcel" onclick="exportBlockedExcel()">Export Excel</button>
+    <button class="btn btn-secondary" id="btnExportBlockedCSV" style="display:none;" onclick="exportBlockedCSV()">Export CSV</button>
+    <button class="btn btn-secondary" id="btnExportBlockedPDF" onclick="exportBlockedPDF()">Export PDF</button>
+    <button class="btn btn-secondary" id="btnExportBlockedXLSX" style="display:none;" onclick="exportBlockedServerXLSX()">Server XLSX</button>
+    <button class="btn btn-secondary" id="btnExportBlockedServerPDF" style="display:none;" onclick="exportBlockedServerPDF()">Server PDF</button>
+  </div>
+  <div id="blockedTable"></div>
+</div>
+
+<!-- ── JQL Paste Drawer ── -->
+<div id="jqlDrawerOverlay" onclick="closeJqlDrawer()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;"></div>
+<div id="jqlDrawer" style="display:none;position:fixed;top:0;right:0;width:420px;max-width:95vw;height:100vh;background:#1c1c1e;border-left:1px solid #333;z-index:1000;box-shadow:-4px 0 24px rgba(0,0,0,.6);padding:28px 24px;overflow-y:auto;transition:transform .25s ease;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+    <h2 style="margin:0;font-size:1rem;">&#128203; Paste &amp; Export</h2>
+    <button onclick="closeJqlDrawer()" style="background:none;border:none;color:#aaa;font-size:1.3rem;cursor:pointer;line-height:1;">&times;</button>
+  </div>
+  <p style="font-size:.82rem;color:#888;margin-bottom:12px;">Paste the full JSON from <code>/tmp/jql-fail-report</code> (Postman / Swagger), then export to Excel.</p>
+  <textarea id="jqlPasteArea" rows="12" style="width:100%;font-size:.78rem;font-family:monospace;border:1px solid #333;background:#111;color:#ccc;padding:8px;border-radius:4px;resize:vertical;box-sizing:border-box;" placeholder='{"executions_scanned":230,"results":[...]}'></textarea>
+  <div style="margin-top:12px;display:flex;gap:10px;align-items:center;">
+    <button class="btn btn-primary" onclick="jqlPasteExport()">Export Excel</button>
+    <span id="jqlPasteStatus" style="font-size:.82rem;color:#888;"></span>
+  </div>
+</div>
+
+<!-- ── FAIL Overview ── -->
+<div class="card" id="failOverviewLaunchCard">
+  <h2>FAIL / BLOCKED Overview — Browse by Region</h2>
+  <p style="color:#9ca3af;font-size:.85rem;margin-bottom:18px;">Select a region to list test plans, then click a plan to view all FAILs with timestamp, tester and KPM links.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;" id="foRegionButtons">
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing ECE','ECE')"       style="border-color:#6366f1;color:#6366f1;">ECE</button>
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing NAR','NAR')"       style="border-color:#6366f1;color:#6366f1;">NAR</button>
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing JPN','JPN')"       style="border-color:#6366f1;color:#6366f1;">JPN</button>
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing KOR','KOR')"       style="border-color:#6366f1;color:#6366f1;">KOR</button>
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing TWN','TWN')"       style="border-color:#6366f1;color:#6366f1;">TWN</button>
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing Hong-Kong','HKG')" style="border-color:#6366f1;color:#6366f1;">Hong Kong</button>
+    <button class="btn btn-secondary" onclick="foSelectRegion('Testing Macau','MAC')"     style="border-color:#6366f1;color:#6366f1;">Macau</button>
+  </div>
+</div>
+
+<div class="card" id="foPickerCard" style="display:none;">
+  <h2 id="foPickerTitle">Select a Test Plan</h2>
+  <p id="foPickerSubtitle" style="color:#9ca3af;font-size:.85rem;margin-bottom:18px;"></p>
+  <div class="status" id="foPickerStatus"></div>
+  <div id="foPickerGrid" style="display:flex;flex-wrap:wrap;gap:14px;"></div>
+</div>
+
+<div class="card" id="foResultCard" style="display:none;">
+  <h2><span id="foResultTitle">FAIL Overview</span> — <span id="foResultPlanKey"></span></h2>
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px;">
+    <label id="foHistoricalLabel" style="font-size:.82rem;color:#9ca3af;display:flex;align-items:center;gap:6px;cursor:pointer;">
+      <input type="checkbox" id="foHistoricalToggle" onchange="foReloadCurrent()" style="accent-color:#6366f1;"> Include historical FAILs
+    </label>
+    <button class="btn btn-primary" id="foExportBtn" onclick="foExportExcel()" style="display:none;">Export Excel</button>
+    <button class="btn btn-secondary" id="foAiBtn" onclick="foAiSummary()" style="display:none;border-color:#a855f7;color:#a855f7;">&#10024; AI Summary</button>
+  </div>
+  <div class="status" id="foResultStatus"></div>
+  <div id="foSummaryRow" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;"></div>
+  <div id="foTable"></div>
+  <div id="foAiBox" style="display:none;"></div>
+</div>
+
+<!-- ── Mail Trigger Card ── -->
+<div class="card" id="mailCard" style="display:none;">
+  <h2>Mail Trigger Preview — No KPM <span id="mailSourceBadge" style="margin-left:10px;font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:3px;vertical-align:middle;display:none;"></span></h2>
+  <div class="status" id="mailStatus"></div>
+  <div id="mailSummaryRow" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;"></div>
+  <div class="action-row" style="margin-bottom:12px;">
+    <button class="btn btn-brand" id="btnMailAll" onclick="triggerMailAll()" disabled>Send Email To All Emailable</button>
+  </div>
+  <div id="mailTable"></div>
+</div>
+
+<script>
+  const BASE = 'http://127.0.0.1:8080';
+  const DEFAULT_PAGE_OPTIONS = {
+    '2378907792': 'Workstream Applications',
+    '2381910576': 'Workstream Platform',
+  };
+  let PAGE_OPTIONS = { ...DEFAULT_PAGE_OPTIONS };
+  let storedTestPlanKey = null;
+
+  // ── DEMO CACHE (TEMPORARY — revert after the demo) ──────────────────────
+  // Caches GET responses in-memory, keyed by full URL, so repeat clicks
+  // during a live demo return instantly instead of re-waiting on slow
+  // upstream Xray/Jira scans. Cache lives only for this page load (cleared
+  // on refresh) and never touches POST/mutating calls.
+  // TO REVERT: replace `cachedFetch(url)` calls below back to `fetch(url)`,
+  // or simply set _DEMO_CACHE_ENABLED = false.
+  const _DEMO_CACHE_ENABLED = true;
+  const _demoCache = new Map();
+  async function cachedFetch(url, options) {
+    if (!_DEMO_CACHE_ENABLED || (options && options.method && options.method !== 'GET')) {
+      return fetch(url, options);
+    }
+    if (_demoCache.has(url)) {
+      const cached = _demoCache.get(url);
+      return { ok: true, status: 200, json: async () => cached };
+    }
+    const resp = await fetch(url, options);
+    if (resp.ok) {
+      const cloned = resp.clone();
+      cloned.json().then(data => _demoCache.set(url, data)).catch(() => {});
+    }
+    return resp;
+  }
+
+  // ── UI helpers ─────────────────────────────────────────────────────────────
+
+  function setStatus(state, msg) {
+    const banner = document.getElementById('statusBanner');
+    const text   = document.getElementById('statusText');
+    const spinner= document.getElementById('statusSpinner');
+    const ph     = document.getElementById('statusPlaceholder');
+
+    banner.className = 'status show ' + state;
+    text.textContent = msg;
+    spinner.style.display = state === 'loading' ? 'block' : 'none';
+    ph.style.display = 'none';
+  }
+
+  function setBannerStatus(id, state, msg) {
+    const el = document.getElementById(id);
+    el.className = 'status show ' + state;
+    el.innerHTML = (state === 'loading'
+      ? '<div class="spinner"></div>'
+      : (state === 'error' ? '✗' : '✓')) + ' <span>' + msg + '</span>';
+  }
+
+  function setLoading(loading) {
+    document.getElementById('btnAnalyze').disabled = loading;
+    if (!loading) {
+      document.getElementById('btnFailHistorical').disabled = !storedTestPlanKey;
+      document.getElementById('btnFailLatest').disabled     = !storedTestPlanKey;
+      document.getElementById('btnBlocked').disabled = !storedTestPlanKey;
+      document.getElementById('btnMail').disabled    = !storedTestPlanKey;
+    } else {
+      document.getElementById('btnFailHistorical').disabled = true;
+      document.getElementById('btnFailLatest').disabled     = true;
+      document.getElementById('btnBlocked').disabled = true;
+      document.getElementById('btnMail').disabled    = true;
+    }
+  }
+
+  function summaryPill(label, value, cls) {
+    return `<div class="summary-pill">
+              <div class="summary-pill__label">${label}</div>
+              <div class="summary-pill__value ${cls}">${value}</div>
+            </div>`;
+  }
+
+  // ── JSON → HTML table ──────────────────────────────────────────────────────
+
+  function renderValue(val) {
+    if (val === null || val === undefined) return '<span class="nested">—</span>';
+    if (typeof val === 'object') {
+      // flatten object to key:value pairs
+      return '<span class="nested">' +
+        Object.entries(val)
+          .filter(([,v]) => v !== null && v !== undefined)
+          .map(([k,v]) => `<b>${k}:</b> ${v}`)
+          .join(' · ') +
+        '</span>';
+    }
+    return String(val);
+  }
+
+  function jsonToTable(data) {
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      return '<p class="empty">No data available.</p>';
+    }
+
+    const rows = Array.isArray(data) ? data : [data];
+    const keys = Object.keys(rows[0]);
+
+    let html = '<div class="table-wrap"><table><thead><tr>';
+    keys.forEach(k => { html += `<th>${k.replace(/_/g,' ')}</th>`; });
+    html += '</tr></thead><tbody>';
+
+    rows.forEach(row => {
+      html += '<tr>';
+      keys.forEach(k => {
+        const val = row[k];
+        let cell = renderValue(val);
+
+        // coloured badges for status / kpm_id
+        if (k === 'status') {
+          const s = String(val).toUpperCase();
+          const cls = s === 'FAIL' ? 'badge-red' : s === 'PASS' ? 'badge-green' : s === 'BLOCKED' ? 'badge-yellow' : 'badge-gray';
+          cell = `<span class="badge ${cls}">${val}</span>`;
+        }
+        if (k === 'kpm_id' && val && val !== 'No KPM') {
+          const kpmUrl = `https://kpmweb.vw.vwg/kpmweb/problemKlickOptimiert.xhtml?id=${val}`;
+          cell = `<a href="${kpmUrl}" target="_blank" rel="noopener" class="kpm">${val}</a>`;
+        }
+        if (k === 'kpm_id' && val === 'No KPM') {
+          cell = `<span class="badge badge-no-kpm">No KPM</span>`;
+        }
+        if (k === 'test_key' || k === 'test_exec_key') {
+          const jiraUrl = `https://skyway.porsche.com/jira/browse/${val}`;
+          cell = `<a href="${jiraUrl}" target="_blank" rel="noopener" style="color:var(--pds-color-brand);text-decoration:none;font-weight:600;">${val}</a>`;
+        }
+
+        html += `<td${k === 'kpm_id' ? ' style="white-space:nowrap;"' : ''}>${cell}</td>`;
+      });
+      html += '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+  }
+
+  // ── Key-value metadata table ───────────────────────────────────────────────
+
+  function renderMetaTable(obj) {
+    const statusFields = ['Pass','Fail','Blocked','Aborted','ToDo','Executing'];
+    let html = '<div class="table-wrap"><table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+    for (const [k, v] of Object.entries(obj)) {
+      if (v === null || v === undefined || v === '') continue;
+      let cell = renderValue(v);
+      if (statusFields.includes(k)) {
+        const cls = k === 'Fail' ? 'badge-red' : k === 'Pass' ? 'badge-green' : k === 'Blocked' ? 'badge-yellow' : k === 'Aborted' ? 'badge-gray' : 'badge-blue';
+        cell = `<span class="badge ${cls}">${v}</span>`;
+      }
+      html += `<tr><td style="font-weight:600;color:#6b7280;">${k}</td><td>${cell}</td></tr>`;
+    }
+    html += '</tbody></table></div>';
+    return html;
+  }
+
+  function getSelectedPageId() {
+    return document.getElementById('pageIdSelect')?.value || '2378907792';
+  }
+
+  function getSelectedPageLabel() {
+    return PAGE_OPTIONS[getSelectedPageId()] || getSelectedPageId();
+  }
+
+  function getStoredCustomPageOptions() {
+    try {
+      const raw = window.localStorage.getItem('customPageOptions');
+      const parsed = raw ? JSON.parse(raw) : {};
+      if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') {
+        return {};
+      }
+      return parsed;
+    } catch {
+      return {};
+    }
+  }
+
+  function saveCustomPageOptions(customOptions) {
+    window.localStorage.setItem('customPageOptions', JSON.stringify(customOptions));
+  }
+
+  function getStoredPageLabelOverrides() {
+    try {
+      const raw = window.localStorage.getItem('pageLabelOverrides');
+      const parsed = raw ? JSON.parse(raw) : {};
+      if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') {
+        return {};
+      }
+      return parsed;
+    } catch {
+      return {};
+    }
+  }
+
+  function saveStoredPageLabelOverrides(overrides) {
+    window.localStorage.setItem('pageLabelOverrides', JSON.stringify(overrides));
+  }
+
+  function updateDeletePageButtonState() {
+    const deleteButton = document.getElementById('deletePageIdBtn');
+    if (!deleteButton) return;
+    deleteButton.disabled = Object.keys(PAGE_OPTIONS).length === 0;
+  }
+
+  function renderPageOptions(selectedPageId) {
+    PAGE_OPTIONS = {
+      ...DEFAULT_PAGE_OPTIONS,
+      ...getStoredCustomPageOptions(),
+      ...getStoredPageLabelOverrides(),
+    };
+    const select = document.getElementById('pageIdSelect');
+    if (!select) return;
+
+    select.innerHTML = Object.entries(PAGE_OPTIONS)
+      .map(([pageId, label]) => `<option value="${pageId}">${pageId} - ${escapeHtml(label)}</option>`)
+      .join('');
+
+    if (selectedPageId && PAGE_OPTIONS[selectedPageId]) {
+      select.value = selectedPageId;
+    }
+    if (!select.value) {
+      select.value = Object.keys(PAGE_OPTIONS)[0] || '2378907792';
+    }
+    renderDeletePageList();
+    updateDeletePageButtonState();
+    handlePageSelectionChange();
+  }
+
+  function handlePageSelectionChange() {
+    document.getElementById('pageIdHelp').textContent = `Using ${getSelectedPageLabel()} (${getSelectedPageId()}).`;
+    updateDeletePageButtonState();
+  }
+
+  function parsePageIdAndLabel(rawPageId, rawPageName) {
+    const trimmedIdInput = (rawPageId || '').trim();
+    const trimmedNameInput = (rawPageName || '').trim();
+
+    let pageId = trimmedIdInput;
+    let pageLabel = trimmedNameInput;
+
+    const combinedMatch = trimmedIdInput.match(/^(\d+)\s*[-:|]\s*(.+)$/);
+    if (combinedMatch) {
+      pageId = combinedMatch[1].trim();
+      if (!pageLabel) {
+        pageLabel = combinedMatch[2].trim();
+      }
+    }
+
+    return {
+      pageId,
+      pageLabel,
+    };
+  }
+
+  function addPageIdOption() {
+    const idInput = document.getElementById('newPageIdInput');
+    const nameInput = document.getElementById('newPageNameInput');
+    const { pageId, pageLabel } = parsePageIdAndLabel(idInput?.value || '', nameInput?.value || '');
+
+    if (!/^\d+$/.test(pageId)) {
+      document.getElementById('pageIdHelp').textContent = 'Enter a numeric page ID.';
+      return;
+    }
+
+    const customOptions = getStoredCustomPageOptions();
+    const nextLabel = pageLabel || PAGE_OPTIONS[pageId] || 'Custom Page';
+    if (!DEFAULT_PAGE_OPTIONS[pageId]) {
+      customOptions[pageId] = nextLabel;
+      saveCustomPageOptions(customOptions);
+    } else if (pageLabel) {
+      const overrides = getStoredPageLabelOverrides();
+      overrides[pageId] = pageLabel;
+      saveStoredPageLabelOverrides(overrides);
+    }
+
+    if (idInput) idInput.value = '';
+    if (nameInput) nameInput.value = '';
+    renderPageOptions(pageId);
+  }
+
+  function renderDeletePageList() {
+    const container = document.getElementById('pageDeleteListItems');
+    if (!container) return;
+    const customOptions = getStoredCustomPageOptions();
+    const entries = Object.entries(PAGE_OPTIONS);
+    if (!entries.length) {
+      container.innerHTML = '<p class="empty" style="margin:0;">No page IDs available.</p>';
+      return;
+    }
+    container.innerHTML = entries.map(([pageId, label]) => {
+      const isDefault = !!DEFAULT_PAGE_OPTIONS[pageId];
+      const renameActionMarkup = `<button class="btn btn-secondary page-delete-secondary-btn" type="button" onclick='beginManagedPageRename(${JSON.stringify(pageId)})'>Rename</button>`;
+      const defaultActionMarkup = isDefault
+        ? '<span class="page-delete-item-fixed">Default</span>'
+        : `<button class="btn btn-secondary page-delete-item-btn" type="button" onclick='beginManagedPageDelete(${JSON.stringify(pageId)})' title="Delete ${escapeHtml(pageId)}" aria-label="Delete ${escapeHtml(pageId)}">&times;</button>`;
+      const badgeText = isDefault ? 'Built-in page ID' : (customOptions[pageId] || 'Custom Page');
+      return `
+      <div class="page-delete-item">
+        <div class="page-delete-item-main">
+          <div class="page-delete-item-text">
+            <strong>${escapeHtml(pageId)}</strong>
+            <span>${escapeHtml(label)} · ${escapeHtml(badgeText)}</span>
+          </div>
+        </div>
+        <div class="page-delete-item-actions">${renameActionMarkup}${defaultActionMarkup}</div>
+      </div>
+    `;
+    }).join('');
+  }
+
+  let activeRenamePageId = null;
+  let activeDeletePageId = null;
+
+  function beginManagedPageRename(pageId) {
+    activeRenamePageId = pageId;
+    const overlay = document.getElementById('pageRenameModalOverlay');
+    const pageIdLabel = document.getElementById('pageRenameModalPageId');
+    const input = document.getElementById('pageRenameModalInput');
+    if (pageIdLabel) pageIdLabel.textContent = pageId;
+    if (input) input.value = PAGE_OPTIONS[pageId] || '';
+    if (overlay) overlay.hidden = false;
+    if (input) {
+      input.focus();
+      input.select();
+    }
+  }
+
+  function closePageRenameModal(evt) {
+    if (evt && evt.target && evt.target.id !== 'pageRenameModalOverlay') return;
+    activeRenamePageId = null;
+    const overlay = document.getElementById('pageRenameModalOverlay');
+    const input = document.getElementById('pageRenameModalInput');
+    const pageIdLabel = document.getElementById('pageRenameModalPageId');
+    if (overlay) overlay.hidden = true;
+    if (input) input.value = '';
+    if (pageIdLabel) pageIdLabel.textContent = '';
+  }
+
+  function beginManagedPageDelete(pageId) {
+    activeDeletePageId = pageId;
+    const overlay = document.getElementById('pageDeleteConfirmOverlay');
+    const pageIdLabel = document.getElementById('pageDeleteConfirmPageId');
+    const label = document.getElementById('pageDeleteConfirmLabel');
+    if (pageIdLabel) pageIdLabel.textContent = pageId;
+    if (label) label.textContent = PAGE_OPTIONS[pageId] || '';
+    if (overlay) overlay.hidden = false;
+  }
+
+  function closePageDeleteConfirm(evt) {
+    if (evt && evt.target && evt.target.id !== 'pageDeleteConfirmOverlay') return;
+    activeDeletePageId = null;
+    const overlay = document.getElementById('pageDeleteConfirmOverlay');
+    const pageIdLabel = document.getElementById('pageDeleteConfirmPageId');
+    const label = document.getElementById('pageDeleteConfirmLabel');
+    if (overlay) overlay.hidden = true;
+    if (pageIdLabel) pageIdLabel.textContent = '';
+    if (label) label.textContent = '';
+  }
+
+  function toggleDeletePageList() {
+    const panel = document.getElementById('pageDeleteList');
+    if (!panel) return;
+    if (!panel.hidden) {
+      closeDeletePageList();
+      return;
+    }
+    renderDeletePageList();
+    panel.hidden = false;
+  }
+
+  function closeDeletePageList() {
+    const panel = document.getElementById('pageDeleteList');
+    closePageRenameModal();
+    closePageDeleteConfirm();
+    if (panel) {
+      panel.hidden = true;
+    }
+  }
+
+  function removeCustomPageId(pageId) {
+    const customOptions = getStoredCustomPageOptions();
+    const overrides = getStoredPageLabelOverrides();
+    delete customOptions[pageId];
+    delete overrides[pageId];
+    saveCustomPageOptions(customOptions);
+    saveStoredPageLabelOverrides(overrides);
+    const nextPageId = getSelectedPageId() === pageId ? Object.keys(DEFAULT_PAGE_OPTIONS)[0] : getSelectedPageId();
+    renderPageOptions(nextPageId);
+    const panel = document.getElementById('pageDeleteList');
+    if (panel && Object.keys(getStoredCustomPageOptions()).length === 0) {
+      panel.hidden = true;
+    }
+    document.getElementById('pageIdHelp').textContent = `Removed page ID ${pageId}. Using ${getSelectedPageLabel()} (${getSelectedPageId()}).`;
+  }
+
+  function confirmDeletePageModal() {
+    if (!activeDeletePageId) return;
+    const pageId = activeDeletePageId;
+    closePageDeleteConfirm();
+    removeCustomPageId(pageId);
+  }
+
+  function renameManagedPageId(pageId) {
+    const input = document.getElementById('pageRenameModalInput');
+    const nextLabel = (input?.value || '').trim();
+    if (!nextLabel) {
+      document.getElementById('pageIdHelp').textContent = `Enter a page name for ${pageId}.`;
+      return;
+    }
+
+    if (DEFAULT_PAGE_OPTIONS[pageId]) {
+      const overrides = getStoredPageLabelOverrides();
+      overrides[pageId] = nextLabel;
+      saveStoredPageLabelOverrides(overrides);
+    } else {
+      const customOptions = getStoredCustomPageOptions();
+      customOptions[pageId] = nextLabel;
+      saveCustomPageOptions(customOptions);
+    }
+
+    closePageRenameModal();
+    renderPageOptions(getSelectedPageId() === pageId ? pageId : getSelectedPageId());
+    const panel = document.getElementById('pageDeleteList');
+    if (panel) {
+      panel.hidden = false;
+    }
+    document.getElementById('pageIdHelp').textContent = `Updated page name for ${pageId} to ${nextLabel}.`;
+  }
+
+  function savePageRenameModal() {
+    if (!activeRenamePageId) return;
+    renameManagedPageId(activeRenamePageId);
+  }
+
+  async function fetchConfluenceTestPlans(filters = {}) {
+    const params = new URLSearchParams({ page_id: getSelectedPageId() });
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+    });
+    const resp = await fetch(`${BASE}/confluence/testplans?${params.toString()}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    return data.test_plans || [];
+  }
+
+  function extractWorkingGroups(plans) {
+    return [...new Set((plans || [])
+      .map(item => item.working_group || item.workstream || '')
+      .filter(Boolean))].sort((left, right) => left.localeCompare(right));
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderPriorityWorkingGroups(groups) {
+    const container = document.getElementById('priorityWgButtons');
+    if (!groups.length) {
+      container.innerHTML = '<p class="empty" style="margin:0;">No working groups found for the selected page and region.</p>';
+      return;
+    }
+    container.innerHTML = groups.map(group =>
+      `<button class="btn btn-secondary" onclick='prioritySelectWG(${JSON.stringify(group)})'>${escapeHtml(group)}</button>`
+    ).join('');
+  }
+
+  function renderFailAllWorkingGroups(groups) {
+    const container = document.getElementById('failAllWgButtons');
+    if (!groups.length) {
+      container.innerHTML = '<p class="empty" style="margin:0;">No working groups found for the selected page.</p>';
+      return;
+    }
+    container.innerHTML = groups.map(group =>
+      `<button class="btn btn-secondary" onclick='failAllRun("working_group", ${JSON.stringify(group)}, ${JSON.stringify(group)})'>${escapeHtml(group)}</button>`
+    ).join('');
+  }
+
+  function renderBlockedAllWorkingGroups(groups) {
+    const container = document.getElementById('blockedAllWgButtons');
+    if (!groups.length) {
+      container.innerHTML = '<p class="empty" style="margin:0;">No working groups found for the selected page.</p>';
+      return;
+    }
+    container.innerHTML = groups.map(group =>
+      `<button class="btn btn-secondary" onclick='blockedAllRun("working_group", ${JSON.stringify(group)}, ${JSON.stringify(group)})'>${escapeHtml(group)}</button>`
+    ).join('');
+  }
+
+  async function loadWorkingGroupsForPriority(region) {
+    const container = document.getElementById('priorityWgButtons');
+    container.innerHTML = '<span style="color:var(--pds-color-neutral-1);font-size:.85rem;">Loading working groups…</span>';
+    const plans = await fetchConfluenceTestPlans({ region });
+    renderPriorityWorkingGroups(extractWorkingGroups(plans));
+  }
+
+  async function loadWorkingGroupsForFailAll() {
+    const container = document.getElementById('failAllWgButtons');
+    container.innerHTML = '<span style="color:var(--pds-color-neutral-1);font-size:.85rem;">Loading working groups…</span>';
+    const plans = await fetchConfluenceTestPlans();
+    renderFailAllWorkingGroups(extractWorkingGroups(plans));
+  }
+
+  async function loadWorkingGroupsForBlockedAll() {
+    const container = document.getElementById('blockedAllWgButtons');
+    container.innerHTML = '<span style="color:var(--pds-color-neutral-1);font-size:.85rem;">Loading working groups…</span>';
+    const plans = await fetchConfluenceTestPlans();
+    renderBlockedAllWorkingGroups(extractWorkingGroups(plans));
+  }
+
+  // ── Tool 1 – parse keywords (now also resolves test_plan_key via Confluence) ─
+
+  async function callTool1(prompt) {
+    const url = `${BASE}/parse-keywords?prompt=${encodeURIComponent(prompt)}`;
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`Tool 1 failed: ${resp.status}`);
+    return await resp.json();
+  }
+
+  // ── Tool 2 – Confluence page ───────────────────────────────────────────────
+
+  async function callTool2(pageId) {
+    const url = `${BASE}/confluence/page/${pageId}`;
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`Tool 2 failed: ${resp.status}`);
+    return await resp.json();
+  }
+
+  // ── Parse Confluence HTML body into a flat key→value object ───────────────
+
+  function parseConfluenceMeta(body) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(body || '', 'text/html');
+    const meta = {};
+    doc.querySelectorAll('table tr').forEach(row => {
+      const cells = row.querySelectorAll('td, th');
+      if (cells.length >= 2) {
+        const key = cells[0].textContent.trim();
+        const val = cells[1].textContent.trim();
+        if (key) meta[key] = val;
+      }
+    });
+    return meta;
+  }
+
+  // ── Main analysis flow ─────────────────────────────────────────────────────
+
+  // ── Expand-mode: show picker cards then wire click → selectExpandedPlan ──
+  async function _runExpand(prompt) {
+    setStatus('loading', 'Expanding across all regions/working groups…');
+    const resp = await fetch(`${BASE}/testplans/expand?query=${encodeURIComponent(prompt)}`);
+    if (!resp.ok) throw new Error(`Expand failed: ${resp.status}`);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+
+    const grid = document.getElementById('expandGrid');
+    grid.innerHTML = '';
+    const items = data.all || [];
+    const groupField = data.matched_as === 'region' ? 'working_group' : 'region';
+
+    document.getElementById('expandTitle').textContent =
+      data.matched_as === 'region'
+        ? `${data.label} — Select a Working Group`
+        : `${data.label} — Select a Region`;
+    document.getElementById('expandSubtitle').textContent =
+      `${items.length} test plan(s) found. Click one to load its metadata and reports.`;
+
+    if (items.length === 0) {
+      grid.innerHTML = '<p style="color:#ef4444;">No test plans found for this query.</p>';
+    } else {
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.style.cssText = 'cursor:pointer;border:1.5px solid #374151;border-radius:10px;padding:16px 20px;min-width:160px;max-width:200px;background:#1c1c1e;transition:border-color .15s,background .15s;text-align:center;';
+        card.innerHTML = `<div style="font-size:.78rem;color:#9ca3af;margin-bottom:6px;">${item[groupField] || '—'}</div><div style="font-weight:700;font-size:.95rem;color:#e5e7eb;">${item.test_plan_key}</div>`;
+        card.onmouseenter = () => { card.style.borderColor='#6366f1'; card.style.background='#27272a'; };
+        card.onmouseleave = () => { card.style.borderColor='#374151'; card.style.background='#1c1c1e'; };
+        card.onclick = () => selectExpandedPlan(item, data);
+        grid.appendChild(card);
+      });
+    }
+
+    document.getElementById('expandCard').style.display = 'block';
+    setStatus('success', `✓ Found ${items.length} test plan(s). Click one to load.`);
+  }
+
+  async function selectExpandedPlan(item, expandData) {
+    storedTestPlanKey = item.test_plan_key;
+
+    // Highlight selected card
+    document.querySelectorAll('#expandGrid > div').forEach(c => {
+      c.style.borderColor = '#374151'; c.style.background = '#1c1c1e';
+    });
+    event.currentTarget.style.borderColor = '#6366f1';
+    event.currentTarget.style.background  = '#2d2d3a';
+
+    setLoading(true);
+    setStatus('loading', `Loading metadata for ${storedTestPlanKey}…`);
+    try {
+      let totalTests = null;
+      try {
+        const statsResp = await fetch(`${BASE}/testplan/${storedTestPlanKey}/failed-tests`);
+        if (statsResp.ok) { const s = await statsResp.json(); totalTests = s.total_fetched ?? null; }
+      } catch (_) {}
+
+      const meta = {
+        'Test Plan Key' : storedTestPlanKey,
+        ...(item.working_group ? { 'Working Group' : item.working_group } : {}),
+        ...(item.region        ? { 'Location'      : item.region }        : {}),
+        ...(totalTests !== null ? { 'Total Scope'  : totalTests }         : {}),
+      };
+      document.getElementById('metaTable').innerHTML = renderMetaTable(meta);
+      document.getElementById('metaCard').style.display = 'block';
+      document.getElementById('btnFailHistorical').disabled = false;
+      document.getElementById('btnFailLatest').disabled     = false;
+      document.getElementById('btnBlocked').disabled        = false;
+      document.getElementById('btnMail').disabled           = false;
+      // reset report cards
+      ['failCard','blockedCard','mailCard'].forEach(id => document.getElementById(id).style.display = 'none');
+      setStatus('success', `✓ Ready. Test Plan: <b>${storedTestPlanKey}</b>`);
+    } catch(err) {
+      setStatus('error', '✗ ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function testSallyConnection() {
+    const resultBox = document.getElementById('aiPromptResult');
+    const btn = document.getElementById('btnSallyTest');
+    btn.disabled = true;
+    resultBox.style.display = 'block';
+    resultBox.textContent = 'Testing Sally D2D connection…';
+    try {
+      const resp = await fetch(`${BASE}/sally/test-connection`, { method: 'POST' });
+      const data = await resp.json();
+      if (!resp.ok) {
+        resultBox.textContent = 'Sally test FAILED:\n' + (data.detail || resp.statusText);
+        return;
+      }
+      resultBox.textContent = 'Sally test OK ✔\n' + JSON.stringify(data, null, 2);
+    } catch (err) {
+      resultBox.textContent = 'Sally test FAILED: ' + err.message;
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  async function runAiPrompt() {
+    const prompt = document.getElementById('prompt').value.trim();
+    const resultBox = document.getElementById('aiPromptResult');
+    if (!prompt) { alert('Please enter a prompt.'); return; }
+
+    const btn = document.getElementById('btnAiPrompt');
+    btn.disabled = true;
+    resultBox.style.display = 'block';
+    resultBox.textContent = 'Asking the AI model…';
+
+    try {
+      const resp = await fetch(`${BASE}/ai/prompt`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        resultBox.textContent = 'Error: ' + (data.detail || resp.statusText);
+        return;
+      }
+
+      const decision = data.decision || {};
+      const value = decision.working_group || decision.region || '';
+      const mode  = decision.working_group ? 'working_group' : (decision.region ? 'region' : null);
+
+      if (data.action === 'fail_all' && mode) {
+        resultBox.style.display = 'none';
+        openFailAllModal();
+        failAllSetMode(mode);
+        // Highlight/click the matching button in that step, same as a manual click.
+        const btnGroup = mode === 'region' ? '#failAllRegionButtons button' : '#failAllWgButtons button';
+        const match = Array.from(document.querySelectorAll(btnGroup))
+          .find(b => b.textContent.trim().toLowerCase() === value.toLowerCase());
+        if (match) match.click();
+        else await failAllRun(mode, value, value);
+      } else if (data.action === 'blocked_all' && mode) {
+        resultBox.style.display = 'none';
+        openBlockedAllModal();
+        blockedAllSetMode(mode);
+        const btnGroup = mode === 'region' ? '#blockedAllRegionButtons button' : '#blockedAllWgButtons button';
+        const match = Array.from(document.querySelectorAll(btnGroup))
+          .find(b => b.textContent.trim().toLowerCase() === value.toLowerCase());
+        if (match) match.click();
+        else await blockedAllRun(mode, value, value);
+      } else if (data.action === 'failed_tests' && decision.test_plan_key) {
+        resultBox.style.display = 'none';
+        document.getElementById('prompt').value = decision.test_plan_key;
+        await runAnalysis();
+      } else {
+        resultBox.style.display = 'block';
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      }
+    } catch (err) {
+      resultBox.style.display = 'block';
+      resultBox.textContent = 'Error: ' + err.message;
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  async function runAnalysis() {
+
+    const prompt = document.getElementById('prompt').value.trim();
+    if (!prompt) { alert('Please enter a prompt.'); return; }
+
+    storedTestPlanKey = null;
+    document.getElementById('metaCard').style.display   = 'none';
+    document.getElementById('expandCard').style.display = 'none';
+    document.getElementById('failCard').style.display   = 'none';
+    document.getElementById('blockedCard').style.display= 'none';
+    document.getElementById('mailCard').style.display   = 'none';
+    document.getElementById('mailSourceBadge').style.display = 'none';
+    document.getElementById('mailSourceBadge').textContent  = '';
+
+    setLoading(true);
+    setStatus('loading', 'Extracting keywords and resolving Test Plan…');
+
+    try {
+      // ── Expand-mode detection (prompt-level) ──────────────────────────────
+      // If the prompt contains broad "all" / "everything" intent, skip normal
+      // parse_keywords flow and go straight to the expand endpoint.
+      const _expandIntent = /\b(all\s+of|all\b|everything|every\s+working\s+group|all\s+regions?|all\s+working\s+groups?)\b/i.test(prompt);
+      if (_expandIntent) {
+        setLoading(false);
+        return await _runExpand(prompt);
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
+      // Step 1 – Tool 1 now internally queries Confluence and returns test_plan_key
+      const kw = await callTool1(prompt);
+
+      // ── Expand-mode fallback (parse_keywords returned only one dimension) ─
+      const hasRegion = !!(kw.location);
+      const hasWG     = !!(kw.working_group);
+      if ((hasRegion !== hasWG) && !kw.test_plan_key) {
+        setLoading(false);
+        return await _runExpand(prompt);
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
+      storedTestPlanKey = kw.test_plan_key || null;
+
+      setStatus('loading', 'Fetching Confluence page metadata…');
+
+      // Step 2 – Confluence page for display metadata
+      const page = await callTool2('2378907792');
+      const rawMeta = parseConfluenceMeta(page.body || '');
+
+      // Step 3 – Fetch real total test count from Xray if key is known
+      let totalTests = null;
+      if (storedTestPlanKey) {
+        try {
+          setStatus('loading', 'Fetching test count from Xray…');
+          const statsResp = await fetch(`${BASE}/testplan/${storedTestPlanKey}/failed-tests`);
+          if (statsResp.ok) {
+            const stats = await statsResp.json();
+            totalTests = stats.total_fetched ?? null;
+          }
+        } catch (_) { /* non-fatal */ }
+      }
+
+      // Build display metadata
+      const CONFLUENCE_FIELDS = ['Orphans', 'Not Yet Planned', 'Planned'];
+      const meta = {
+        'Page Title'  : page.title || '—',
+        ...(storedTestPlanKey          ? { 'Test Plan Key' : storedTestPlanKey }       : {}),
+        ...(totalTests !== null        ? { 'Total Scope' : totalTests }         : {}),
+        ...(kw.working_group           ? { 'Working Group' : kw.working_group }        : {}),
+        ...(kw.location                ? { 'Location'      : kw.location }             : {}),
+        ...(kw.workstream              ? { 'Workstream'    : kw.workstream }           : {}),
+        ...(kw.product_owner           ? { 'Product Owner' : kw.product_owner }        : {}),
+        ...(kw.status                  ? { 'Status Filter' : kw.status }               : {}),
+        ...Object.fromEntries(CONFLUENCE_FIELDS.filter(f => rawMeta[f]).map(f => [f, rawMeta[f]])),
+      };
+
+      document.getElementById('metaTable').innerHTML = renderMetaTable(meta);
+      document.getElementById('metaCard').style.display = 'block';
+
+      document.getElementById('btnFailHistorical').disabled = !storedTestPlanKey;
+      document.getElementById('btnFailLatest').disabled     = !storedTestPlanKey;
+      document.getElementById('btnBlocked').disabled = !storedTestPlanKey;
+      document.getElementById('btnMail').disabled    = !storedTestPlanKey;
+
+      const keyNote = storedTestPlanKey
+        ? `Test Plan Key: <b>${storedTestPlanKey}</b>`
+        : 'No Test Plan Key found. Try including more specific keywords or a key like <b>MLBEVO-12345</b>.';
+
+      setStatus('success', '✓ Analysis complete. ' + keyNote);
+
+    } catch (err) {
+      setStatus('error', '✗ ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // ── Reset all report cards except the one being opened ─────────────────
+  function _resetCards(keep) {
+    const cards = {
+      fail:    { card: 'failCard',    table: 'failTable',    summary: 'failSummaryRow',    status: 'failStatus',    exports: 'failExports' },
+      blocked: { card: 'blockedCard', table: 'blockedTable', summary: 'blockedSummaryRow', status: 'blockedStatus', exports: 'blockedExports' },
+      mail:    { card: 'mailCard',    table: 'mailTable',    summary: 'mailSummaryRow',    status: 'mailStatus',    exports: null },
+    };
+    for (const [key, ids] of Object.entries(cards)) {
+      if (key === keep) continue;
+      const card = document.getElementById(ids.card);
+      if (card) card.style.display = 'none';
+      const tbl = document.getElementById(ids.table);
+      if (tbl) tbl.innerHTML = '';
+      const sum = document.getElementById(ids.summary);
+      if (sum) sum.innerHTML = '';
+      const st = document.getElementById(ids.status);
+      if (st) { st.className = 'status'; st.innerHTML = ''; }
+      if (ids.exports) {
+        const exp = document.getElementById(ids.exports);
+        if (exp) exp.style.display = 'none';
+      }
+    }
+    // also hide mail source badge when not showing mail
+    if (keep !== 'mail') {
+      const badge = document.getElementById('mailSourceBadge');
+      if (badge) { badge.style.display = 'none'; badge.textContent = ''; }
+    }
+  }
+
+  // ── Fail report ────────────────────────────────────────────────────────────
+
+  async function loadFail(mode) {
+    if (!storedTestPlanKey) return;
+    _resetCards('fail');
+    const isHistorical = mode === 'historical';
+    const endpoint = isHistorical
+      ? `${BASE}/xray/fail-report/${storedTestPlanKey}/historical`
+      : `${BASE}/xray/fail-report/${storedTestPlanKey}`;
+    const modeLabel = isHistorical ? 'Historical Fail Report' : 'Latest Fail Report';
+
+    document.getElementById('failCard').style.display = 'block';
+    document.getElementById('failCard').querySelector('h2').childNodes[1]
+      ? (document.getElementById('failCard').querySelector('h2').lastChild.textContent = modeLabel)
+      : null;
+    document.getElementById('failTable').innerHTML = '';
+    document.getElementById('failSummaryRow').innerHTML = '';
+    setBannerStatus('failStatus', 'loading', `Fetching ${modeLabel.toLowerCase()}…`);
+    document.getElementById('btnFailHistorical').disabled = true;
+    document.getElementById('btnFailLatest').disabled     = true;
+    document.getElementById('btnBlocked').disabled = true;
+
+    try {
+      const resp = await cachedFetch(endpoint);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      // Update card title
+      const h2 = document.getElementById('failCard').querySelector('h2');
+      h2.innerHTML = `<span></span>${modeLabel}`;
+
+      // Summary pills
+      document.getElementById('failSummaryRow').innerHTML =
+        summaryPill('Total FAIL', data.total_fail ?? 0, 'badge-red') +
+        summaryPill('With KPM',   data.with_kpm   ?? 0, 'badge-green') +
+        summaryPill('No KPM',     data.without_kpm?? 0, 'badge-gray') +
+        summaryPill('Time (s)',    Math.round(data.execution_time_seconds ?? 0), '');
+
+      const results = data.results || [];
+      window._lastFailResults = results;
+      window._lastFailMode = isHistorical ? 'Historical Fail' : 'Latest Fail';
+      document.getElementById('failExports').style.display = results && results.length ? 'block' : 'none';
+      document.getElementById('failTable').innerHTML = results.length
+        ? jsonToTable(results)
+        : '<p class="empty">No FAIL results found.</p>';
+
+      setBannerStatus('failStatus', 'success', `Loaded ${results.length} FAIL result(s) for ${storedTestPlanKey} [${isHistorical ? 'historical' : 'latest'}]`);
+
+    } catch (err) {
+      setBannerStatus('failStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('failTable').innerHTML = '<p class="empty">Could not load data.</p>';
+      document.getElementById('failExports').style.display = 'none';
+    } finally {
+      document.getElementById('btnFailHistorical').disabled = false;
+      document.getElementById('btnFailLatest').disabled     = false;
+      document.getElementById('btnBlocked').disabled = false;
+    }
+  }
+
+  async function loadBlocked() {
+    if (!storedTestPlanKey) return;
+    _resetCards('blocked');
+
+    document.getElementById('blockedCard').style.display = 'block';
+    document.getElementById('blockedTable').innerHTML = '';
+    document.getElementById('blockedSummaryRow').innerHTML = '';
+    setBannerStatus('blockedStatus', 'loading', 'Fetching BLOCKED report…');
+    document.getElementById('btnFailHistorical').disabled = true;
+    document.getElementById('btnFailLatest').disabled     = true;
+    document.getElementById('btnBlocked').disabled = true;
+    document.getElementById('btnMail').disabled    = true;
+
+    try {
+      const resp = await cachedFetch(`${BASE}/xray/blocked-report/${storedTestPlanKey}`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      document.getElementById('blockedSummaryRow').innerHTML =
+        summaryPill('Total BLOCKED', data.total_blocked ?? 0, 'badge-yellow') +
+        summaryPill('With KPM',      data.with_kpm      ?? 0, 'badge-green') +
+        summaryPill('No KPM',        data.without_kpm   ?? 0, 'badge-gray') +
+        summaryPill('Time (s)',       Math.round(data.execution_time_seconds ?? 0), '');
+
+      const results = data.results || [];
+      // Cache results for export helpers and show/hide export buttons
+      window._lastBlockedResults = results;
+      document.getElementById('blockedExports').style.display = results && results.length ? 'block' : 'none';
+      document.getElementById('blockedTable').innerHTML = results.length
+        ? jsonToTable(results)
+        : '<p class="empty">No BLOCKED results found.</p>';
+
+      setBannerStatus('blockedStatus', 'success', `Loaded ${results.length} BLOCKED result(s) for ${storedTestPlanKey}`);
+
+    } catch (err) {
+      setBannerStatus('blockedStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('blockedTable').innerHTML = '<p class="empty">Could not load data.</p>';
+      document.getElementById('blockedExports').style.display = 'none';
+    } finally {
+      document.getElementById('btnFailHistorical').disabled = false;
+      document.getElementById('btnFailLatest').disabled     = false;
+      document.getElementById('btnBlocked').disabled = false;
+      document.getElementById('btnMail').disabled    = false;
+    }
+  }
+
+  function renderMailTable(rows) {
+    const filtered = Array.isArray(rows) ? rows : [];
+    if (!filtered.length) return '<p class="empty">No No-KPM candidates found.</p>';
+
+    let html = '<div class="table-wrap"><table><thead><tr>' +
+      '<th>Test Key</th><th>KPM ID</th><th>Display Name</th><th>Email</th><th>Action</th>' +
+      '</tr></thead><tbody>';
+
+    for (const r of filtered) {
+      const key = r.test_key || '—';
+      const kpm = r.kpm_id || 'No KPM';
+      const name = r.display_name || '—';
+      const email = r.email || '—';
+      const canEmail = !!r.can_email;
+      const noKpm = !!r.no_kpm;
+      const action = canEmail
+        ? (noKpm
+            ? `<button class="btn btn-primary" style="padding:6px 10px;font-size:.78rem;" onclick="triggerMailOne('${key}')">Send Email</button>`
+            : '<span class="nested">Has KPM</span>')
+        : '<span class="nested">No email</span>';
+
+      html += `<tr><td>${key}</td><td><span class="kpm">${kpm}</span></td><td>${name}</td><td>${email}</td><td>${action}</td></tr>`;
+    }
+
+    html += '</tbody></table></div>';
+    return html;
+  }
+
+  async function loadMailCandidates() {
+    if (!storedTestPlanKey) return;
+    _resetCards('mail');
+
+    document.getElementById('mailCard').style.display = 'block';
+    document.getElementById('mailTable').innerHTML = '';
+    document.getElementById('mailSummaryRow').innerHTML = '';
+    document.getElementById('btnMailAll').disabled = true;
+
+    // ── Use cached fail results if a report has already been loaded ──────
+    if (window._lastFailResults && window._lastFailResults.length) {
+      const mode   = window._lastFailMode || 'Fail Report';
+      const cached = window._lastFailResults;
+
+      // Derive mail-candidate rows from cached results (same shape renderMailTable expects)
+      const mailRows = cached.map(r => {
+        const a     = r.assignee || {};
+        const email = a.emailAddress || '';
+        const noKpm = !r.kpm_id || r.kpm_id === 'No KPM';
+        return {
+          test_key:     r.test_key    || '',
+          kpm_id:       noKpm ? '' : (r.kpm_id || ''),
+          display_name: a.displayName || '—',
+          email,
+          can_email:    !!email,
+          no_kpm:       noKpm,
+        };
+      }).filter(r => r.no_kpm);
+
+      const emailable = mailRows.filter(r => r.can_email).length;
+
+      // Show source badge
+      const badge = document.getElementById('mailSourceBadge');
+      const isHistorical = mode.toLowerCase().includes('historical');
+      badge.textContent  = `Source: ${mode}`;
+      badge.style.display = 'inline-block';
+      badge.style.background   = isHistorical ? '#010205' : '#1a56db';
+      badge.style.color        = '#fff';
+
+      document.getElementById('mailSummaryRow').innerHTML =
+        summaryPill(mode, cached.length, 'badge-red') +
+        summaryPill('No KPM', mailRows.length, 'badge-gray') +
+        summaryPill('Emailable (No KPM)', emailable, 'badge-blue');
+
+      document.getElementById('mailTable').innerHTML = renderMailTable(mailRows);
+      document.getElementById('btnMailAll').disabled = !(emailable > 0);
+      setBannerStatus('mailStatus', 'success',
+        `Showing ${mailRows.length} No-KPM candidate(s) from ${mode}. No extra server call.`);
+      return;
+    }
+
+    // ── Fallback: no cache, fetch from server ────────────────────────────
+    setBannerStatus('mailStatus', 'loading', 'Fetching historical No-KPM mail candidates…');
+    document.getElementById('btnFailHistorical').disabled = true;
+    document.getElementById('btnFailLatest').disabled     = true;
+    document.getElementById('btnBlocked').disabled = true;
+    document.getElementById('btnMail').disabled    = true;
+
+    try {
+      const resp = await fetch(`${BASE}/mail/trigger/${storedTestPlanKey}`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      document.getElementById('mailSummaryRow').innerHTML =
+        summaryPill('Historical FAIL', data.total_historical_fail ?? 0, 'badge-red') +
+        summaryPill('No KPM', data.no_kpm_count ?? 0, 'badge-gray') +
+        summaryPill('Emailable (No KPM)', data.emailable_no_kpm_count ?? 0, 'badge-blue');
+
+      const rows = data.rows || [];
+      document.getElementById('mailTable').innerHTML = renderMailTable(rows);
+      document.getElementById('btnMailAll').disabled = !(data.emailable_no_kpm_count > 0);
+      // Source badge — server fallback always returns historical
+      const badge2 = document.getElementById('mailSourceBadge');
+      badge2.textContent = 'Source: Historical Fail (server)';
+      badge2.style.display  = 'inline-block';
+      badge2.style.background = '#010205';
+      badge2.style.color      = '#fff';
+      setBannerStatus('mailStatus', 'success', `Loaded ${rows.length} candidate(s).`);
+    } catch (err) {
+      setBannerStatus('mailStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('mailTable').innerHTML = '<p class="empty">Could not load candidates.</p>';
+    } finally {
+      document.getElementById('btnFailHistorical').disabled = false;
+      document.getElementById('btnFailLatest').disabled     = false;
+      document.getElementById('btnBlocked').disabled = false;
+      document.getElementById('btnMail').disabled    = false;
+    }
+  }
+
+  async function triggerMailOne(testKey) {
+    if (!storedTestPlanKey || !testKey) return;
+    try {
+      const resp = await fetch(`${BASE}/mail/trigger/${storedTestPlanKey}/send`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify([testKey]),
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      alert(`Dry run: selected ${data.selected_count} recipient(s) for ${testKey}.`);
+    } catch (err) {
+      alert('Trigger failed: ' + err.message);
+    }
+  }
+
+  async function triggerMailAll() {
+    if (!storedTestPlanKey) return;
+    try {
+      const resp = await fetch(`${BASE}/mail/trigger/${storedTestPlanKey}/send`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify([]),
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      alert(`Dry run: selected ${data.selected_count} recipient(s) for mail.`);
+    } catch (err) {
+      alert('Trigger failed: ' + err.message);
+    }
+  }
+
+  // Allow Enter + Ctrl/Cmd to submit
+  document.getElementById('prompt').addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') runAnalysis();
+  });
+
+  function openPatModal() {
+    const overlay = document.getElementById('patModalOverlay');
+    const input = document.getElementById('patValueInput');
+    const statusBox = document.getElementById('patUpdateStatus');
+    if (statusBox) {
+      statusBox.className = 'status';
+      statusBox.textContent = '';
+    }
+    if (overlay) overlay.hidden = false;
+    if (input) input.focus();
+  }
+
+  function closePatModal(evt) {
+    if (evt && evt.target && evt.target.id !== 'patModalOverlay') return;
+    const overlay = document.getElementById('patModalOverlay');
+    const input = document.getElementById('patValueInput');
+    const statusBox = document.getElementById('patUpdateStatus');
+    if (overlay) overlay.hidden = true;
+    if (input) input.value = '';
+    if (statusBox) {
+      statusBox.className = 'status';
+      statusBox.textContent = '';
+    }
+  }
+
+  async function updatePatConfig() {
+    const patType = document.getElementById('patTypeSelect').value;
+    const patValueInput = document.getElementById('patValueInput');
+    const patValue = patValueInput.value.trim();
+    const statusBox = document.getElementById('patUpdateStatus');
+    const button = document.getElementById('btnUpdatePat');
+
+    if (!patValue) {
+      statusBox.className = 'status show error';
+      statusBox.textContent = 'Enter a PAT value first.';
+      return;
+    }
+
+    statusBox.className = 'status show loading';
+    statusBox.innerHTML = '<div class="spinner"></div><span>Updating local PAT configuration…</span>';
+    button.disabled = true;
+
+    try {
+      const resp = await fetch(`${BASE}/admin/pat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pat_type: patType, pat_value: patValue }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.detail || `HTTP ${resp.status}`);
+
+      statusBox.className = 'status show success';
+      statusBox.textContent = `${data.detail} Restart ${data.service_name} locally if it is already running. Azure still needs a separate update.`;
+      patValueInput.value = '';
+    } catch (err) {
+      statusBox.className = 'status show error';
+      statusBox.textContent = 'PAT update failed: ' + err.message;
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  // ── Export helpers ───────────────────────────────────────────────────────
+  function _stringifyCell(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'object') return JSON.stringify(v);
+    return String(v);
+  }
+
+  function downloadCSV(filename, rows) {
+    if (!rows || !rows.length) { alert('No data to export'); return; }
+    const keys = Object.keys(rows[0]);
+    const lines = [keys.join(',')];
+    for (const r of rows) {
+      const vals = keys.map(k => '"' + (_stringifyCell(r[k]) || '').replace(/"/g,'""') + '"');
+      lines.push(vals.join(','));
+    }
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  const FAIL_COLS = [
+    { key: 'test_key',        label: 'Test Key',       w: 25 },
+    { key: 'summary',         label: 'Summary',        w: 80 },
+    { key: 'test_exec_key',   label: 'Test Exec Key',  w: 28 },
+    { key: 'run_id',          label: 'Run ID',         w: 18 },
+    { key: 'status',          label: 'Status',         w: 18 },
+    { key: 'kpm_id',          label: 'KPM ID',         w: 25 },
+    { key: 'comment',         label: 'Comment',        w: 80 },
+    { key: '_assignee_name',  label: 'Assignee Name',  w: 40 },
+    { key: '_assignee_email', label: 'Assignee Email', w: 50 },
+  ];
+
+  const BLOCKED_COLS = [
+    { key: 'test_key',        label: 'Test Key',       w: 25 },
+    { key: 'summary',         label: 'Summary',        w: 80 },
+    { key: 'test_exec_key',   label: 'Test Exec Key',  w: 28 },
+    { key: 'run_id',          label: 'Run ID',         w: 18 },
+    { key: 'status',          label: 'Status',         w: 18 },
+    { key: 'kpm_id',          label: 'KPM ID',         w: 25 },
+    { key: 'comment',         label: 'Comment',        w: 80 },
+    { key: '_assignee_name',  label: 'Assignee Name',  w: 40 },
+    { key: '_assignee_email', label: 'Assignee Email', w: 50 },
+  ];
+
+  function _flattenRow(r) {
+    const a = r.assignee || {};
+    return {
+      test_key:        r.test_key      || '',
+      summary:         r.summary       || '',
+      test_exec_key:   r.test_exec_key || '',
+      run_id:          r.run_id        ?? '',
+      status:          r.status        || '',
+      kpm_id:          r.kpm_id        || '',
+      comment:         r.comment       || '',
+      _assignee_name:  a.displayName   || '',
+      _assignee_email: a.emailAddress  || '',
+    };
+  }
+
+  // Porsche brand colours (RGB)
+  const PDF_BLACK  = [1,   2,   5];    // #010205
+  const PDF_RED    = [213, 0,   28];   // #d5001c
+  const PDF_GRAY1  = [245, 245, 245];  // alternating row
+  const PDF_GRAY2  = [220, 220, 220];  // separator / footer bg
+  const PDF_FAIL_TINT    = [255, 235, 237]; // light red for FAIL rows
+  const PDF_BLOCKED_TINT = [255, 248, 225]; // light amber for BLOCKED rows
+
+  function _drawPageChrome(doc, title, generatedAt) {
+    const pw = doc.internal.pageSize.getWidth();
+    const ph = doc.internal.pageSize.getHeight();
+    const totalPages = doc.internal.getNumberOfPages();
+
+    for (let p = 1; p <= totalPages; p++) {
+      doc.setPage(p);
+
+      // ── Header band ──────────────────────────────────────────────────────
+      doc.setFillColor(...PDF_BLACK);
+      doc.rect(0, 0, pw, 40, 'F');
+
+      // Left: "PORSCHE" — Porsche-style: light weight, wide tracking, all-caps
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(13);
+      doc.setTextColor(255, 255, 255);
+      if (doc.setCharSpace) doc.setCharSpace(4.5);
+      doc.text('PORSCHE', 14, 18);
+      if (doc.setCharSpace) doc.setCharSpace(0);
+
+      // Left sub-line: "ENGINEERING" — smaller, tighter, muted
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(5.5);
+      doc.setTextColor(180, 180, 180);
+      if (doc.setCharSpace) doc.setCharSpace(3.5);
+      doc.text('Engineering', 14, 29);
+      if (doc.setCharSpace) doc.setCharSpace(0);
+
+      // Centre: product name
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(200, 200, 200);
+      if (doc.setCharSpace) doc.setCharSpace(1.2);
+      doc.text('MLBEVO · Testing SOP Tools', pw / 2, 23, { align: 'center' });
+      if (doc.setCharSpace) doc.setCharSpace(0);
+
+      // Right: INTERNAL badge
+      const badgeW = 54, badgeH = 15, badgeX = pw - 14 - badgeW, badgeY = 12;
+      doc.setFillColor(...PDF_RED);
+      doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 2, 2, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(6.5);
+      doc.setTextColor(255, 255, 255);
+      if (doc.setCharSpace) doc.setCharSpace(2);
+      doc.text('INTERNAL', badgeX + badgeW / 2, badgeY + 10, { align: 'center' });
+      if (doc.setCharSpace) doc.setCharSpace(0);
+
+      // Red accent line below header
+      doc.setFillColor(...PDF_RED);
+      doc.rect(0, 40, pw, 2.5, 'F');
+
+      // ── Report title block (page 1 only) ─────────────────────────────────
+      if (p === 1 && title) {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(...PDF_BLACK);
+        doc.text(title, 14, 62);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Generated: ${generatedAt}`, 14, 74);
+        // thin separator under title
+        doc.setDrawColor(...PDF_GRAY2);
+        doc.setLineWidth(0.5);
+        doc.line(14, 78, pw - 14, 78);
+      }
+
+      // ── Footer ───────────────────────────────────────────────────────────
+      doc.setFillColor(...PDF_GRAY1);
+      doc.rect(0, ph - 22, pw, 22, 'F');
+      doc.setDrawColor(...PDF_GRAY2);
+      doc.setLineWidth(0.4);
+      doc.line(0, ph - 22, pw, ph - 22);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(6.5);
+      doc.setTextColor(120, 120, 120);
+      // left
+      doc.text(`Generated: ${generatedAt}`, 14, ph - 8);
+      // centre – page number
+      doc.text(`Page ${p} of ${totalPages}`, pw / 2, ph - 8, { align: 'center' });
+      // right
+      doc.setFont('helvetica', 'italic');
+      doc.text('© Porsche Engineering — Internal Tool', pw - 14, ph - 8, { align: 'right' });
+    }
+  }
+
+  function _exportPDF(filename, rows, cols, title) {
+    if (!rows || !rows.length) { alert('No data to export'); return; }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a3' });
+    const flatRows = rows.map(_flattenRow);
+    const head    = [cols.map(c => c.label)];
+    const body    = flatRows.map(r => cols.map(c => String(r[c.key] ?? '')));
+
+    const totalW  = cols.reduce((s, c) => s + c.w, 0);
+    const pageW   = doc.internal.pageSize.getWidth() - 28; // 14pt margin each side
+    const colWidths = cols.map(c => ({ cellWidth: (c.w / totalW) * pageW }));
+
+    const generatedAt = new Date().toLocaleString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+
+    // Status-based row colouring
+    const statusIdx = cols.findIndex(c => c.key === 'status');
+
+    doc.autoTable({
+      startY: title ? 88 : 54,   // leave space for header + title block
+      head,
+      body,
+      margin: { left: 14, right: 14, top: 50, bottom: 28 },
+      columnStyles: Object.fromEntries(colWidths.map((cw, i) => [i, cw])),
+      headStyles: {
+        fillColor: PDF_BLACK,
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 7,
+        cellPadding: { top: 4, bottom: 4, left: 3, right: 3 },
+      },
+      bodyStyles: { fontSize: 7, cellPadding: { top: 3, bottom: 3, left: 3, right: 3 } },
+      alternateRowStyles: { fillColor: PDF_GRAY1 },
+      // Red accent on the left edge of every header cell col-0
+      didDrawCell(data) {
+        if (data.section === 'head' && data.column.index === 0) {
+          doc.setFillColor(...PDF_RED);
+          doc.rect(data.cell.x, data.cell.y, 2, data.cell.height, 'F');
+        }
+      },
+      willDrawCell(data) {
+        if (data.section !== 'body' || statusIdx < 0) return;
+        const status = (flatRows[data.row.index]?.status || '').toUpperCase();
+        if (status === 'FAIL' || status === 'FAILED') {
+          doc.setFillColor(...PDF_FAIL_TINT);
+        } else if (status === 'BLOCKED') {
+          doc.setFillColor(...PDF_BLOCKED_TINT);
+        }
+      },
+    });
+
+    // Draw header/footer chrome on every page now that autoTable has set page count
+    _drawPageChrome(doc, title, generatedAt);
+
+    doc.save(filename);
+  }
+
+  // kept for any legacy callers
+  async function downloadPDF(filename, rows, title) {
+    _exportPDF(filename, rows, FAIL_COLS, title);
+  }
+
+  // ── Excel export (SheetJS) ────────────────────────────────────────────────
+  function exportFailExcel() {
+    const rows = window._lastFailResults || [];
+    if (!rows.length) { alert('No data to export.'); return; }
+
+    const COLS = [
+      { key: 'test_key',      label: 'Test Key' },
+      { key: 'summary',       label: 'Summary' },
+      { key: 'test_exec_key', label: 'Test Exec Key' },
+      { key: 'run_id',        label: 'Run ID' },
+      { key: 'status',        label: 'Status' },
+      { key: 'kpm_id',        label: 'KPM ID' },
+      { key: 'comment',       label: 'Comment' },
+      { key: '_assignee_name',  label: 'Assignee Name' },
+      { key: '_assignee_email', label: 'Assignee Email' },
+    ];
+
+    // Flatten assignee fields
+    const flatRows = rows.map(r => {
+      const a = r.assignee || {};
+      return {
+        test_key:        r.test_key      || '',
+        summary:         r.summary       || '',
+        test_exec_key:   r.test_exec_key || '',
+        run_id:          r.run_id        ?? '',
+        status:          r.status        || '',
+        kpm_id:          r.kpm_id        || '',
+        comment:         r.comment       || '',
+        _assignee_name:  a.displayName   || '',
+        _assignee_email: a.emailAddress  || '',
+      };
+    });
+
+    // Build worksheet data: header row + data rows
+    const wsData = [
+      COLS.map(c => c.label),
+      ...flatRows.map(r => COLS.map(c => r[c.key])),
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+    // Column widths
+    ws['!cols'] = [12, 60, 16, 12, 10, 16, 80, 30, 40].map(w => ({ wch: w }));
+
+    // Bold header row
+    const headerRange = XLSX.utils.decode_range(ws['!ref']);
+    for (let c = headerRange.s.c; c <= headerRange.e.c; c++) {
+      const cellAddr = XLSX.utils.encode_cell({ r: 0, c });
+      if (ws[cellAddr]) {
+        ws[cellAddr].s = { font: { bold: true } };
+      }
+    }
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Fail Report');
+
+    const filename = (storedTestPlanKey || 'testplan') + '_Failed.xlsx';
+    XLSX.writeFile(wb, filename);
+  }
+
+  function openJqlDrawer() {
+    document.getElementById('jqlDrawer').style.display = 'block';
+    document.getElementById('jqlDrawerOverlay').style.display = 'block';
+    document.getElementById('jqlPasteStatus').textContent = '';
+  }
+  function closeJqlDrawer() {
+    document.getElementById('jqlDrawer').style.display = 'none';
+    document.getElementById('jqlDrawerOverlay').style.display = 'none';
+  }
+
+  function jqlPasteExport() {
+    const raw = document.getElementById('jqlPasteArea').value.trim();
+    const status = document.getElementById('jqlPasteStatus');
+    if (!raw) { status.textContent = 'Nothing pasted.'; return; }
+    let data;
+    try { data = JSON.parse(raw); } catch(e) { status.textContent = 'Invalid JSON: ' + e.message; return; }
+    const rows = data.results || (Array.isArray(data) ? data : []);
+    if (!rows.length) { status.textContent = 'No results found in JSON.'; return; }
+
+    const COLS = [
+      { key: 'test_key',      label: 'Test Key' },
+      { key: 'test_summary',  label: 'Summary' },
+      { key: 'test_exec_key', label: 'Test Exec Key' },
+      { key: 'run_id',        label: 'Run ID' },
+      { key: 'status',        label: 'Status' },
+      { key: 'kpm_id',        label: 'KPM ID' },
+      { key: 'comment',       label: 'Comment' },
+    ];
+
+    const wsData = [
+      COLS.map(c => c.label),
+      ...rows.map(r => COLS.map(c => r[c.key] ?? '')),
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    ws['!cols'] = [14, 60, 16, 12, 10, 16, 100].map(w => ({ wch: w }));
+
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let c = range.s.c; c <= range.e.c; c++) {
+      const addr = XLSX.utils.encode_cell({ r: 0, c });
+      if (ws[addr]) ws[addr].s = { font: { bold: true } };
+    }
+
+    XLSX.utils.book_append_sheet(wb, ws, 'JQL Fail Report');
+    const execCount = data.executions_scanned || rows.length;
+    XLSX.writeFile(wb, `jql_fail_report_${execCount}execs.xlsx`);
+    status.textContent = `Exported ${rows.length} rows.`;
+  }
+
+  function exportBlockedExcel() {
+    const rows = window._lastBlockedResults || [];
+    if (!rows.length) { alert('No data to export.'); return; }
+
+    const COLS = [
+      { key: 'test_key',      label: 'Test Key' },
+      { key: 'summary',       label: 'Summary' },
+      { key: 'test_exec_key', label: 'Test Exec Key' },
+      { key: 'run_id',        label: 'Run ID' },
+      { key: 'status',        label: 'Status' },
+      { key: 'kpm_id',        label: 'KPM ID' },
+      { key: 'comment',       label: 'Comment' },
+      { key: '_assignee_name',  label: 'Assignee Name' },
+      { key: '_assignee_email', label: 'Assignee Email' },
+    ];
+
+    const flatRows = rows.map(r => {
+      const a = r.assignee || {};
+      return {
+        test_key:        r.test_key      || '',
+        summary:         r.summary       || r.test_summary || '',
+        test_exec_key:   r.test_exec_key || '',
+        run_id:          r.run_id        ?? '',
+        status:          r.status        || '',
+        kpm_id:          r.kpm_id        || '',
+        comment:         r.comment       || '',
+        _assignee_name:  a.displayName   || '',
+        _assignee_email: a.emailAddress  || '',
+      };
+    });
+
+    const wsData = [
+      COLS.map(c => c.label),
+      ...flatRows.map(r => COLS.map(c => r[c.key])),
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    ws['!cols'] = [12, 60, 16, 12, 10, 16, 80, 30, 40].map(w => ({ wch: w }));
+
+    const headerRange = XLSX.utils.decode_range(ws['!ref']);
+    for (let c = headerRange.s.c; c <= headerRange.e.c; c++) {
+      const cellAddr = XLSX.utils.encode_cell({ r: 0, c });
+      if (ws[cellAddr]) ws[cellAddr].s = { font: { bold: true } };
+    }
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Blocked Report');
+    const filename = (storedTestPlanKey || 'testplan') + '_Blocked.xlsx';
+    XLSX.writeFile(wb, filename);
+  }
+
+  function exportFailCSV() {
+    const rows = window._lastFailResults || [];
+    const name = (storedTestPlanKey || 'testplan') + '_Failed.csv';
+    downloadCSV(name, rows);
+  }
+  function exportFailPDF() {
+    const rows = window._lastFailResults || [];
+    const mode = window._lastFailMode || 'Fail';
+    const name = (storedTestPlanKey || 'testplan') + '_Failed.pdf';
+    _exportPDF(name, rows, FAIL_COLS, `${storedTestPlanKey || ''} — ${mode} Report`);
+  }
+
+  function exportBlockedCSV() {
+    const rows = window._lastBlockedResults || [];
+    const name = (storedTestPlanKey || 'testplan') + '_Blocked.csv';
+    downloadCSV(name, rows);
+  }
+  function exportBlockedPDF() {
+    const rows = window._lastBlockedResults || [];
+    const name = (storedTestPlanKey || 'testplan') + '_Blocked.pdf';
+    _exportPDF(name, rows, BLOCKED_COLS, `${storedTestPlanKey || ''} — Blocked Report`);
+  }
+
+  // Server-side export helpers
+  function _downloadFromServer(path, filename) {
+    fetch(path).then(resp => {
+      if (!resp.ok) throw new Error('Server error: ' + resp.status);
+      return resp.blob();
+    }).then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }).catch(err => alert('Export failed: ' + err.message));
+  }
+
+  function exportFailServerXLSX() {
+    if (!storedTestPlanKey) return alert('No test plan key');
+    const path = `${BASE}/export/fail/${storedTestPlanKey}.xlsx`;
+    _downloadFromServer(path, `${storedTestPlanKey}_Fails.xlsx`);
+  }
+  function exportFailServerPDF() {
+    if (!storedTestPlanKey) return alert('No test plan key');
+    const path = `${BASE}/export/fail/${storedTestPlanKey}.pdf`;
+    _downloadFromServer(path, `${storedTestPlanKey}_Fails.pdf`);
+  }
+
+  function exportBlockedServerXLSX() {
+    if (!storedTestPlanKey) return alert('No test plan key');
+    const path = `${BASE}/export/blocked/${storedTestPlanKey}.xlsx`;
+    _downloadFromServer(path, `${storedTestPlanKey}_Blocked.xlsx`);
+  }
+  function exportBlockedServerPDF() {
+    if (!storedTestPlanKey) return alert('No test plan key');
+    const path = `${BASE}/export/blocked/${storedTestPlanKey}.pdf`;
+    _downloadFromServer(path, `${storedTestPlanKey}_Blocked.pdf`);
+  }
+
+  // ── FAIL Overview ─────────────────────────────────────────────────────────
+
+  let _foCurrentPlan = null;
+  let _foCurrentMode = 'fail';
+
+  function foSetBanner(id, state, msg) {
+    const el = document.getElementById(id); if (!el) return;
+    el.className = 'status show ' + state;
+    el.innerHTML = state === 'loading' ? `<div class="spinner"></div><span>${msg}</span>` : msg;
+  }
+
+  async function foSelectRegion(region, label) {
+    document.querySelectorAll('#foRegionButtons button').forEach(b => { b.style.background=''; b.style.color='#6366f1'; });
+    event.currentTarget.style.background = '#6366f1';
+    event.currentTarget.style.color = '#fff';
+
+    const picker = document.getElementById('foPickerCard');
+    const result = document.getElementById('foResultCard');
+    picker.style.display = 'block';
+    result.style.display = 'none';
+    document.getElementById('foPickerGrid').innerHTML = '';
+    document.getElementById('foPickerTitle').textContent = `${label} — Select a Test Plan`;
+    document.getElementById('foPickerSubtitle').textContent = 'Fetching test plans from Confluence…';
+    foSetBanner('foPickerStatus', 'loading', 'Loading…');
+    picker.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    try {
+      const plans = await fetchConfluenceTestPlans({ region });
+
+      foSetBanner('foPickerStatus', plans.length ? 'success' : 'error',
+        plans.length ? `✓ ${plans.length} test plan(s) found. Click one to load.` : 'No test plans found for this region.');
+      document.getElementById('foPickerSubtitle').textContent = `${plans.length} test plan(s) in ${label}`;
+
+      const grid = document.getElementById('foPickerGrid');
+      grid.innerHTML = '';
+      plans.forEach(item => {
+        const key = item.test_plan_key || '';
+        const wg  = item.working_group || item.workstream || '—';
+        const card = document.createElement('div');
+        card.style.cssText = 'border:1.5px solid #374151;border-radius:10px;padding:14px 18px;min-width:170px;max-width:210px;background:#1c1c1e;transition:border-color .15s,background .15s;text-align:center;';
+        card.innerHTML =
+          `<div style="font-size:.7rem;color:#9ca3af;margin-bottom:4px;">${wg}</div>` +
+          `<div style="font-weight:700;font-size:.9rem;color:#e5e7eb;margin-bottom:10px;">${key}</div>` +
+          `<div style="display:flex;gap:8px;justify-content:center;">` +
+            `<button class="btn btn-secondary" style="padding:6px 14px;font-size:.72rem;border-color:var(--pds-color-error);color:var(--pds-color-error);" onclick="foLoadPlan('${key}','fail')">FAIL</button>` +
+            `<button class="btn btn-secondary" style="padding:6px 14px;font-size:.72rem;border-color:#a65f00;color:#a65f00;" onclick="foLoadPlan('${key}','blocked')">BLOCKED</button>` +
+          `</div>`;
+        card.onmouseenter = () => { card.style.borderColor='#6366f1'; card.style.background='#27272a'; };
+        card.onmouseleave = () => { card.style.borderColor='#374151'; card.style.background='#1c1c1e'; };
+        grid.appendChild(card);
+      });
+    } catch (err) {
+      foSetBanner('foPickerStatus', 'error', 'Failed to load test plans: ' + err.message);
+    }
+  }
+
+  async function foLoadPlan(planKey, mode = 'fail') {
+    _foCurrentPlan = planKey;
+    _foCurrentMode = mode;
+    const isBlocked = mode === 'blocked';
+    const label = isBlocked ? 'BLOCKED' : 'FAIL';
+    const historical = !isBlocked && document.getElementById('foHistoricalToggle').checked;
+    const resultCard = document.getElementById('foResultCard');
+    resultCard.style.display = 'block';
+    document.getElementById('foResultTitle').textContent = isBlocked ? 'BLOCKED Overview' : 'FAIL Overview';
+    document.getElementById('foHistoricalLabel').style.display = isBlocked ? 'none' : 'flex';
+    document.getElementById('foResultPlanKey').textContent = planKey;
+    document.getElementById('foTable').innerHTML = '';
+    document.getElementById('foSummaryRow').innerHTML = '';
+    document.getElementById('foExportBtn').style.display = 'none';
+    document.getElementById('foAiBtn').style.display = 'none';
+    document.getElementById('foAiBox').style.display = 'none';
+    document.getElementById('foAiBox').innerHTML = '';
+    foSetBanner('foResultStatus', 'loading', `Fetching ${label} overview for ${planKey}…`);
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    try {
+      const url = isBlocked
+        ? `${BASE}/xray/blocked-overview/${planKey}`
+        : `${BASE}/xray/fail-overview/${planKey}${historical ? '?historical=true' : ''}`;
+      const resp = await cachedFetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      const total = isBlocked ? (data.total_blocked ?? 0) : (data.total_fail ?? 0);
+      document.getElementById('foSummaryRow').innerHTML =
+        summaryPill(`Total ${label}`, total, isBlocked ? 'badge-yellow' : 'badge-red') +
+        summaryPill('With KPM',   data.with_kpm    ?? 0, 'badge-green') +
+        summaryPill('No KPM',     data.without_kpm ?? 0, 'badge-gray') +
+        summaryPill('Time (s)',   Math.round(data.execution_time_seconds ?? 0), '');
+
+      const rows = data.rows || [];
+      window._lastFoResults = rows;
+      window._lastFoPlanKey  = planKey;
+
+      if (!rows.length) {
+        document.getElementById('foTable').innerHTML = `<p class="empty">No ${label} results found.</p>`;
+        foSetBanner('foResultStatus', 'success', `No ${label}s found for ${planKey} [${data.mode}]`);
+        return;
+      }
+
+      document.getElementById('foExportBtn').style.display = 'inline-flex';
+      document.getElementById('foAiBtn').style.display = 'none';
+      document.getElementById('foAiBox').style.display = 'none';
+      document.getElementById('foTable').innerHTML = foRenderTable(rows, true);
+      foSetBanner('foResultStatus', 'success',
+        `✓ ${rows.length} ${label}(s) for ${planKey} [${data.mode}] — ${Math.round(data.execution_time_seconds ?? 0)}s`);
+      // Auto-trigger per-row AI summaries (uses the fail- or blocked- overview LLM route)
+      foFetchRowSummaries(rows, planKey, mode);
+    } catch (err) {
+      foSetBanner('foResultStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('foTable').innerHTML = '<p class="empty">Could not load data.</p>';
+    }
+  }
+
+  async function foReloadCurrent() { if (_foCurrentPlan) await foLoadPlan(_foCurrentPlan, _foCurrentMode || 'fail'); }
+
+  async function foAiSummary() {
+    const rows = window._lastFoResults || [];
+    if (!rows.length) return;
+    const isBlocked = _foCurrentMode === 'blocked';
+    const box = document.getElementById('foAiBox');
+    box.style.display = 'block';
+    box.innerHTML = '<div style="color:#a855f7;font-size:.78rem;font-weight:700;margin-bottom:8px;">&#10024; AI Summary</div><span style="color:#9ca3af;">&#8987; Analysing…</span>';
+    try {
+      const url = isBlocked
+        ? `${BASE}/xray/blocked-overview/${window._lastFoPlanKey}/ai-summary`
+        : `${BASE}/xray/fail-overview/${window._lastFoPlanKey}/ai-summary`;
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          rows,
+          plan_summary: document.getElementById('foResultPlanKey').textContent,
+          mode: isBlocked ? 'latest' : (document.getElementById('foHistoricalToggle').checked ? 'historical' : 'latest'),
+        }),
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      // Render markdown-style bullets as HTML
+      const html = (data.summary || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/^#{1,3} (.+)$/gm, '<strong>$1</strong>')
+        .replace(/^[-•] (.+)$/gm, '&bull; $1')
+        .replace(/\n/g, '<br>');
+      box.innerHTML = `<div style="margin-bottom:10px;font-size:.78rem;color:#a855f7;font-weight:700;letter-spacing:.03em;">&#10024; AI Summary — ${data.model}</div>${html}`;
+    } catch (err) {
+      box.innerHTML = `<div style="color:#a855f7;font-size:.78rem;font-weight:700;margin-bottom:8px;">&#10024; AI Summary</div><span style="color:#ef4444;">Failed: ${err.message}</span>`;
+    }
+  }
+
+  function foRenderTable(rows, withAi = true) {
+    // Build data in the same shape jsonToTable expects so styling is identical
+    // to the existing Fail Report Latest table.
+    const mapped = rows.map(r => {
+      const key = r.test_key || '';
+      const row = {
+        test_key:      key,
+        description:   r.summary       || '',
+      };
+      if (withAi) {
+        row.ai_summary = `<span class="ai-row-sum" data-key="${key}" style="color:#9ca3af;font-style:italic;">⏳ analysing…</span>`;
+      }
+      row.executed_on   = r.executed_on   || '';
+      row.tester        = r.tester_name   ? (r.tester_email ? `<a href="mailto:${r.tester_email}" style="color:var(--pds-color-neutral-1);text-decoration:none;">${r.tester_name}</a>` : r.tester_name) : '—';
+      row.test_exec_key = r.test_exec_key || '';
+      row.kpm_id        = r.kpm_id        || 'No KPM';
+      row.comment       = r.comment       || '';
+      return row;
+    });
+    return jsonToTable(mapped);
+  }
+
+  async function foFetchRowSummaries(rows, planKey, mode = 'fail') {
+    if (!rows.length) return;
+    const isBlocked = mode === 'blocked';
+    try {
+      const url = isBlocked
+        ? `${BASE}/xray/blocked-overview/${planKey}/row-summaries`
+        : `${BASE}/xray/fail-overview/${planKey}/row-summaries`;
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rows }),
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      // Guard: only apply if the user is still viewing the same plan
+      if (window._lastFoPlanKey !== planKey) return;
+      const summaries = data.summaries || {};
+      window._lastFoRowSummaries = summaries;
+      document.querySelectorAll('.ai-row-sum').forEach(el => {
+        const key = el.getAttribute('data-key');
+        const txt = summaries[key];
+        if (txt) {
+          el.style.color = '#1f2937';
+          el.style.fontStyle = 'normal';
+          el.textContent = txt;
+        } else {
+          el.style.color = '#6b7280';
+          el.textContent = '—';
+        }
+      });
+    } catch (err) {
+      document.querySelectorAll('.ai-row-sum').forEach(el => {
+        el.style.color = '#ef4444';
+        el.style.fontStyle = 'normal';
+        el.textContent = 'AI failed';
+      });
+    }
+  }
+
+  function foExportExcel() {
+    const rows = window._lastFoResults || [];
+    const key  = window._lastFoPlanKey || 'testplan';
+    const sums = window._lastFoRowSummaries || {};
+    if (!rows.length) return;
+    const isBlocked = _foCurrentMode === 'blocked';
+    const label = isBlocked ? 'BLOCKED' : 'FAIL';
+    const headers = ['Test Key','Description','AI Summary','Executed On','Tester','Tester Email','Test Exec Key','KPM ID','KPM URL','Comment'];
+    const wsData  = [headers, ...rows.map(r => [r.test_key||'',r.summary||'',sums[r.test_key]||'',r.executed_on||'',r.tester_name||'',r.tester_email||'',r.test_exec_key||'',r.kpm_id||'',r.kpm_url||'',r.comment||''])];
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    ws['!cols'] = [16,60,60,20,25,35,16,16,50,60].map(w=>({wch:w}));
+    XLSX.utils.book_append_sheet(wb, ws, `${label} Overview`);
+    XLSX.writeFile(wb, `${key}_${label}_Overview.xlsx`);
+  }
+
+  // ── Priority Modal ────────────────────────────────────────────────────────
+
+  let _priorityRegion = null, _priorityRegionLabel = null;
+
+  function cloneConfluence() {
+    // TODO: functionality to be added
+  }
+
+
+  function openPriorityModal() {
+    _priorityRegion = null;
+    _priorityRegionLabel = null;
+    document.getElementById('priorityRegionStep').style.display = 'block';
+    document.getElementById('priorityWgStep').style.display = 'none';
+    document.getElementById('priorityResultStep').style.display = 'none';
+    document.getElementById('prioritySubtitle').textContent =
+      'Select a region to list test plans, then click a plan to view all FAILs with timestamp, tester and KPM links.';
+    document.querySelectorAll('#priorityRegionButtons button').forEach(b => { b.style.background=''; b.style.color=''; });
+    document.getElementById('priorityWgButtons').innerHTML = '';
+    document.getElementById('priorityModalOverlay').style.display = 'block';
+    document.addEventListener('keydown', _priorityEscHandler);
+  }
+
+  function closePriorityModal(evt) {
+    if (evt && evt.target && evt.target.id !== 'priorityModalOverlay') return;
+    document.getElementById('priorityModalOverlay').style.display = 'none';
+    document.removeEventListener('keydown', _priorityEscHandler);
+  }
+
+  function _priorityEscHandler(e) {
+    if (e.key === 'Escape') closePriorityModal();
+  }
+
+  async function prioritySelectRegion(region, label) {
+    _priorityRegion = region;
+    _priorityRegionLabel = label;
+    document.querySelectorAll('#priorityRegionButtons button').forEach(b => { b.style.background=''; b.style.color=''; });
+    event.currentTarget.style.background = 'var(--pds-color-brand)';
+    event.currentTarget.style.borderColor = 'var(--pds-color-brand)';
+    event.currentTarget.style.color = '#fff';
+
+    document.getElementById('priorityWgRegionLabel').textContent = `(${label})`;
+    document.getElementById('priorityWgStep').style.display = 'block';
+    document.getElementById('priorityResultStep').style.display = 'none';
+    await loadWorkingGroupsForPriority(region);
+  }
+
+  let _priorityData = null;
+
+  async function prioritySelectWG(workingGroup) {
+    document.querySelectorAll('#priorityWgButtons button').forEach(b => { b.style.background=''; b.style.color=''; });
+    event.currentTarget.style.background = 'var(--pds-color-brand)';
+    event.currentTarget.style.borderColor = 'var(--pds-color-brand)';
+    event.currentTarget.style.color = '#fff';
+
+    const resultStep = document.getElementById('priorityResultStep');
+    resultStep.style.display = 'block';
+    document.getElementById('prioritySummaryRow').innerHTML = '';
+    document.getElementById('priorityBuckets').innerHTML = '';
+    foSetBanner('priorityResultStatus', 'loading', `Fetching FAILs for ${_priorityRegionLabel} / ${workingGroup} from ${getSelectedPageLabel()}…`);
+
+    try {
+      const url = `${BASE}/test-results/failures/by-region-working-group?region=${encodeURIComponent(_priorityRegion)}&working_group=${encodeURIComponent(workingGroup)}&page_id=${encodeURIComponent(getSelectedPageId())}`;
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      const grouped = data.grouped || {};
+      const totalFail = data.total_fail_all_priorities ?? 0;
+      _priorityData = grouped;
+
+      document.getElementById('prioritySummaryRow').innerHTML = '';
+
+      if (!totalFail) {
+        document.getElementById('priorityBuckets').innerHTML = '<p class="empty">No FAIL results found.</p>';
+        foSetBanner('priorityResultStatus', 'success', `No FAILs found for ${_priorityRegionLabel} / ${workingGroup} on ${getSelectedPageLabel()}`);
+        return;
+      }
+
+      const order = ['high', 'medium', 'low', 'other'];
+      const meta = {
+        high:   { label: 'High',   color: 'var(--pds-color-error)' },
+        medium: { label: 'Medium', color: '#a65f00' },
+        low:    { label: 'Low',    color: 'var(--pds-color-success)' },
+        other:  { label: 'Other',  color: 'var(--pds-color-neutral-1)' },
+      };
+
+      let boxesHtml = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;font-family:var(--pds-font);">';
+      order.forEach(bucket => {
+        const b = grouped[bucket] || { count: 0, results: [] };
+        const m = meta[bucket];
+        boxesHtml += `
+          <div id="priorityBox_${bucket}" onclick="priorityToggleBucket('${bucket}')"
+               style="cursor:pointer;background:var(--pds-color-surface);border:1px solid var(--pds-color-neutral-3);padding:20px 16px;text-align:center;box-shadow:var(--pds-shadow-low);border-top:4px solid ${m.color};transition:box-shadow .15s,transform .12s;">
+            <div style="font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:${m.color};margin-bottom:6px;">${m.label}</div>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--pds-color-primary);">${b.count}</div>
+            <div style="font-size:.72rem;color:var(--pds-color-neutral-1);margin-top:4px;">${b.count === 1 ? 'test' : 'tests'} &middot; click to ${b.count ? 'expand' : 'view'}</div>
+          </div>`;
+      });
+      boxesHtml += '</div>';
+      boxesHtml += '<div id="priorityExpandArea" style="margin-top:20px;"></div>';
+
+      document.getElementById('priorityBuckets').innerHTML = boxesHtml;
+      foSetBanner('priorityResultStatus', 'success', `✓ ${totalFail} FAIL(s) for ${_priorityRegionLabel} / ${workingGroup} on ${getSelectedPageLabel()}`);
+    } catch (err) {
+      foSetBanner('priorityResultStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('priorityBuckets').innerHTML = '<p class="empty">Could not load data.</p>';
+    }
+  }
+
+  let _priorityExpandedBucket = null;
+
+  function priorityToggleBucket(bucket) {
+    const area = document.getElementById('priorityExpandArea');
+    // Reset all box highlight states
+    ['high','medium','low','other'].forEach(b => {
+      const box = document.getElementById(`priorityBox_${b}`);
+      if (box) box.style.boxShadow = 'var(--pds-shadow-low)';
+    });
+
+    if (_priorityExpandedBucket === bucket) {
+      // collapse
+      _priorityExpandedBucket = null;
+      area.innerHTML = '';
+      return;
+    }
+
+    _priorityExpandedBucket = bucket;
+    const box = document.getElementById(`priorityBox_${bucket}`);
+    if (box) box.style.boxShadow = 'var(--pds-shadow-medium)';
+
+    const results = (_priorityData && _priorityData[bucket] && _priorityData[bucket].results) || [];
+    if (!results.length) {
+      area.innerHTML = '<p class="empty">No FAIL results in this category.</p>';
+      return;
+    }
+    area.innerHTML = priorityRenderTable(results);
+  }
+
+  function priorityRenderTable(rows) {
+    const mapped = (rows || []).map(r => ({
+      test_key:      r.test_key || '',
+      priority:      r.priority || '',
+      test_plan_key: r.test_plan_key || '',
+      description:   r.summary || '',
+      executed_on:   r.executed_on || '',
+      tester:        r.tester_name || '—',
+      test_exec_key: r.test_exec_key || '',
+      kpm_id:        r.kpm_id || 'No KPM',
+      comment:       r.comment || '',
+    }));
+    return jsonToTable(mapped);
+  }
+
+  // ── FAIL All Modal ───────────────────────────────────────────────────────
+
+  let _failAllMode = null;
+
+  function openFailAllModal() {
+    _failAllMode = null;
+    document.getElementById('failAllRegionStep').style.display = 'none';
+    document.getElementById('failAllWgStep').style.display = 'none';
+    document.getElementById('failAllResultStep').style.display = 'none';
+    document.getElementById('failAllModeRegionBtn').style.background = '';
+    document.getElementById('failAllModeRegionBtn').style.color = '';
+    document.getElementById('failAllModeWgBtn').style.background = '';
+    document.getElementById('failAllModeWgBtn').style.color = '';
+    document.getElementById('failAllWgButtons').innerHTML = '';
+    document.getElementById('failAllModalOverlay').style.display = 'block';
+    document.addEventListener('keydown', _failAllEscHandler);
+  }
+
+  function closeFailAllModal(evt) {
+    if (evt && evt.target && evt.target.id !== 'failAllModalOverlay') return;
+    document.getElementById('failAllModalOverlay').style.display = 'none';
+    document.removeEventListener('keydown', _failAllEscHandler);
+  }
+
+  function _failAllEscHandler(e) {
+    if (e.key === 'Escape') closeFailAllModal();
+  }
+
+  async function failAllSetMode(mode) {
+    _failAllMode = mode;
+    document.getElementById('failAllRegionStep').style.display = mode === 'region' ? 'block' : 'none';
+    document.getElementById('failAllWgStep').style.display = mode === 'working_group' ? 'block' : 'none';
+    document.getElementById('failAllResultStep').style.display = 'none';
+
+    const regionBtn = document.getElementById('failAllModeRegionBtn');
+    const wgBtn = document.getElementById('failAllModeWgBtn');
+    regionBtn.style.background = mode === 'region' ? 'var(--pds-color-brand)' : '';
+    regionBtn.style.color = mode === 'region' ? '#fff' : '';
+    wgBtn.style.background = mode === 'working_group' ? 'var(--pds-color-brand)' : '';
+    wgBtn.style.color = mode === 'working_group' ? '#fff' : '';
+    if (mode === 'working_group') {
+      await loadWorkingGroupsForFailAll();
+    }
+  }
+
+  async function failAllRun(mode, value, label) {
+    const btnGroup = mode === 'region' ? '#failAllRegionButtons button' : '#failAllWgButtons button';
+    document.querySelectorAll(btnGroup).forEach(b => { b.style.background = ''; b.style.color = ''; });
+    if (event && event.currentTarget) {
+      event.currentTarget.style.background = 'var(--pds-color-brand)';
+      event.currentTarget.style.color = '#fff';
+    }
+
+    const resultStep = document.getElementById('failAllResultStep');
+    resultStep.style.display = 'block';
+    document.getElementById('failAllJqlText').textContent = '';
+    document.getElementById('failAllTableArea').innerHTML = '';
+    foSetBanner('failAllResultStatus', 'loading', `Fetching all FAILs for ${label} from ${getSelectedPageLabel()}…`);
+
+    try {
+      const param = mode === 'region' ? 'region' : 'working_group';
+      const url = `${BASE}/test-results/failures/fail-all?${param}=${encodeURIComponent(value)}&page_id=${encodeURIComponent(getSelectedPageId())}`;
+      const resp = await cachedFetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      document.getElementById('failAllJqlText').textContent = data.combined_jql || '';
+
+      const results = data.results || [];
+      if (!results.length) {
+        document.getElementById('failAllTableArea').innerHTML = '<p class="empty">No FAIL results found.</p>';
+        foSetBanner('failAllResultStatus', 'success', `No FAILs found for ${label} on ${getSelectedPageLabel()} (checked ${(data.test_plans_checked||[]).length} test plan(s)) — ${data.elapsed_seconds ?? '?'}s`);
+        return;
+      }
+
+      const mapped = results.map(r => ({
+        test_key:      r.test_key || '',
+        test_plan_key: r.test_plan_key || '',
+        working_group: r.working_group || '',
+        description:   r.summary || '',
+        executed_on:   r.executed_on || '',
+        tester:        r.tester_name || '—',
+        test_exec_key: r.test_exec_key || '',
+        kpm_id:        r.kpm_id || 'No KPM',
+        comment:       r.comment || '',
+      }));
+      document.getElementById('failAllTableArea').innerHTML = jsonToTable(mapped);
+      foSetBanner('failAllResultStatus', 'success', `✓ ${data.total_fail} FAIL(s) for ${label} on ${getSelectedPageLabel()} across ${(data.test_plans_checked||[]).length} test plan(s) — ${data.elapsed_seconds ?? '?'}s`);
+    } catch (err) {
+      foSetBanner('failAllResultStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('failAllTableArea').innerHTML = '<p class="empty">Could not load data.</p>';
+    }
+  }
+
+  let _blockedAllMode = null;
+
+  function openBlockedAllModal() {
+    _blockedAllMode = null;
+    document.getElementById('blockedAllRegionStep').style.display = 'none';
+    document.getElementById('blockedAllWgStep').style.display = 'none';
+    document.getElementById('blockedAllResultStep').style.display = 'none';
+    document.getElementById('blockedAllModeRegionBtn').style.background = '';
+    document.getElementById('blockedAllModeRegionBtn').style.color = '';
+    document.getElementById('blockedAllModeWgBtn').style.background = '';
+    document.getElementById('blockedAllModeWgBtn').style.color = '';
+    document.getElementById('blockedAllWgButtons').innerHTML = '';
+    document.getElementById('blockedAllModalOverlay').style.display = 'block';
+    document.addEventListener('keydown', _blockedAllEscHandler);
+  }
+
+  function closeBlockedAllModal(evt) {
+    if (evt && evt.target && evt.target.id !== 'blockedAllModalOverlay') return;
+    document.getElementById('blockedAllModalOverlay').style.display = 'none';
+    document.removeEventListener('keydown', _blockedAllEscHandler);
+  }
+
+  function _blockedAllEscHandler(e) {
+    if (e.key === 'Escape') closeBlockedAllModal();
+  }
+
+  async function blockedAllSetMode(mode) {
+    _blockedAllMode = mode;
+    document.getElementById('blockedAllRegionStep').style.display = mode === 'region' ? 'block' : 'none';
+    document.getElementById('blockedAllWgStep').style.display = mode === 'working_group' ? 'block' : 'none';
+    document.getElementById('blockedAllResultStep').style.display = 'none';
+
+    const regionBtn = document.getElementById('blockedAllModeRegionBtn');
+    const wgBtn = document.getElementById('blockedAllModeWgBtn');
+    regionBtn.style.background = mode === 'region' ? 'var(--pds-color-brand)' : '';
+    regionBtn.style.color = mode === 'region' ? '#fff' : '';
+    wgBtn.style.background = mode === 'working_group' ? 'var(--pds-color-brand)' : '';
+    wgBtn.style.color = mode === 'working_group' ? '#fff' : '';
+    if (mode === 'working_group') {
+      await loadWorkingGroupsForBlockedAll();
+    }
+  }
+
+  async function blockedAllRun(mode, value, label) {
+    const btnGroup = mode === 'region' ? '#blockedAllRegionButtons button' : '#blockedAllWgButtons button';
+    document.querySelectorAll(btnGroup).forEach(b => { b.style.background = ''; b.style.color = ''; });
+    if (event && event.currentTarget) {
+      event.currentTarget.style.background = 'var(--pds-color-brand)';
+      event.currentTarget.style.color = '#fff';
+    }
+
+    const resultStep = document.getElementById('blockedAllResultStep');
+    resultStep.style.display = 'block';
+    document.getElementById('blockedAllJqlText').textContent = '';
+    document.getElementById('blockedAllTableArea').innerHTML = '';
+    foSetBanner('blockedAllResultStatus', 'loading', `Fetching all BLOCKEDs for ${label} from ${getSelectedPageLabel()}…`);
+
+    try {
+      const param = mode === 'region' ? 'region' : 'working_group';
+      const url = `${BASE}/test-results/blocked/blocked-all?${param}=${encodeURIComponent(value)}&page_id=${encodeURIComponent(getSelectedPageId())}`;
+      const resp = await cachedFetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      document.getElementById('blockedAllJqlText').textContent = data.combined_jql || '';
+
+      const results = data.results || [];
+      if (!results.length) {
+        document.getElementById('blockedAllTableArea').innerHTML = '<p class="empty">No BLOCKED results found.</p>';
+        foSetBanner('blockedAllResultStatus', 'success', `No BLOCKEDs found for ${label} on ${getSelectedPageLabel()} (checked ${(data.test_plans_checked||[]).length} test plan(s)) — ${data.elapsed_seconds ?? '?'}s`);
+        return;
+      }
+
+      const mapped = results.map(r => ({
+        test_key:      r.test_key || '',
+        test_plan_key: r.test_plan_key || '',
+        working_group: r.working_group || '',
+        description:   r.summary || '',
+        executed_on:   r.executed_on || '',
+        tester:        r.tester_name || '—',
+        test_exec_key: r.test_exec_key || '',
+        kpm_id:        r.kpm_id || 'No KPM',
+        comment:       r.comment || '',
+      }));
+      document.getElementById('blockedAllTableArea').innerHTML = jsonToTable(mapped);
+      foSetBanner('blockedAllResultStatus', 'success', `✓ ${data.total_blocked} BLOCKED(s) for ${label} on ${getSelectedPageLabel()} across ${(data.test_plans_checked||[]).length} test plan(s) — ${data.elapsed_seconds ?? '?'}s`);
+    } catch (err) {
+      foSetBanner('blockedAllResultStatus', 'error', 'Failed: ' + err.message);
+      document.getElementById('blockedAllTableArea').innerHTML = '<p class="empty">Could not load data.</p>';
+    }
+  }
+
+  renderPageOptions(getSelectedPageId());
+
+  const pagePickerWrap = document.querySelector('.page-picker-wrap');
+  if (pagePickerWrap) {
+    pagePickerWrap.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    const panel = document.getElementById('pageDeleteList');
+    if (!panel || panel.hidden) return;
+    const target = event.target;
+    if (target instanceof Element && (target.closest('#pageRenameModalOverlay') || target.closest('#pageDeleteConfirmOverlay'))) {
+      return;
+    }
+    closeDeletePageList();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      const patOverlay = document.getElementById('patModalOverlay');
+      const deleteOverlay = document.getElementById('pageDeleteConfirmOverlay');
+      const renameOverlay = document.getElementById('pageRenameModalOverlay');
+      if (patOverlay && !patOverlay.hidden) {
+        closePatModal();
+        return;
+      }
+      if (deleteOverlay && !deleteOverlay.hidden) {
+        closePageDeleteConfirm();
+        return;
+      }
+      if (renameOverlay && !renameOverlay.hidden) {
+        closePageRenameModal();
+        return;
+      }
+      closeDeletePageList();
+    }
+  });
+
+</script>
+</div><!-- /.pds-page -->
+
+<footer class="pds-footer">
+  <span>© 2026 Porsche Engineering — Internal Tool</span>
+  <span>MLB · Testing SOP Dashboard</span>
+</footer>
+
+</body>
+</html>

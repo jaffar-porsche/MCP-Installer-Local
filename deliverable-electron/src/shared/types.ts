@@ -32,9 +32,9 @@ export interface ServerSpec {
   defaultPort: number;
   appModule: string;
   healthPath: string;
-  myselfPath: string;
-  baseUrlEnv: string;
-  tokenEnv: string;
+  myselfPath?: string | null;
+  baseUrlEnv?: string | null;
+  tokenEnv?: string | null;
   fields: FieldSpec[];
 }
 

@@ -212,9 +212,15 @@ function registerIpc(): void {
     return integrateAll(chosen);
   });
 
-  ipcMain.handle(IPC.windows_openWizard, () => ensureWizardWindow());
-  ipcMain.handle(IPC.windows_openPatRotation, (_e, serverKey: string) => ensureWizardWindow(`rotate/${serverKey}`));
-  ipcMain.handle(IPC.windows_openControlPanel, () => ensureControlPanelWindow());
+  ipcMain.handle(IPC.windows_openWizard, async () => {
+    await ensureWizardWindow();
+  });
+  ipcMain.handle(IPC.windows_openPatRotation, async (_e, serverKey: string) => {
+    await ensureWizardWindow(`rotate/${serverKey}`);
+  });
+  ipcMain.handle(IPC.windows_openControlPanel, async () => {
+    await ensureControlPanelWindow();
+  });
   ipcMain.handle(IPC.windows_closeCurrent, (e) => {
     const win = BrowserWindow.fromWebContents(e.sender);
     win?.close();

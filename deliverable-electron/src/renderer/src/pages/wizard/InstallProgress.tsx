@@ -8,7 +8,7 @@ const PHASE_HINTS: Record<BootstrapPhase, string> = {
   'venv': 'Creating isolated Python environments so nothing pollutes your system Python.',
   'pip-upgrade': 'Upgrading pip inside each virtual environment.',
   'requirements': 'Downloading and installing FastAPI, uvicorn, jira, atlassian-python-api …',
-  'env': 'Writing your .env files with the PATs you entered.',
+  'env': 'Writing your .env files with the configuration you entered.',
   'done': 'All set — closing the wizard opens the Control Panel.',
 };
 

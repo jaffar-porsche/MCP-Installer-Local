@@ -21,9 +21,9 @@ interface RawManifest {
   default_port: number;
   app_module: string;
   health_path: string;
-  myself_path: string;
-  base_url_env: string;
-  token_env: string;
+  myself_path?: string | null;
+  base_url_env?: string | null;
+  token_env?: string | null;
   fields: RawField[];
   include_common?: string[];
 }
@@ -92,9 +92,9 @@ function makeSpec(raw: RawManifest, common: CommonGroups): ServerSpec {
     defaultPort: raw.default_port,
     appModule: raw.app_module,
     healthPath: raw.health_path,
-    myselfPath: raw.myself_path,
-    baseUrlEnv: raw.base_url_env,
-    tokenEnv: raw.token_env,
+    myselfPath: raw.myself_path ?? null,
+    baseUrlEnv: raw.base_url_env ?? null,
+    tokenEnv: raw.token_env ?? null,
     fields,
   };
 }
