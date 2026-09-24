@@ -25,7 +25,13 @@ function Repair-NsisCache {
     Get-ChildItem $nsisDir -Directory -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -notmatch '^nsis(-|\.)' } |
         ForEach-Object {
-            $target = if (Test-Path (Join-Path $_.FullName 'Plugins')) {
+            $target = if (
+                (Test-Path (Join-Path $_.FullName 'elevate.exe')) -or
+                (Test-Path (Join-Path $_.FullName 'makensis.exe')) -or
+                (Test-Path (Join-Path $_.FullName 'NSIS.exe'))
+            ) {
+                Join-Path $nsisDir 'nsis-3.0.4.1'
+            } elseif (Test-Path (Join-Path $_.FullName 'Plugins')) {
                 Join-Path $nsisDir 'nsis-resources-3.4.1'
             } else {
                 Join-Path $nsisDir 'nsis-3.0.4.1'
