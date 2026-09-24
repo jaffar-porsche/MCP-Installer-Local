@@ -12,6 +12,7 @@ from routes.teams import router as teams_router
 from routes.users import router as users_router
 from routes.servicedesk import router as servicedesk_router
 from routes.health import router as health_router
+from routes.xray import router as xray_router
 
 
 def register_routes(app):
@@ -27,3 +28,4 @@ def register_routes(app):
     app.include_router(teams_router)
     app.include_router(users_router)
     app.include_router(servicedesk_router)
+    app.include_router(xray_router)

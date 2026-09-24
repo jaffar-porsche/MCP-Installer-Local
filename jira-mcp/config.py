@@ -38,6 +38,9 @@ JIRA_AGILE_BASE = f"{JIRA_BASE_URL}/rest/agile/1.0"
 # Service Desk API base URL
 JIRA_SD_BASE = f"{JIRA_BASE_URL}/rest/servicedeskapi"
 
+# xRay REST API base URL (v2.0)
+XRAY_BASE_URL = f"{JIRA_BASE_URL}/rest/raven/2.0"
+
 # Attachment download size limits
 MAX_IMAGE_SIZE = 10 * 1024 * 1024   # 10MB
 MAX_TEXT_SIZE = 5 * 1024 * 1024      # 5MB
